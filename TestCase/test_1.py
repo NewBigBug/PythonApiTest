@@ -36,11 +36,13 @@ class ServerTest(unittest.TestCase):
     """
 
     def test_creat_user(self):
-        testcase_file_path = os.path.join(os.getcwd(), 'TestData\demo1.yaml')
+
+
+        #testcase_file_path = os.path.join(os.getcwd(), 'TestData\demo1.yaml')
         testcases = utils.load_testcases_by_path(testcase_file_path)
         for i in range(len(testcases)):
             caseresult=flask_casebase.case_generator(i, self.host, testcases[i])
-            msg=flask_casebase.case_result(caseresult)
+            msg=flask_casebase.case_result(testcase_file_path, caseresult)
             print(msg)
 
 
