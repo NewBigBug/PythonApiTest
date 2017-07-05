@@ -1,0 +1,33 @@
+test0:
+  name: create user which does not exist
+  request:
+    url: http://127.0.0.1:5000/api/users/1000
+    method: POST
+    json:
+      name: user1
+      password: 123456
+  extract_binds:
+    resp_status_code: status_code
+    resp_body_success: content.success
+    resp_headers_content_type: headers.content-type
+  validators:
+    resp_status_code: {"comparator": "eq", "expected": 201}
+    resp_headers_content_type: {"comparator": "eq", "expected": "application/json"}
+    resp_body_success: {"comparator": "eq", "expected": true}
+
+test1:
+  name: create user which exist
+  request:
+    url: http://127.0.0.1:5000/api/users/1000
+    method: POST
+    json:
+      name: user1
+      password: 123456
+  extract_binds:
+    resp_status_code: status_code
+    resp_body_success: content.success
+    resp_headers_content_type: headers.content-type
+  validators:
+    resp_status_code: {"comparator": "eq", "expected": 201}
+    resp_headers_content_type: {"comparator": "eq", "expected": "application/json"}
+    resp_body_success: {"comparator": "eq", "expected": true}

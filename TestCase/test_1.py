@@ -15,13 +15,16 @@ class ServerTest(unittest.TestCase):
 
     def creatuser(self, testcase):
 
+        case_name  = testcase['name']
         req_kwargs = testcase['request']
+        print("CaseName: " + case_name)
         try:
             url = req_kwargs.pop('url')
             method = req_kwargs.pop('method')
         except KeyError:
             raise exception.ParamsError("Params Error")
         resp_obj = self.api_client(url=url, method=method, **req_kwargs)
+
         #diff_content = utils.diff_response(resp_obj, testcase['response'])
         #success = False if diff_content else True
         #return success, diff_content
@@ -30,8 +33,8 @@ class ServerTest(unittest.TestCase):
 
     def test_creatuser(self):
         testcase_file_path = os.path.join(os.getcwd(), '../TestData/demo1.yaml')
-        testcases = utils.load_testcases(testcase_file_path)
-        res= self.creatuser(testcases['test'])
+        testcases = utils.load_testcases_by_path(testcase_file_path)
+        res = self.creatuser(testcases[0]["testcases"])
         print(res)
 
     def tearDown(self):
