@@ -6,6 +6,7 @@ import utils
 
 class UtilsTest(unittest.TestCase):
 
+    """
     def test_load_testcasesfile(self):
 
         # absolute file path
@@ -15,12 +16,14 @@ class UtilsTest(unittest.TestCase):
 
         #print(type(test1))
         #print(test1['name'])
+    """
 
     def test_load_testcases_by_path(self):
 
-        path = '..\TestCase\TestData\demo1.yaml'
-        testset_list = utils.load_testcases_by_path(path)
-        test1 = testset_list[1]
+        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData'
+        testset_list = utils.load_case_by_path(path)
+        #test1 = testset_list[1]
 
-        print(type(test1))
-        print(test1['name'])
+        #print(type(test1))
+        print(testset_list)
+

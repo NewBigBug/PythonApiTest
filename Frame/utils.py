@@ -1,8 +1,7 @@
 import os
-
+#加载yaml文件
 import yaml
 
-#加载yaml文件
 from exception import ParamsError
 
 
@@ -54,18 +53,13 @@ def load_case_by_path(path):
     if os.path.isdir(path):
 
         casefile_list=load_foler_files(path)
-        for key in casefile_list.items():
-            testset_isfile={
-                'filepath': key,
-                'filecase': load_caseset(casefile_list)
-            }
-
+        for i in range(len(casefile_list)):
+            testset_isfile[casefile_list[i]] = load_caseset(casefile_list[i])
         return testset_isfile
 
     if os.path.isfile(path):
         testset_isfile = {
-            'filepath': path,
-            'filecase': load_caseset(path)
+            path: load_caseset(path)
         }
 
         return testset_isfile
@@ -84,7 +78,7 @@ def assertresult(resp, checkpoint):
         if key in respjson:
             resppame = respjson[key]
             if str(resppame) != str(point):
-                json_diff[key]={
+                json_diff[key] = {
                     'respdata': resppame,
                     'checkdata': point,
                     'checkresult': False
