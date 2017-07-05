@@ -9,7 +9,7 @@ class UtilsTest(unittest.TestCase):
     def test_load_testcasesfile(self):
 
         # absolute file path
-        path = 'TestData\demo1.yaml'
+        path = '..\TestCase\TestData\demo1.yaml'
         testset_list = utils.load_testcasesfile(path)
         test1=testset_list['test1']
 
@@ -18,7 +18,7 @@ class UtilsTest(unittest.TestCase):
 
     def test_load_testcases_by_path(self):
 
-        path = 'TestData\demo1.yaml'
+        path = '..\TestCase\TestData\demo1.yaml'
         testset_list = utils.load_testcases_by_path(path)
         test1 = testset_list[1]
 

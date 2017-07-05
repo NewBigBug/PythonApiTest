@@ -47,9 +47,38 @@ def load_testcases_by_path(path):
         for key in testcases_list:
 
             testset.append(testcases_list[key])
-            #print([testset])
+
         return testset
 
     else:
         print("文件类型异常")
         return
+
+
+
+def assertresult(resp, checkpoint):
+    json_diff = {}
+
+    respjson=resp.json()
+    for key, point in checkpoint.items():
+        if key in respjson:
+            resppame = respjson[key]
+            if str(resppame) != str(point):
+                json_diff[key]={
+                    'respdata': resppame,
+                    'checkdata': point,
+                    'checkresult': False
+                }
+            else:
+                json_diff[key]={
+                    'checkresult': True
+                }
+        else:
+            json_diff[key] = {
+                'caseresult': 'Checkpoint 在返回值中不存在，请检查'
+            }
+
+
+    return json_diff
+
+
