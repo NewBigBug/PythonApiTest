@@ -36,7 +36,6 @@ def case_generator_request():
             check_point = testcase['Checkpoint']
             resp_obj = case_requests(method, url, **req_kwargs)
             result = utils.assertresult(resp_obj, check_point)
-            #resultstr=utils.assertresult_tostr(result)
             msg = {
                 'CasePath': case_path,
                 'CaseNumb': i,

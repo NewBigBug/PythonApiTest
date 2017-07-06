@@ -1,7 +1,6 @@
 import os
 # 加载yaml文件
 import yaml
-from termcolor import colored
 
 from exception import ParamsError
 
@@ -93,13 +92,3 @@ def assertresult(resp, checkpoint):
             }
 
     return json_diff
-
-"""
-def assertresult_tostr(json_diff):
-    assertstr = ''
-    for key, value in json_diff.items():
-        assertstr = assertstr + str(key) + ':' + str(value)
-    if not json_diff['checkresult']:
-        assertresultstr = colored(assertstr, 'red')
-    return assertresultstr
-"""
