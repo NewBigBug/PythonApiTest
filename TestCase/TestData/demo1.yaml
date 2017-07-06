@@ -8,7 +8,7 @@ test0:
     resp_body_success: content.success
     resp_headers_content_type: headers.content-type
   Checkpoint:
-    success: True
+    success: FAILE
 test1:
   name: create user which does not exist
   request:

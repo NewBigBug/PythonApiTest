@@ -18,12 +18,20 @@ class UtilsTest(unittest.TestCase):
         #print(test1['name'])
     """
 
-    def test_load_testcases_by_path(self):
+    def test_load_testcases_by_path_foler(self):
 
-        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData'
+        path = '..\TestCase\TestData'
         testset_list = utils.load_case_by_path(path)
         #test1 = testset_list[1]
 
         #print(type(test1))
         print(testset_list)
 
+    def test_load_testcases_by_path_file(self):
+
+        path = '..\TestCase\TestData\demo1.yaml'
+        testset_list = utils.load_case_by_path(path)
+        #test1 = testset_list[1]
+
+        #print(type(test1))
+        print(type(testset_list))
