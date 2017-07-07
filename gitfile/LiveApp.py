@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-# Todo：接口自动化测试
+#
 # Author：归根落叶
 # Blog：http://this.ispenn.com
 
