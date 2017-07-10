@@ -1,0 +1,30 @@
+No.1: 用例编号
+  API Purpose: login  用例名称
+  Request Url: /api/users  api接口
+  Request method: POST 请求方法
+  Header: 若项目请求header文件内容无变化，可将内容写入config.yaml文件
+    Accept:
+    Accept-Encoding:
+    Accept-Language:
+    User-Agent:
+    .......
+  Body Type: Forms/Json  若为Forms格式需要进行urlencode编码，若为Json请按照Json层级填写，后续不再处理。默认Json
+  Request Body:
+    name: user1 --参数内容支持文件，
+    password: 123456
+  Need Cookie: True/False 若配置为Ture，执行该用例前，必须先执行有Collection Cookie的请求，会自动取值
+                          也可指定生成cookie的接口，若有则执行该接口时会直接先去调用。  默认False
+  Need Sign: True/False (自定义编写sign生成规则，框架不提供) 默认False
+  Need Collection: 默认False，参数名需要和response中的key值对应
+    param1:
+    param2:
+  Depends: 需要依赖的接口，比如创建客户，需要先行登录。若为空，则判断接口独立，不依赖执行
+  Response Type: Html/Json 默认Json，目前思路html转为text，查找检查点文本
+  Checkpoint: 检查点
+    param1:
+    param2:
+  Active: True/False 是否运行  默认Ture
+
+
+
+后续支持excl
