@@ -1,0 +1,24 @@
+No.1:
+  API_Purpose: login
+  Request_Url: /api/users
+  Request_method: POST
+  Header:
+    Accept:
+    Accept-Encoding:
+    Accept-Language:
+    User-Agent:
+  Body_Type: Forms
+  Request Body:
+    name: user1
+    password: 123456
+  Need_Cookie: Ture
+  Need_Sign: True
+  Need_Collection:
+    param1: 123
+    param2: 123
+  Depends: /api/login,/api/reg
+  Response_Type: Html
+  Checkpoint:
+    param1: 123
+    param2: 123
+  Active: True

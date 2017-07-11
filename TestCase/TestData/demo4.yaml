@@ -9,22 +9,25 @@ No.1: 用例编号
     User-Agent:
     .......
   Body Type: Forms/Json  若为Forms格式需要进行urlencode编码，若为Json请按照Json层级填写，后续不再处理。默认Json
-  Request Body:
+  Request Body:  参数体
     name: user1 --参数内容支持文件，
     password: 123456
   Need Cookie: True/False 若配置为Ture，执行该用例前，必须先执行有Collection Cookie的请求，会自动取值
                           也可指定生成cookie的接口，若有则执行该接口时会直接先去调用。  默认False
   Need Sign: True/False (自定义编写sign生成规则，框架不提供) 默认False
-  Need Collection: 默认False，参数名需要和response中的key值对应
+  Need Collection: 值为空，或缺省，则默认False，参数名需要和response中的key值对应。主要为后续需要依赖的接口提供参数
     param1:
     param2:
-  Depends: 需要依赖的接口，比如创建客户，需要先行登录。若为空，则判断接口独立，不依赖执行
-  Response Type: Html/Json 默认Json，目前思路html转为text，查找检查点文本
+  Depends: 需要依赖的接口，比如创建客户，需要先行登录，如有多个以逗号分隔。若为空，则判断接口独立，不依赖执行
+           执行时会判断依赖接口执行状态，若为Pass，则执行，否则顺序调用依赖接口
+  Response Type: Html/Json 默认Json，目前思路html转为text，查找检查点文本，若为Json检查点中的key值需一一对应，若找不到则异常
   Checkpoint: 检查点
     param1:
     param2:
   Active: True/False 是否运行  默认Ture
 
+---------------------------
+  Result: 执行结果，Pass/Fail，写入结果文件
 
 
-后续支持excl
+后续支持excel

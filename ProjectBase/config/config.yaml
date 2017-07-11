@@ -1,2 +1,10 @@
+#请求host
 host: http://127.0.0.1:5000
+#用例文件/文件夹,文件夹仅支持yaml
 casefile: D:\GitPro\Python\PythonApiTest\TestCase\TestData
+#用例头文件，若用例中已经配置，以用例为准
+Heade:
+  test1:
+  test2:
+#秘钥
+Secrete:

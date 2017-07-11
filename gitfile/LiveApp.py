@@ -10,7 +10,7 @@ from urllib.parse import urlencode
 import random
 import time
 import re
-import logging
+import logmsg
 import os,sys
 try:
     import xlrd
@@ -29,18 +29,18 @@ from email.mime.text import MIMEText
 
 log_file = os.path.join(os.getcwd(),'log/liveappapi.log')
 log_format = '[%(asctime)s] [%(levelname)s] %(message)s'
-logging.basicConfig(format=log_format,filename=log_file,filemode='w',level=logging.DEBUG)
-console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
-formatter = logging.Formatter(log_format)
+logmsg.basicConfig(format=log_format, filename=log_file, filemode='w', level=logmsg.DEBUG)
+console = logmsg.StreamHandler()
+console.setLevel(logmsg.DEBUG)
+formatter = logmsg.Formatter(log_format)
 console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
+logmsg.getLogger('').addHandler(console)
 
 #获取并执行测试用例
 def runTest(testCaseFile):
     testCaseFile = os.path.join(os.getcwd(),testCaseFile)
     if not os.path.exists(testCaseFile):
-        logging.error('测试用例文件不存在！！！')
+        logmsg.error('测试用例文件不存在！！！')
         sys.exit()
     testCase = xlrd.open_workbook(testCaseFile)
     table = testCase.sheet_by_index(0)
@@ -81,7 +81,7 @@ def runTest(testCaseFile):
                     request_data = json.loads(request_data)
                     status,md5 = getMD5(api_host,urlencode(request_data).replace("%27","%22"))
                     if status != 200:
-                        logging.error(num + ' ' + api_purpose + "[ " + str(status) + " ], 获取md5验证码失败！！！")
+                        logmsg.error(num + ' ' + api_purpose + "[ " + str(status) + " ], 获取md5验证码失败！！！")
                         continue
                     request_data = dict(request_data,**{"sign":md5.decode("utf-8")})
                     request_data = urlencode(request_data).replace("%27","%22")
@@ -91,7 +91,7 @@ def runTest(testCaseFile):
                 else:
                     request_data = urlencode(json.loads(request_data))
             except Exception as e:
-                logging.error(num + ' ' + api_purpose + ' 请求的数据有误，请检查[Request Data]字段是否是标准的json格式字符串！')
+                logmsg.error(num + ' ' + api_purpose + ' 请求的数据有误，请检查[Request Data]字段是否是标准的json格式字符串！')
                 continue
         elif request_data_type == 'Data':
             dataFile = request_data
@@ -106,7 +106,7 @@ def runTest(testCaseFile):
         elif request_data_type == 'File':
             dataFile = request_data
             if not os.path.exists(dataFile):
-                logging.error(num + ' ' + api_purpose + ' 文件路径配置无效，请检查[Request Data]字段配置的文件路径是否存在！！！')
+                logmsg.error(num + ' ' + api_purpose + ' 文件路径配置无效，请检查[Request Data]字段配置的文件路径是否存在！！！')
                 continue
             fopen = open(dataFile,'rb')
             data = fopen.read()
@@ -128,7 +128,7 @@ Content-Transfer-Encoding:binary
             param = correlation[j].split('=')
             if len(param) == 2:
                 if param[1] == '' or not re.search(r'^\[',param[1]) or not re.search(r'\]$',param[1]):
-                    logging.error(num + ' ' + api_purpose + ' 关联参数设置有误，请检查[Correlation]字段参数格式是否正确！！！')
+                    logmsg.error(num + ' ' + api_purpose + ' 关联参数设置有误，请检查[Correlation]字段参数格式是否正确！！！')
                     continue
                 value = resp
                 for key in param[1][1:-1].split(']['):
@@ -163,7 +163,7 @@ def interfaceTest(num,api_purpose,api_host,request_url,request_data,check_point,
     elif request_method == 'GET':
         conn.request('GET',request_url+'?'+request_data,headers=headers)
     else:
-        logging.error(num + ' ' + api_purpose + ' HTTP请求方法错误，请确认[Request Method]字段是否正确！！！')
+        logmsg.error(num + ' ' + api_purpose + ' HTTP请求方法错误，请确认[Request Method]字段是否正确！！！')
         return 400,request_method
     response = conn.getresponse()
     status = response.status
@@ -171,13 +171,13 @@ def interfaceTest(num,api_purpose,api_host,request_url,request_data,check_point,
     if status == 200:
         resp = resp.decode('utf-8')
         if re.search(check_point,str(resp)):
-            logging.info(num + ' ' + api_purpose + ' 成功, ' + str(status) + ', ' + str(resp))
+            logmsg.info(num + ' ' + api_purpose + ' 成功, ' + str(status) + ', ' + str(resp))
             return status,json.loads(resp)
         else:
-            logging.error(num + ' ' + api_purpose + ' 失败！！！, [ ' + str(status) + ' ], ' + str(resp))
+            logmsg.error(num + ' ' + api_purpose + ' 失败！！！, [ ' + str(status) + ' ], ' + str(resp))
             return 2001,resp
     else:
-        logging.error(num + ' ' + api_purpose + ' 失败！！！, [ ' + str(status) + ' ], ' + str(resp))
+        logmsg.error(num + ' ' + api_purpose + ' 失败！！！, [ ' + str(status) + ' ], ' + str(resp))
         return status,resp.decode('utf-8')
 
 #获取md5验证码
