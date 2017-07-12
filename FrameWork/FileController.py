@@ -35,7 +35,7 @@ def load_foler_files(folder_path):
     for dirpath, dirnames, filenames in os.walk(folder_path):
         for filename in filenames:
             file_path = os.path.join(dirpath, filename)
-            LogMsg.logger.info('用例结果列表: ' + file_path)
+            LogMsg.logger.info('用例文件列表: ' + file_path)
             file_list.append(file_path)
     return file_list
 
@@ -73,15 +73,13 @@ def load_case_by_path(path):
         casefile_list = load_foler_files(path)
         for i in range(len(casefile_list)):
             file_casedict[casefile_list[i]] = load_yaml_file(casefile_list[i])
-        return file_casedict
 
-    if os.path.isfile(path):
+    elif os.path.isfile(path):
         file_suffix = os.path.splitext(path)[1]
         if file_suffix in ['.yaml', '.yml']:
             file_casedict[path] = load_yaml_file(path)
         elif file_suffix in ['.xlsx', '.xls']:
             xlrd_stream = load_excel_file(path)
-            case_lines={}
             for i in range(len(xlrd_stream.sheets())):
                 sheetname = xlrd_stream.sheet_by_index(i).name
                 taledata = xlrd_stream.sheet_by_index(i)
@@ -97,11 +95,11 @@ def load_case_by_path(path):
                             columnvalue=column_value
                         case_line[columnname]=columnvalue
                     case_line_no['No.'+str(j)] = case_line
-                case_lines[path+'_'+sheetname] = case_line_no
-            return case_lines
+                file_casedict[path+'_'+sheetname] = case_line_no
+            #return file_casedict
         else:
             LogMsg.logger.error('用例文件格式不正确：' + path)
-        return file_casedict
+
     else:
         LogMsg.logger.error("传入文件路径异常：" + path)
-        return
+    return file_casedict
