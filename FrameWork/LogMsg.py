@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2017/7/11 13:43
 # @Author  : Charles
-# @File    : logmsg.py
+# @File    : LogMsg.py
 # @Software: PyCharm
 
 

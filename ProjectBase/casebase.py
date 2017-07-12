@@ -1,6 +1,6 @@
 import requests
 import projectconfig
-import utils
+import Utils
 
 
 def case_requests(method, url, **req_kwargs):
@@ -22,7 +22,7 @@ def case_generator_request():
     case_config = projectconfig.load_testconfig()
     config_path = case_config['casefile']
     url_host = case_config['host']
-    caselibrary = utils.load_case_by_path(config_path)
+    caselibrary = Utils.load_case_by_path(config_path)
     for key, value in caselibrary.items():
         file_path = str(key)
         test_case = value
@@ -35,7 +35,7 @@ def case_generator_request():
             method = req_kwargs.pop('method')
             check_point = testcase['Checkpoint']
             resp_obj = case_requests(method, url, **req_kwargs)
-            result = utils.assertresult(resp_obj, check_point)
+            result = Utils.assertresult(resp_obj, check_point)
             msg = {
                 'CasePath': case_path,
                 'CaseNumb': i,

@@ -1,7 +1,7 @@
 import os
 import unittest
 
-import utils
+import Utils
 
 
 class UtilsTest(unittest.TestCase):
@@ -42,11 +42,13 @@ class UtilsTest(unittest.TestCase):
     def test_load_testcases_by_path_file_yaml(self):
 
         path = '..\TestCase\TestData\case.yaml'
-        testset_list = utils.load_case_by_path(path)
+        testset_list = Utils.load_case_by_path(path)
         #test1 = testset_list[1]
 
         #print(type(test1))
         print(testset_list)
+        d1=testset_list['..\\TestCase\\TestData\\case.yaml']['No.1']
+        print(type(d1['Active']))
 
 
 
@@ -54,8 +56,8 @@ class UtilsTest(unittest.TestCase):
     def test_load_testcases_by_path_file_excel(self):
 
         path = '..\TestCase\TestData\case.xlsx'
-        testset_list = utils.load_case_by_path(path)
+        testset_list = Utils.load_case_by_path(path)
         #test1 = testset_list[1]
-
-        #print(type(test1))
+        d2 = testset_list['..\\TestCase\\TestData\\case.xlsx_case']['No.1']
         print(testset_list)
+        print(type(d2['Active']))

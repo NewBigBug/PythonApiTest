@@ -4,7 +4,7 @@ import unittest
 import requests
 
 import casebase
-import utils
+import Utils
 
 """
 requests库的session对象能够帮我们跨请求保持某些参数，也会在同一个session实例发出的所有请求之间保持cookies。

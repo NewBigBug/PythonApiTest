@@ -8,3 +8,7 @@ Heade:
   test2:
 #秘钥
 Secrete:
+#用户自定义参数
+UserParm:
+  username: '123456789'
+  password: '123456789'

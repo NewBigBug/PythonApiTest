@@ -1,4 +1,4 @@
-from utils import load_yaml_file
+from Utils import load_yaml_file
 
 
 def load_testconfig():
