@@ -8,7 +8,7 @@ No.1: 用例编号
     Accept-Language:
     User-Agent:
     .......
-  Body Type: Forms/Json  若为Forms格式需要进行urlencode编码，若为Json请按照Json层级填写，后续不再处理。默认Json
+  Body Type: Data/Json  若为Data格式需要进行urlencode编码，若为Json请按照Json层级填写，后续不再处理。默认Json
   Request Body:  参数体
     name: user1 --参数内容支持文件，
     password: 123456

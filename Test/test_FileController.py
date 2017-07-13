@@ -23,7 +23,7 @@ class TestLoad_case_by_path(TestCase):
 
     """
 
-    def test_load_testcases_by_path_file_yaml_dir(self):
+    def test_load_testcases_by_path_file_01(self):
 
         path = '..\TestCase\TestData\data1'
         testset_list = FileController.load_case_by_path(path)
@@ -38,11 +38,15 @@ class TestLoad_case_by_path(TestCase):
 
 
 
-    def test_load_testcases_by_path_file_excel(self):
+    def test_load_testcases_by_path_file_02(self):
 
         path = '..\TestCase\TestData\case.xlsx'
         testset_list = FileController.load_case_by_path(path)
+        str1='32432dgdsg,r23r23sdg,dgdsgsdg'
         #test1 = testset_list[1]
+        cc=str1.split(',')
+        print(type(cc))
+        print(cc)
         #d2 = testset_list['..\\TestCase\\TestData\\case.xlsx_case']['No.1']
         print(testset_list)
         #print(type(d2['Active']))

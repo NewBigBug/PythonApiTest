@@ -6,24 +6,34 @@
 import unittest
 
 import requests
+import ResponseParse
 
 
 class UtilsTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.request
-        self.cookie = ''
+
 
     def test_case_requests(self):
 
         url = 'http://172.16.5.33:8080/nauth/login'
         method = 'get'
 
+
+
         resp_obj = self.api_client(method, url)
         print(resp_obj.cookies)
         cookie=resp_obj.cookies
 
 
+        ck={'param1': '魏双双'}
 
+
+        respdict = {
+            'Need_Collection': 'param1,param2',
+            'Response_Type': 'Html',
+            'Checkpoint': ck
+        }
 
         url = 'http://172.16.5.33:8080/nauth/login'
         method = 'post'
@@ -35,9 +45,10 @@ class UtilsTest(unittest.TestCase):
         req_kwargs['cookies']=cookie
 
         resp_obj = self.api_client(method, url, **req_kwargs)
-        ind=resp_obj.text.index('魏双双')
-        cutslice = resp_obj.text[ind - 10:ind + 10]
-        print(cutslice)
+        t_resp=ResponseParse.response_parse(resp_obj,respdict)
+
+        print(t_resp)
+        print(resp_obj)
 
         #print(resp_obj.history[])
         # api_client.close()
@@ -57,3 +68,8 @@ class UtilsTest(unittest.TestCase):
         #self.api_client.close()
         pass
 
+# -*- coding: utf-8 -*-
+# @Time    : 2017/7/13 15:33
+# @Author  : Charles
+# @File    : test_ResponseP.py
+# @Software: PyCharm

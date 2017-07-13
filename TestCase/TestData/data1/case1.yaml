@@ -7,15 +7,13 @@ No.1:
     Accept-Encoding: ''
     Accept-Language: ''
     User-Agent: ''
-  Body_Type: 'Forms'
-  Request Body:
+  Body_Type: 'Data'
+  Request_Body:
     name: '%name'
     password: '%password'
-  Need_Cookie: 'TRUE'
+  #Need_Cookie: 'TRUE'
   Need_Sign: 'TRUE'
-  Need_Collection:
-    param1: '123'
-    param2: '123'
+  Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
   Response_Type: 'Html'
   Checkpoint:

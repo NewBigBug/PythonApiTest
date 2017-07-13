@@ -1,5 +1,5 @@
 No.1:
-  API_Purpose: 'login'
+  API_Purpose: '登录'
   Request_Url: '/api/users'
   Request_method: 'POST'
   Header:
@@ -7,11 +7,11 @@ No.1:
     Accept-Encoding: ''
     Accept-Language: ''
     User-Agent: ''
-  Body_Type: 'Forms'
+  Body_Type: 'Data'
   Request Body:
     name: '%name'
     password: '%password'
-  Need_Cookie: 'TRUE'
+  #Need_Cookie: 'TRUE'
   Need_Sign: 'TRUE'
   Need_Collection:
     param1: '123'

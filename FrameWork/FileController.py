@@ -16,15 +16,15 @@ import LogMsg
 
 # 加载yaml
 def load_yaml_file(yaml_file):
-    with open(yaml_file, 'r') as stream:
-        LogMsg.logger.info('读取yaml用例文件：' + yaml_file)
+    with open(yaml_file, mode='r', encoding='utf-8') as stream:
+        LogMsg.logger.info('读取yaml文件：' + yaml_file)
         return yaml.load(stream)
 
 
 # 加载excel
 def load_excel_file(excel_file):
     with xlrd.open_workbook(excel_file) as stream:
-        LogMsg.logger.info('读取excel用例文件：' + excel_file)
+        LogMsg.logger.info('读取excel文件：' + excel_file)
         return stream
 
 
