@@ -34,11 +34,8 @@ import ResultGenerate
 """
 
 
-
-
-def case_Prepare(caselines, udatadic,usrconfig):
-
-    #分割用例数据
+def case_Prepare(client, caselines, udatadic, usrconfig):
+    # 分割用例数据
     case_info = {
         'CasePath': caselines['CasePath'],
         'CaseNumb': caselines['CaseNo'],
@@ -53,27 +50,20 @@ def case_Prepare(caselines, udatadic,usrconfig):
         'Request_Body': caselines['Request_Body'],
     }
 
-    case_response={
+    case_response = {
         'Need_Collection': caselines['Need_Collection'],
         'Response_Type': caselines['Response_Type'],
         'Checkpoint': caselines['Checkpoint']
     }
 
-    #处理请求的表单数据
-    case_dg=DataGenerate.data_generate(case_request, udatadic)
-    #处理请求数据
-    case_rq=RequestGenerate.request_generate(case_dg, usrconfig)
-    #处理返回数据
-    case_rp=ResponseParse.response_parse()
-
-
-
-
-
-
-
-
-
+    # 处理请求的表单数据
+    case_dg = DataGenerate.data_generate(case_request, udatadic)
+    # 处理请求数据
+    case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
+    # 发送请求
+    case_sd = RequestGenerate.request_send(client, case_rq)
+    # 处理返回数据
+    case_rp = ResponseParse.response_parse(case_sd, case_response)
 
 
 def case_result(case_result_list):

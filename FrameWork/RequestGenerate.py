@@ -4,7 +4,7 @@
 # @File    : RequestGenerate.py
 # @Software: PyCharm
 import LogMsg
-
+import requests
 
 """
 该参数应为示例字典格式
@@ -20,10 +20,10 @@ import LogMsg
 """
 
 
-def request_generate(requestdict,usrconfig):
+def request_generate(requestdict, usrconfig):
     requestkwargs = {}
     # usrconfig为字典类型
-    #usrconfig = load_yaml_file('../Config/config.yaml')
+    # usrconfig = load_yaml_file('../Config/config.yaml')
 
     """
     # 处理url
@@ -91,3 +91,12 @@ def request_generate(requestdict,usrconfig):
 
     # 返回请求参数表
     return requestkwargs
+
+#发送请求
+def request_send(client, req_kwargs):
+    url = req_kwargs.pop('url')
+    method = req_kwargs.pop('method')
+    # session client
+    # client = requests.Session
+    resp = client.request(method=method, url=url, **req_kwargs)
+    return resp

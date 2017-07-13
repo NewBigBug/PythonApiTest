@@ -10,7 +10,7 @@ import requests
 
 class UtilsTest(unittest.TestCase):
     def setUp(self):
-        self.api_client = requests.request
+        self.api_client = requests.Session()
         self.cookie = ''
 
     def test_case_requests(self):
@@ -18,7 +18,7 @@ class UtilsTest(unittest.TestCase):
         url = 'http://172.16.5.33:8080/nauth/login'
         method = 'get'
 
-        resp_obj = self.api_client(method, url)
+        resp_obj = self.api_client.request(method, url)
         print(resp_obj.cookies)
         cookie=resp_obj.cookies
 
