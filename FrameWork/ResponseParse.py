@@ -25,10 +25,6 @@ def response_parse(resp, respdict):
     checkpoint = respdict['Checkpoint']
     needcollection = []
 
-    if 'Need_Collection' in respdict.keys() and (respdict['Need_Collection'] is not None):
-        needcollection = respdict['Need_Collection'].split(',')
-    else:
-        LogMsg.logger.info('用例文件中未配置需要收集的参数，若有后续依赖，执行会报错')
 
     """
     # 先判断返回值resp的内容格式，收集参数只支持json
@@ -84,8 +80,15 @@ def response_parse(resp, respdict):
 
 
         elif respdict['Response_Type'] == 'Json':
+
+            if 'Need_Collection' in respdict.keys() and (respdict['Need_Collection'] is not None):
+                needcollection = respdict['Need_Collection'].split(',')
+            else:
+                LogMsg.logger.info('用例文件中未配置需要收集的参数，若有后续依赖，执行会报错')
+
             respjson = resp.json()
             respjson['status_code'] = resp.status_code
+
             for key, point in checkpoint.items():
                 if key in respjson:
                     resppame = respjson[key]
@@ -109,7 +112,7 @@ def response_parse(resp, respdict):
             for i in range(len(needcollection)):
                 key = needcollection[i]
                 if key in respjson:
-                    collectionparm[key] = respjson[key]
+                    collectionparm['$'+key] = respjson[key]
                 else:
                     LogMsg.logger.info('返回值中不存在该参数 ' + key)
 

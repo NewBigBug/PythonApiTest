@@ -9,8 +9,8 @@ No.1:
     User-Agent: ''
   Body_Type: 'Data'
   Request Body:
-    name: '%name'
-    password: '%password'
+    name: '张飞%{name}'
+    password: '${password}'
   #Need_Cookie: 'TRUE'
   Need_Sign: 'TRUE'
   Need_Collection:

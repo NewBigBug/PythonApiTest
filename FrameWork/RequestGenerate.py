@@ -75,6 +75,7 @@ def request_generate(requestdict):
 
     """
     # 处理请求数据
+    # requestdict['Request_Body'],需要转成数据处理方法 DataGenerate
     """
     if 'Body_Type' in requestdict.keys() and requestdict['Body_Type'] is not None:
         if requestdict['Body_Type'] == 'Data':

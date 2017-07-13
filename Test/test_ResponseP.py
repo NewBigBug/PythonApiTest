@@ -30,7 +30,6 @@ class UtilsTest(unittest.TestCase):
 
 
         respdict = {
-            'Need_Collection': 'param1,param2',
             'Response_Type': 'Html',
             'Checkpoint': ck
         }
