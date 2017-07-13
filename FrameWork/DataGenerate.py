@@ -17,54 +17,64 @@ import LogMsg
 """
 datadic  用例数据
 udatadic 用户参数化数据
-datadic={
-
-    name: '$name'
-    password: '$password'
-    pm1: '123213'
-    pm2: '23423'
-    pm3: ''
-    }
+requestdict={
+    'Request_Url': '/api/users', 
+    'Request_method': 'POST', 
+    'Header': {'Accept': '', 'Accept-Encoding': '', 'Accept-Language': '', 'User-Agent': ''}, 
+    'Body_Type': 'Data', 
+    'Request_Body': {'name': 'user1', 'password': '123456'}, 
+    #'Need_Cookie': 'TRUE', 
+    #'Need_Sign': 'TRUE'
+}
 """
 
-def data_generate(datadic, udatadic):
 
-    for key, value in datadic.items():
-        #只遍历4层，超出4层不考虑
-        if isinstance(value,dict):
-            for key1, value1 in value.items():
-                if isinstance(value1, dict):
-                    for key2, value2 in value1.items():
-                        if isinstance(value2, dict):
-                            for key3, value3 in value2.items():
-                                if isinstance(value3, dict):
-                                    LogMsg.logger.error('参数嵌套层数过多')
-                                else:
-                                    if '$' in value3:
-                                        if value3 in udatadic.keys():
-                                            value2[key3] = udatadic[value3]
-                                        else:
-                                            LogMsg.logger.error('获取参数值失败 '+value3)
-                        else:
-                            if '$' in value2:
-                                if value2 in udatadic.keys():
-                                    value1[key2] = udatadic[value2]
-                                else:
-                                    LogMsg.logger.error('获取参数值失败 ' + value2)
-                else:
-                    if '$' in value1:
-                        if value1 in udatadic.keys():
-                            value[key1] = udatadic[value1]
-                        else:
-                            LogMsg.logger.error('获取参数值失败 ' + value1)
-        else:
-            if '$' in value:
-                if value in udatadic.keys():
-                    datadic[key] = udatadic[value]
-                else:
-                    LogMsg.logger.error('获取参数值失败 ' + value)
 
-    return datadic
+
+
+def data_generate(datadict, udatadic):
+    data_dict={}
+    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None):
+        data_dict = datadict['Request_Body']
+        for key, value in data_dict.items():
+            # 只遍历4层，超出4层不考虑
+            if isinstance(value, dict):
+                for key1, value1 in value.items():
+                    if isinstance(value1, dict):
+                        for key2, value2 in value1.items():
+                            if isinstance(value2, dict):
+                                for key3, value3 in value2.items():
+                                    if isinstance(value3, dict):
+                                        LogMsg.logger.error('参数嵌套层数过多')
+                                    else:
+                                        if '$' in value3:
+                                            if value3 in udatadic.keys():
+                                                value2[key3] = udatadic[value3]
+                                            else:
+                                                LogMsg.logger.error('获取参数值失败 ' + value3)
+                            else:
+                                if '$' in value2:
+                                    if value2 in udatadic.keys():
+                                        value1[key2] = udatadic[value2]
+                                    else:
+                                        LogMsg.logger.error('获取参数值失败 ' + value2)
+                    else:
+                        if '$' in value1:
+                            if value1 in udatadic.keys():
+                                value[key1] = udatadic[value1]
+                            else:
+                                LogMsg.logger.error('获取参数值失败 ' + value1)
+            else:
+                if '$' in value:
+                    if value in udatadic.keys():
+                        data_dict[key] = udatadic[value]
+                    else:
+                        LogMsg.logger.error('获取参数值失败 ' + value)
+        return data_dict
+    else:
+        LogMsg.logger.warn('用例无请求数据')
+        return data_dict
+
 
 
 

@@ -40,7 +40,7 @@ class TestLoad_case_by_path(TestCase):
 
     def test_load_testcases_by_path_file_02(self):
 
-        path = '..\TestCase\TestData\case.xlsx'
+        path = '../TestCase/TestData/case.xlsx'
         testset_list = FileController.load_case_by_path(path)
         str1='32432dgdsg,r23r23sdg,dgdsgsdg'
         #test1 = testset_list[1]

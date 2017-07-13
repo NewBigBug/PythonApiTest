@@ -12,7 +12,7 @@ No.1:
     name: '%name'
     password: '%password'
   #Need_Cookie: 'TRUE'
-  Need_Sign: 'TRUE'
+  #Need_Sign: 'TRUE'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
   Response_Type: 'Html'

@@ -12,7 +12,7 @@ No.1:
     name: '张飞%{name}'
     password: '${password}'
   #Need_Cookie: 'TRUE'
-  Need_Sign: 'TRUE'
+  #Need_Sign: 'TRUE'
   Need_Collection:
     param1: '123'
     param2: '123'

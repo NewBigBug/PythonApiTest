@@ -4,25 +4,26 @@
 # @File    : RequestGenerate.py
 # @Software: PyCharm
 import LogMsg
-from FileController import load_yaml_file
+
 
 """
 该参数应为示例字典格式
-requestdict={
-    'Request_Url': '/api/users', 
-    'Request_method': 'POST', 
-    'Header': {'Accept': '', 'Accept-Encoding': '', 'Accept-Language': '', 'User-Agent': ''}, 
-    'Body_Type': 'Data', 
-    'Request_Body': {'name': 'user1', 'password': '123456'}, 
-    #'Need_Cookie': 'TRUE', 
-}
+        requestdict={
+            'Request_Url': '/api/users', 
+            'Request_method': 'POST', 
+            'Header': {'Accept': '', 'Accept-Encoding': '', 'Accept-Language': '', 'User-Agent': ''}, 
+            'Body_Type': 'Data', 
+            'Request_Body': {'name': 'user1', 'password': '123456'}, 
+            #'Need_Cookie': 'TRUE', 
+            #Need_Sign: 'TRUE'
+        }
 """
 
 
-def request_generate(requestdict):
+def request_generate(requestdict,usrconfig):
     requestkwargs = {}
     # usrconfig为字典类型
-    usrconfig = load_yaml_file('../Config/config.yaml')
+    #usrconfig = load_yaml_file('../Config/config.yaml')
 
     """
     # 处理url

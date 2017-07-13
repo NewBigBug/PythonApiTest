@@ -11,6 +11,7 @@ import DataGenerate
 
 class Test_DataGen(unittest.TestCase):
     def test_data_generate(self):
+        """
         datadic={
             'name': '$name',
             'password': '$password',
@@ -19,7 +20,8 @@ class Test_DataGen(unittest.TestCase):
             'pm3': {'k1':{'k2':{'k3':{'k4':'$k4'}}}}
         }
 
-
+        """
+        datadic={}
 
         udatadic={
             '$name':'n123456',
