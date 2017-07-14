@@ -91,7 +91,7 @@ def load_case_by_path(path):
     if os.path.isdir(path):
         casefile_list = load_foler_files(path)
         for i in range(len(casefile_list)):
-            file_casedict[casefile_list[i]] = load_case_by_path(casefile_list[i])
+            file_casedict = load_case_by_path(casefile_list[i])
 
     elif os.path.isfile(path):
         file_suffix = os.path.splitext(path)[1]
