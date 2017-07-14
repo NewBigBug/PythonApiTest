@@ -1,6 +1,8 @@
 import os
 import unittest
 
+import yaml
+
 import FileController
 
 
@@ -38,7 +40,7 @@ class UtilsTest(unittest.TestCase):
         # print(type(test1))
         print(type(test1))
         print(test1['No.2'])
-    """
+
     def test_load_testcases_by_path_file_yaml(self):
 
         path = '..\TestCase\TestData\case.yaml'
@@ -61,3 +63,27 @@ class UtilsTest(unittest.TestCase):
         d2 = testset_list['..\\TestCase\\TestData\\case.xlsx_case']['No.1']
         print(testset_list)
         print(type(d2['Active']))
+    """
+
+    def test_create_yaml_file(self):
+        case_info = {
+            '/api/login': 'PASS'
+        }
+
+        path='D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
+
+        if os.path.exists(path):
+            os.remove(path)
+            createstream = FileController.create_yaml_file(path)
+        else:
+            createstream = FileController.create_yaml_file(path)
+
+        #yaml.dump(case_info, createstream)
+        #createstream.close()
+
+        rd=FileController.write_yaml_file(case_info,path)
+
+        #ss=rd['/api/login']
+        #print(ss)
+
+

@@ -70,6 +70,7 @@ def data_generate(datadict, udatadic):
                         data_dict[key] = udatadic[value]
                     else:
                         LogMsg.logger.error('获取参数值失败 ' + value)
+        LogMsg.logger.info(data_dict)
         return data_dict
     else:
         LogMsg.logger.warn('用例无请求数据')

@@ -34,7 +34,7 @@ class UtilsTest(unittest.TestCase):
         }
         req_kwargs['cookies']=cookie
 
-        resp_obj = self.api_client(method, url, **req_kwargs)
+        resp_obj = self.api_client.request(method, url, **req_kwargs)
         ind=resp_obj.text.index('魏双双')
         cutslice = resp_obj.text[ind - 10:ind + 10]
         print(cutslice)
@@ -45,7 +45,7 @@ class UtilsTest(unittest.TestCase):
         url = 'http://172.16.5.33:8080/nauth/sys/user/info'
         method = 'get'
         req_kwargs['cookies'] = cookie
-        resp_obj = self.api_client(method, url, **req_kwargs)
+        resp_obj = self.api_client.request(method, url, **req_kwargs)
         print(resp_obj.status_code)
         print(resp_obj.history)
 

@@ -90,13 +90,16 @@ def request_generate(requestdict, usrconfig):
         LogMsg.logger.info('config配置文件中缺失请求数据配置，如果请求需要，用例会失败')
 
     # 返回请求参数表
+    LogMsg.logger.info(requestkwargs)
     return requestkwargs
 
-#发送请求
+
+# 发送请求
 def request_send(client, req_kwargs):
     url = req_kwargs.pop('url')
     method = req_kwargs.pop('method')
     # session client
     # client = requests.Session
-    resp = client.request(method=method, url=url, **req_kwargs)
+    resp = client.request(method, url, **req_kwargs)
+    LogMsg.logger.info(resp)
     return resp

@@ -106,8 +106,9 @@ def response_parse(resp, respdict):
                         }
                 else:
                     check_diff[key] = {
+                        'respdata': 'Checkpoint is not exist in respdata',
                         'checkdata': point,
-                        'checkresult': 'Checkpoint is not exist!'
+                        'checkresult': False
                     }
             for i in range(len(needcollection)):
                 key = needcollection[i]
@@ -119,5 +120,6 @@ def response_parse(resp, respdict):
     else:
         LogMsg.logger.error('用例中未指定 Response_Type 类型')
 
+    LogMsg.logger.info(collectionparm)
     responseparse = [collectionparm, check_diff]
     return responseparse

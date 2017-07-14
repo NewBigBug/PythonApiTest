@@ -8,10 +8,9 @@ import ast
 import os
 
 import xlrd as xlrd
+import xlwt
 import yaml
 import LogMsg
-
-
 
 
 # 加载yaml
@@ -21,11 +20,30 @@ def load_yaml_file(yaml_file):
         return yaml.load(stream)
 
 
+# 创建yaml文件
+def create_yaml_file(yaml_file):
+    with open(yaml_file, mode='x', encoding='utf-8'):
+        LogMsg.logger.info('创建yaml文件：' + yaml_file)
+
+
+# 写入yaml文件
+def write_yaml_file(data, yaml_file):
+    with open(yaml_file, mode='a', encoding='utf-8') as stream:
+        LogMsg.logger.info('写入yaml文件：' + yaml_file)
+        return yaml.dump(data, stream)
+
+
 # 加载excel
 def load_excel_file(excel_file):
     with xlrd.open_workbook(excel_file) as stream:
         LogMsg.logger.info('读取excel文件：' + excel_file)
         return stream
+
+
+# 写入excel
+def write_excle_file():
+    workbook = xlwt.Workbook()
+    return workbook
 
 
 # 加载传入yamlcase文件夹
@@ -66,8 +84,9 @@ def load_foler_files(folder_path):
     }
 }
 """
-def load_case_by_path(path):
 
+
+def load_case_by_path(path):
     file_casedict = {}
     if os.path.isdir(path):
         casefile_list = load_foler_files(path)
@@ -86,16 +105,16 @@ def load_case_by_path(path):
                 case_line_no = {}
                 for j in range(1, taledata.nrows):
                     case_line = {}
-                    for c in range(1,taledata.ncols):
-                        columnname=taledata.cell(0, c).value
-                        column_value=taledata.cell(j, c).value.replace('\n', '').replace('\r', '')
+                    for c in range(1, taledata.ncols):
+                        columnname = taledata.cell(0, c).value
+                        column_value = taledata.cell(j, c).value.replace('\n', '').replace('\r', '')
                         if '{' in column_value:
-                            columnvalue=ast.literal_eval(column_value)
+                            columnvalue = ast.literal_eval(column_value)
                         else:
-                            columnvalue=column_value
-                        case_line[columnname]=columnvalue
-                    case_line_no['No.'+str(j)] = case_line
-                file_casedict[path+'_'+sheetname] = case_line_no
+                            columnvalue = column_value
+                        case_line[columnname] = columnvalue
+                    case_line_no['No.' + str(j)] = case_line
+                file_casedict[path + '_' + sheetname] = case_line_no
         else:
             LogMsg.logger.error('用例文件格式不正确：' + path)
 
