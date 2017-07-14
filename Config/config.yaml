@@ -1,7 +1,7 @@
 #请求host地址
 Host: http://127.0.0.1:5000
 #用例文件路径
-Casefile: D:\GitPro\Python\PythonApiTest\TestCase\TestData
+Casefile: D:\GitPro\Python\PythonApiTest\TestCase\TestData\data1
 #临时文件路径
 tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
 #请求header内容

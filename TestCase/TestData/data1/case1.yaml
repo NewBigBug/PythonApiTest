@@ -1,5 +1,5 @@
 No.1:
-  API_Purpose: 'login'
+  API_Purpose: '登录'
   Request_Url: '/api/users'
   Request_method: 'POST'
   Header:
@@ -8,9 +8,9 @@ No.1:
     Accept-Language: ''
     User-Agent: ''
   Body_Type: 'Data'
-  Request_Body:
+  Request Body:
     name: '%name'
-    password: '%password'
+    password: '$password'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
   Response_Type: 'Html'
@@ -18,3 +18,4 @@ No.1:
     param1: '123'
     param2: '123'
   Active: 'TRUE'
+

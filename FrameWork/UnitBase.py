@@ -9,7 +9,9 @@ import FileController
 
 class UnitBase(unittest.TestCase):
 
+    udatadic = {}
     def setUpClass(cls):
-        udatadic={}
+
+
 
 
