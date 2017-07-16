@@ -15,4 +15,8 @@ class Test_CaseGoto(unittest.TestCase):
         cc = CaseGoto.case_goto()
         print(cc[0])
         print(cc[1])
-        print(cc[2])
+        #print(cc[2])
+        msg=''
+        for i in range(len(cc[2])):
+            msg = msg + str(cc[2][i]) + '\n'
+        print(msg)

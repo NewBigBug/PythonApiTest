@@ -5,6 +5,18 @@
 # @Software: PyCharm
 
 import hashlib
+import Utils
+
+
+def param_generate():
+    paramdict={
+        '$tm': Utils.time_generate()
+    }
+    return paramdict
+
+
+
+
 
 """
 caselines={

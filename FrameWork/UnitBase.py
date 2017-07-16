@@ -6,11 +6,24 @@
 
 import unittest
 import FileController
+import UserParam
+import CaseGoto
 
 class UnitBase(unittest.TestCase):
 
-    udatadic = {}
+
     def setUpClass(cls):
+        udatadic = {}
+        cago = CaseGoto.case_goto()
+        udatadic.update(cago[2])
+        uspa = UserParam.param_generate()
+        udatadic.update(uspa)
+
+
+
+
+
+
 
 
 

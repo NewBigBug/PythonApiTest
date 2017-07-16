@@ -9,7 +9,7 @@ import FileController
 class TestLoad_case_by_path(TestCase):
 
 
-
+    """
     def test_load_testcases_by_path_file_yaml(self):
 
         path = '..\TestCase\TestData\data1\case.yaml'
@@ -21,11 +21,11 @@ class TestLoad_case_by_path(TestCase):
         #d1=testset_list['..\\TestCase\\TestData\\case.yaml']['No.1']
         #print(type(d1['Active']))
 
-
+    """
 
     def test_load_testcases_by_path_file_01(self):
 
-        path = '..\TestCase\TestData\data1'
+        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/data1'
         testset_list = FileController.load_case_by_path(path)
         #test1 = testset_list[1]
 
@@ -40,7 +40,7 @@ class TestLoad_case_by_path(TestCase):
 
     def test_load_testcases_by_path_file_02(self):
 
-        path = '../TestCase/TestData/case.xlsx'
+        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/case.xlsx'
         testset_list = FileController.load_case_by_path(path)
 
         #test1 = testset_list[1]
@@ -48,4 +48,4 @@ class TestLoad_case_by_path(TestCase):
         #d2 = testset_list['..\\TestCase\\TestData\\case.xlsx_case']['No.1']
         print(testset_list)
         #print(type(d2['Active']))
-    pass
+

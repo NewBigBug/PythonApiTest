@@ -46,32 +46,24 @@ def case_goto():
         configdatadic[key] = UserParm[key]
 
     # 处理用例库
+    case_lines_list = []
     caselibrarypath = testconfig['Casefile']
     caselibrary = FileController.load_case_by_path(caselibrarypath)
-    case_lines_list = []
+    print(caselibrary)
     for key, value in caselibrary.items():
         file_path = str(key)
-        test_case = value
-        print(test_case)
-        print(type(test_case))
-        for key1, value1 in test_case.items():
-            test_case_1 = test_case[key1]
-            for i in range(len(test_case_1)):
-                testcase = test_case_1[i]
-                for no, case in testcase.items():
-                    case_line = case
-                    case_line['CasePath'] = file_path
-                    case_line['CaseNo'] = key
-                    case_lines_list.append(case_line)
-
+        for key1, value1 in value.items():
+            case_line = {'CasePath': file_path, 'CaseNo': key1}
+            case_line.update(value1)
+            LogMsg.logger.info('CaseList: ' + str(case_line))
+            case_lines_list.append(case_line)
     return usrconfig, configdatadic, case_lines_list
-
 
 # 创建临时yaml文件
 def tempfile_generate(path):
     if os.path.exists(path):
         os.remove(path)
-        createstream = FileController.create_yaml_file(path)
+        FileController.create_yaml_file(path)
     else:
-        createstream = FileController.create_yaml_file(path)
+        FileController.create_yaml_file(path)
     LogMsg.logger.info('临时文件成功： ' + path)

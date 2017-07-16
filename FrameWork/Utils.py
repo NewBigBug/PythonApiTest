@@ -5,10 +5,11 @@
 # @Software: PyCharm
 import time
 
+
 # 生成当前时间
 def time_generate():
     tm = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-    return time
+    return tm
 
 # 生成手机号
 
@@ -16,8 +17,5 @@ def time_generate():
 
 # 生成身份证
 
-
-
-# 对字典排序
 
 

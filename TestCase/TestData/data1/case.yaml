@@ -1,5 +1,5 @@
 No.1:
-  API_Purpose: '登录'
+  API_Purpose: '登录1'
   Request_Url: '/api/users'
   Request_method: 'POST'
   Header:
@@ -9,7 +9,7 @@ No.1:
     User-Agent: ''
   Body_Type: 'Data'
   Request Body:
-    name: '%name'
+    name: '$name'
     password: '$password'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
@@ -19,7 +19,7 @@ No.1:
     param2: '123'
   Active: 'TRUE'
 No.2:
-  API_Purpose: '登录'
+  API_Purpose: '登录2'
   Request_Url: '/api/users'
   Request_method: 'POST'
   Header:
@@ -29,7 +29,7 @@ No.2:
     User-Agent: ''
   Body_Type: 'Data'
   Request Body:
-    name: '%name'
+    name: '$tm'
     password: '$password'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
@@ -39,7 +39,7 @@ No.2:
     param2: '123'
   Active: 'TRUE'
 No.3:
-  API_Purpose: '登录'
+  API_Purpose: '登录3'
   Request_Url: '/api/users'
   Request_method: 'POST'
   Header:
@@ -49,7 +49,7 @@ No.3:
     User-Agent: ''
   Body_Type: 'Data'
   Request Body:
-    name: '%name'
+    name: '$tm'
     password: '$password'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'

@@ -33,7 +33,7 @@ requestdict={
 
 
 def data_generate(datadict, udatadic):
-    data_dict={}
+
     if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None):
         data_dict = datadict['Request_Body']
         for key, value in data_dict.items():
@@ -66,6 +66,7 @@ def data_generate(datadict, udatadic):
                                 LogMsg.logger.error('获取参数值失败 ' + value1)
             else:
                 if '$' in value:
+                    print(type(value))
                     if value in udatadic.keys():
                         data_dict[key] = udatadic[value]
                     else:
@@ -74,7 +75,7 @@ def data_generate(datadict, udatadic):
         return data_dict
     else:
         LogMsg.logger.warn('用例无请求数据')
-        return data_dict
+        #return data_dict = {}
 
 
 
