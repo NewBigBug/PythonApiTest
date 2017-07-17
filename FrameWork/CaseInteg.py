@@ -35,56 +35,62 @@ import LogMsg
 """
 
 
-def case_Prepare(client, caselines, udatadic, usrconfig):
-    if caselines['CasePath'] == 'TRUE':
-        LogMsg.logger.info(caselines)
-        # 分割用例数据
-        case_info = {
-            'CasePath': caselines['CasePath'],
-            'CaseNumb': caselines['CaseNo'],
-            'CaseName': caselines['API_Purpose'],
-            'Request_Url': caselines['Request_Url'],
-            'Temp_Filepath': caselines['Request_Url']
-        }
+def case_Prepare(caselines):
+    caselinespilt = []
+    if caselines is not None:
+        if caselines['Active'] == 'TRUE':
+            LogMsg.logger.info(caselines)
+            # 分割用例数据
+            case_info = {
+                'CasePath': caselines['CasePath'],
+                'CaseNumb': caselines['CaseNo'],
+                'CaseName': caselines['API_Purpose'],
+                'Request_Url': caselines['Request_Url'],
+                'Temp_Filepath': caselines['Temp_Filepath']
+            }
+            caselinespilt.append(case_info)
+            case_request = {
+                'Request_Url': caselines['Request_Url'],
+                'Request_method': caselines['Request_method'],
+                'Header': caselines['Header'],
+                'Body_Type': caselines['Body_Type'],
+                'Request_Body': caselines['Request_Body'],
+            }
+            caselinespilt.append(case_request)
+            case_response = {
+                'Need_Collection': caselines['Need_Collection'],
+                'Response_Type': caselines['Response_Type'],
+                'Checkpoint': caselines['Checkpoint']
+            }
+            caselinespilt.append(case_response)
 
-        case_request = {
-            'Request_Url': caselines['Request_Url'],
-            'Request_method': caselines['Request_method'],
-            'Header': caselines['Header'],
-            'Body_Type': caselines['Body_Type'],
-            'Request_Body': caselines['Request_Body'],
-        }
+            """
+            # 处理请求的表单数据
+            case_dg = DataGenerate.data_generate(case_request, udatadic)
+            LogMsg.logger.info('请求表单已处理')
 
-        case_response = {
-            'Need_Collection': caselines['Need_Collection'],
-            'Response_Type': caselines['Response_Type'],
-            'Checkpoint': caselines['Checkpoint']
-        }
 
-        # 处理请求的表单数据
-        case_dg = DataGenerate.data_generate(case_request, udatadic)
-        LogMsg.logger.info('请求表单已处理')
+            # 处理请求数据
+            case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
+            LogMsg.logger.info('请求数据已解析')
 
-        """
-        # 处理请求数据
-        case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
-        LogMsg.logger.info('请求数据已解析')
+            # 发送请求
+            case_sd = RequestGenerate.request_send(client, case_rq)
+            LogMsg.logger.info('请求数据已发送')
+            # 处理返回数据
+            case_rp = ResponseParse.response_parse(case_sd, case_response)
+            LogMsg.logger.info('已获取请求返回值')
+            # 处理结果内容
+            case_rs = ResultGenerate.result_generate(case_info, case_rp[1])
+            LogMsg.logger.info('返回值已处理')
 
-        # 发送请求
-        case_sd = RequestGenerate.request_send(client, case_rq)
-        LogMsg.logger.info('请求数据已发送')
-        # 处理返回数据
-        case_rp = ResponseParse.response_parse(case_sd, case_response)
-        LogMsg.logger.info('已获取请求返回值')
-        # 处理结果内容
-        case_rs = ResultGenerate.result_generate(case_info, case_rp[1])
-        LogMsg.logger.info('返回值已处理')
-        
 
-        case_intline = [case_rp[0], case_rs[0]]
+            case_intline = [case_rp[0], case_rs[0]]
 
-        return case_intline
-        """
+            return case_intline
+            """
+        else:
+            LogMsg.logger.info('用例非活动状态 ' + caselines['CasePath'] + caselines['CaseNo'] + caselines['API_Purpose'])
     else:
-        LogMsg.logger.info('用例非活动状态 '+ caselines['CasePath'] + caselines['CaseNo'] + caselines['API_Purpose'])
-
+        LogMsg.logger.error('无用例数据')
+    return caselinespilt

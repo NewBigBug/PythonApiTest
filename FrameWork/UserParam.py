@@ -9,29 +9,30 @@ import Utils
 
 
 def param_generate():
-    paramdict={
-        '$tm': Utils.time_generate()
+    paramdict = {
+        '$tm$': Utils.time_generate()
     }
     return paramdict
 
 
-
-
-
 """
-caselines={
+
     Request_Body': {
         'name': 'user1',
         'password': '123456'
         'key1':'value1'
         'key1':'value2'
         }
-    }
+    
 """
+
 
 # 生成sign值
 def sign_generate(caselines, secret):
     new_caseline = sorted(caselines)
+    if 'sign' in new_caseline:
+        del new_caseline['sign']
+    #print(new_caseline)
     secretStr = ''
     for i in range(len(new_caseline)):
         key = new_caseline[i]

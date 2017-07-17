@@ -59,7 +59,7 @@ def result_generate(case_info, check_diff):
             CaseResult = 'Fail'
             break
     mssge = rmg + 'CaseResult:' + CaseResult
-    LogMsg.logger.info(mssge)
+    LogMsg.logger.info('测试结果：' + mssge)
     case_info['CaseResult'] = CaseResult
 
     resultlist=[case_info, mssge]

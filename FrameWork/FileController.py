@@ -115,6 +115,7 @@ def load_case_by_path(path):
                         case_line[columnname] = columnvalue
                     case_line_no['No.' + str(j)] = case_line
                 file_casedict[path + '_' + sheetname] = case_line_no
+                #print(file_casedict)
         else:
             LogMsg.logger.error('用例文件格式不正确：' + path)
 

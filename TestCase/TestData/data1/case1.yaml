@@ -9,8 +9,8 @@ No.1:
     User-Agent: ''
   Body_Type: 'Data'
   Request Body:
-    name: '%tm'
-    password: '$password'
+    name: '%tm$'
+    password: '$password$'
   Need_Collection: 'param1,param2'
   Depends: '/api/login,/api/reg'
   Response_Type: 'Html'

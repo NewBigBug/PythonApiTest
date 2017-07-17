@@ -13,11 +13,14 @@ class UnitBase(unittest.TestCase):
 
 
     def setUpClass(cls):
-        udatadic = {}
+        cls.udatadic = {}
         cago = CaseGoto.case_goto()
-        udatadic.update(cago[2])
-        uspa = UserParam.param_generate()
-        udatadic.update(uspa)
+        cls.usrconfig = cago[0]
+        cls.configdatadic = cago[1]
+        cls.case_lines_list = cago[2]
+        cls.uspa = UserParam.param_generate()
+        cls.udatadic.update(cls.case_lines_list)
+        cls.udatadic.update(cls.uspa)
 
 
 

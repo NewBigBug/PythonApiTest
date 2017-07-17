@@ -33,9 +33,9 @@ requestdict={
 
 
 def data_generate(datadict, udatadic):
-
-    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None):
-        data_dict = datadict['Request_Body']
+    #print(datadict)
+    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None and datadict['Request_Body']!=''):
+        data_dict = datadict.pop('Request_Body')
         for key, value in data_dict.items():
             # 只遍历4层，超出4层不考虑
             if isinstance(value, dict):
@@ -48,35 +48,38 @@ def data_generate(datadict, udatadic):
                                         LogMsg.logger.error('参数嵌套层数过多')
                                     else:
                                         if '$' in value3:
-                                            if value3 in udatadic.keys():
-                                                value2[key3] = udatadic[value3]
-                                            else:
-                                                LogMsg.logger.error('获取参数值失败 ' + value3)
+                                            for ukey, uvalue in udatadic.items():
+                                                if ukey in value3:
+                                                    value2[key3] = value3.replace(ukey, uvalue)
+                                                else:
+                                                    LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value3)
                             else:
                                 if '$' in value2:
-                                    if value2 in udatadic.keys():
-                                        value1[key2] = udatadic[value2]
-                                    else:
-                                        LogMsg.logger.error('获取参数值失败 ' + value2)
+                                    for ukey, uvalue in udatadic.items():
+                                        if ukey in value2:
+                                            value1[key2] = value2.replace(ukey, uvalue)
+                                        else:
+                                            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
                     else:
                         if '$' in value1:
-                            if value1 in udatadic.keys():
-                                value[key1] = udatadic[value1]
-                            else:
-                                LogMsg.logger.error('获取参数值失败 ' + value1)
+                            for ukey, uvalue in udatadic.items():
+                                if ukey in value1:
+                                    value[key1] = value1.replace(ukey, uvalue)
+                                else:
+                                    LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
             else:
                 if '$' in value:
-                    print(type(value))
-                    if value in udatadic.keys():
-                        data_dict[key] = udatadic[value]
-                    else:
-                        LogMsg.logger.error('获取参数值失败 ' + value)
+                    for ukey, uvalue in udatadic.items():
+                        if ukey in value:
+                            data_dict[key] = value.replace(ukey, uvalue)
+                        else:
+                            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
         LogMsg.logger.info(data_dict)
-        return data_dict
+        datadict['Request_Body'] = data_dict
+        return datadict
     else:
+        return datadict
         LogMsg.logger.warn('用例无请求数据')
-        #return data_dict = {}
-
 
 
 
