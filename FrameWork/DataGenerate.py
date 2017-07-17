@@ -51,35 +51,36 @@ def data_generate(datadict, udatadic):
                                             for ukey, uvalue in udatadic.items():
                                                 if ukey in value3:
                                                     value2[key3] = value3.replace(ukey, uvalue)
-                                                else:
-                                                    LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value3)
+
                             else:
                                 if '$' in value2:
                                     for ukey, uvalue in udatadic.items():
                                         if ukey in value2:
                                             value1[key2] = value2.replace(ukey, uvalue)
-                                        else:
-                                            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
+
                     else:
                         if '$' in value1:
                             for ukey, uvalue in udatadic.items():
                                 if ukey in value1:
                                     value[key1] = value1.replace(ukey, uvalue)
-                                else:
-                                    LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
+
             else:
                 if '$' in value:
                     for ukey, uvalue in udatadic.items():
                         if ukey in value:
                             data_dict[key] = value.replace(ukey, uvalue)
-                        #else:
-                            #LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
-        LogMsg.logger.info(data_dict)
+
+        if '$' in str(data_dict):
+            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
+
+        else:
+            LogMsg.logger.info(data_dict)
         datadict['Request_Body'] = data_dict
         return datadict
     else:
-        return datadict
+
         LogMsg.logger.warn('用例无请求数据')
+        return datadict
 
 
 
