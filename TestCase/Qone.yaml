@@ -1,0 +1,23 @@
+#登录
+No.1:
+  API_Purpose: 'login'
+  Request_Url: '/api/CobraUser/Login'
+  Request_method: 'POST'
+  Header:
+  Body_Type: 'Json'
+  Request_Body:
+    APP_KEY: "10001"
+    DEVICE_VERSION: "$deviceversion$"
+    FORMAT: "json"
+    TELPHONE: "$account$"
+    TIMESTAMP: "$tm$"
+    VERSION: "$veron$"
+    U_ID: "ANDROID"
+    PASSWORD: "$password$"
+    Sign: '$sign$'
+  Need_Collection:
+  Depends:
+  Response_Type: 'Json'
+  Checkpoint:
+    success: 'True'
+  Active: 'TRUE'

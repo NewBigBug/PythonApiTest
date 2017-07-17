@@ -8,6 +8,7 @@ from RequestGenerate import request_generate
 
 
 class RequestGen(unittest.TestCase):
+    """
     def test_request_generate(self):
         requestdict = {
             'Request_Url': '/api/users',
@@ -22,3 +23,4 @@ class RequestGen(unittest.TestCase):
         req = request_generate(requestdict)
 
         print(req)
+    """

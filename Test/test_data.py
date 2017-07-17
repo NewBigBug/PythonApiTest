@@ -19,6 +19,7 @@ class UtilsTest(unittest.TestCase):
         method = 'get'
 
         resp_obj = self.api_client.request(method, url)
+
         print(resp_obj.cookies)
         cookie=resp_obj.cookies
 

@@ -32,6 +32,7 @@ def response_parse(resp, respdict):
     if 'Response_Type' in respdict.keys() and (respdict['Response_Type'] is not None):
         if respdict['Response_Type'] == 'Html':
             resptext = [resp.status_code, resp.text]
+            LogMsg.logger.info(resptext)
             if 'status_code' in checkpoint.keys():
                 if checkpoint['status_code'] == resptext[0]:
                     check_diff['status_code'] = {
@@ -87,6 +88,7 @@ def response_parse(resp, respdict):
                 LogMsg.logger.info('用例文件中未配置需要收集的参数，若有后续依赖，执行会报错')
 
             respjson = resp.json()
+            LogMsg.logger.info(respjson)
             respjson['status_code'] = resp.status_code
 
             for key, point in checkpoint.items():

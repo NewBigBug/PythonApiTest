@@ -11,6 +11,7 @@ import xlrd as xlrd
 import xlwt
 import yaml
 import LogMsg
+import Utils
 
 
 # 加载yaml
@@ -40,10 +41,7 @@ def load_excel_file(excel_file):
         return stream
 
 
-# 写入excel
-def write_excle_file():
-    workbook = xlwt.Workbook()
-    return workbook
+
 
 
 # 加载传入yamlcase文件夹
@@ -115,10 +113,33 @@ def load_case_by_path(path):
                         case_line[columnname] = columnvalue
                     case_line_no['No.' + str(j)] = case_line
                 file_casedict[path + '_' + sheetname] = case_line_no
-                #print(file_casedict)
+                # print(file_casedict)
         else:
             LogMsg.logger.error('用例文件格式不正确：' + path)
 
     else:
         LogMsg.logger.error("传入文件路径异常：" + path)
     return file_casedict
+
+
+# 将用例结果写入excel
+def write_result_to_excel(temp_filepath, case_result_list):
+    workbook = xlwt.Workbook()
+    dir_path = os.path.dirname(temp_filepath)
+    temp_filepath = dir_path + '\\api_test_result.xls'
+    tm = Utils.time_generate1()
+    table_sheet = workbook.add_sheet(tm)
+    #写入列名
+    if case_result_list:
+        new_caseline = sorted(case_result_list[0])
+        for j in range(len(new_caseline)):
+            table_sheet.write(0, j, new_caseline[j])
+        # 写入列值
+        for i in range(len(case_result_list)):
+            case_result = case_result_list[i]
+            for i2 in range(len(new_caseline)):
+                value = case_result[new_caseline[i2]]
+                table_sheet.write(i+1, i2, str(value))
+    else:
+        LogMsg.logger.error('无测试结果内容')
+    workbook.save(temp_filepath)

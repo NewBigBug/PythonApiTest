@@ -3,6 +3,7 @@
 # @Author  : Charles
 # @File    : ResultGenerate.py
 # @Software: PyCharm
+import os
 
 import LogMsg
 import FileController
@@ -71,4 +72,15 @@ def result_generate(case_info, check_diff):
     FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
 
     return resultlist
+
+
+
+
+
+
+
+
+
+
+
 

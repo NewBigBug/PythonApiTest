@@ -6,6 +6,8 @@
 
 import hashlib
 import Utils
+import LogMsg
+import copy
 
 
 def param_generate():
@@ -28,16 +30,19 @@ def param_generate():
 
 
 # 生成sign值
-def sign_generate(caselines, secret):
+def sign_generate(case_lines, secret):
+    caselines = copy.deepcopy(case_lines['Request_Body'])
+    if 'Sign' in caselines:
+        del caselines['Sign']
     new_caseline = sorted(caselines)
-    if 'sign' in new_caseline:
-        del new_caseline['sign']
+    #print(new_caseline)
     #print(new_caseline)
     secretStr = ''
     for i in range(len(new_caseline)):
         key = new_caseline[i]
         secretStr = secretStr + key + str(caselines[key])
     scStr = secret + secretStr + secret
+    LogMsg.logger.info(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
     md5Str = m.hexdigest().upper()
     return md5Str

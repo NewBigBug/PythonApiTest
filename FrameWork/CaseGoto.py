@@ -18,8 +18,6 @@ def tempfile_generate(path):
     else:
         FileController.create_yaml_file(path)
     LogMsg.logger.info('临时文件成功： ' + path)
-
-
 """
 #请求host地址
 Host: http://127.0.0.1:5000
@@ -47,6 +45,9 @@ def case_goto():
 
     # 创建临时yaml文件
     tempfile_generate(testconfig['tempfile'])
+
+
+
 
     # 分割config数据
     usrconfig = {

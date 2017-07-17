@@ -34,7 +34,7 @@ requestdict={
 
 def data_generate(datadict, udatadic):
     #print(datadict)
-    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None and datadict['Request_Body']!=''):
+    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None and datadict['Request_Body'] != ''):
         data_dict = datadict.pop('Request_Body')
         for key, value in data_dict.items():
             # 只遍历4层，超出4层不考虑
@@ -72,8 +72,8 @@ def data_generate(datadict, udatadic):
                     for ukey, uvalue in udatadic.items():
                         if ukey in value:
                             data_dict[key] = value.replace(ukey, uvalue)
-                        else:
-                            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
+                        #else:
+                            #LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + value)
         LogMsg.logger.info(data_dict)
         datadict['Request_Body'] = data_dict
         return datadict
