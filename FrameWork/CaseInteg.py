@@ -69,13 +69,13 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     case_dg = DataGenerate.data_generate(caselinespilt[1], udatadic)
     LogMsg.logger.info('请求表单已处理')
     LogMsg.logger.info(case_dg)
-    print(case_dg)
+    #print(case_dg)
     case_dg1=case_dg
     udatadic['$sign$'] = UserParam.sign_generate(case_dg1, config['Secrete'])
     #print(udatadic['$sign$'])
     # 重新调用一次
     case_dg = DataGenerate.data_generate(case_dg, udatadic)
-    print(case_dg)
+    #print(case_dg)
     # 处理请求数据
     case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
     LogMsg.logger.info('请求数据已解析')
@@ -91,10 +91,11 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     case_rs = ResultGenerate.result_generate(caselinespilt[0], case_rp[1])
     LogMsg.logger.info('返回值已处理')
 
-    return case_rs
+    return case_rs, case_rp[0]
 
 
-def case_Prepare(api_client, caselines, udatadic, usrconfig, config):
+def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
+    udatadic.update(uspa)
     if caselines is not None:
         if caselines['Active'] == 'TRUE':
             if caselines['Depends'] is None or caselines['Depends'] == '':

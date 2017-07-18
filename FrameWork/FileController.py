@@ -41,9 +41,6 @@ def load_excel_file(excel_file):
         return stream
 
 
-
-
-
 # 加载传入yamlcase文件夹
 def load_foler_files(folder_path):
     file_list = []
@@ -129,17 +126,26 @@ def write_result_to_excel(temp_filepath, case_result_list):
     temp_filepath = dir_path + '\\api_test_result.xls'
     tm = Utils.time_generate1()
     table_sheet = workbook.add_sheet(tm)
-    #写入列名
+    # 写入列名
     if case_result_list:
         new_caseline = sorted(case_result_list[0])
         for j in range(len(new_caseline)):
-            table_sheet.write(0, j, new_caseline[j])
+
+            pattern = xlwt.Pattern()  # Create the Pattern
+            pattern.pattern = xlwt.Pattern.SOLID_PATTERN  # May be: NO_PATTERN, SOLID_PATTERN, or 0x00 through 0x12
+            pattern.pattern_fore_colour = 5  # May be: 8 through 63. 0 = Black, 1 = White, 2 = Red, 3 = Green, 4 = Blue, 5 = Yellow, 6 = Magenta, 7 = Cyan, 16 = Maroon, 17 = Dark Green, 18 = Dark Blue, 19 = Dark Yellow , almost brown), 20 = Dark Magenta, 21 = Teal, 22 = Light Gray, 23 = Dark Gray, the list goes on...
+            style = xlwt.XFStyle()  # Create the Pattern
+            style.pattern = pattern  # Add Pattern to Style
+            # worksheet.write(0, 0, 'Cell Contents', style)
+
+            table_sheet.write(0, j, new_caseline[j], style)
+
         # 写入列值
         for i in range(len(case_result_list)):
             case_result = case_result_list[i]
             for i2 in range(len(new_caseline)):
                 value = case_result[new_caseline[i2]]
-                table_sheet.write(i+1, i2, str(value))
+                table_sheet.write(i + 1, i2, str(value))
     else:
         LogMsg.logger.error('无测试结果内容')
     workbook.save(temp_filepath)

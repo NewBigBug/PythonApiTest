@@ -40,7 +40,7 @@ class TestLoad_case_by_path(TestCase):
 
     def test_load_testcases_by_path_file_02(self):
 
-        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/case.xlsx'
+        path = '/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.xlsx'
         testset_list = FileController.load_case_by_path(path)
 
         #test1 = testset_list[1]

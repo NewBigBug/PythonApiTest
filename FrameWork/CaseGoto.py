@@ -9,7 +9,6 @@ import FileController
 import LogMsg
 
 
-
 # 创建临时yaml文件
 def tempfile_generate(path):
     if os.path.exists(path):
@@ -18,6 +17,8 @@ def tempfile_generate(path):
     else:
         FileController.create_yaml_file(path)
     LogMsg.logger.info('临时文件成功： ' + path)
+
+
 """
 #请求host地址
 Host: http://127.0.0.1:5000
@@ -41,13 +42,10 @@ UserParm:
 # caselines, udatadic, usrconfig
 
 def case_goto():
-    testconfig = FileController.load_yaml_file('../Config/Config.yaml')
+    testconfig = FileController.load_yaml_file('../TestCase/Config/config.yaml')
 
     # 创建临时yaml文件
     tempfile_generate(testconfig['tempfile'])
-
-
-
 
     # 分割config数据
     usrconfig = {
@@ -71,7 +69,7 @@ def case_goto():
     case_lines_list = []
     caselibrarypath = testconfig.pop('Casefile')
     caselibrary = FileController.load_case_by_path(caselibrarypath)
-    #print(caselibrary)
+    # print(caselibrary)
     for key, value in caselibrary.items():
         file_path = str(key)
         for key1, value1 in value.items():
@@ -81,5 +79,6 @@ def case_goto():
             LogMsg.logger.info('CaseList: ' + str(case_line))
             case_lines_list.append(case_line)
     return usrconfig, configdatadic, case_lines_list, testconfig
+
 
 

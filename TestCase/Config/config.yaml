@@ -1,8 +1,8 @@
 #请求host地址
 Host: https://sitqone-wh.quarkfinance.com
 #用例文件路径
-Casefile: D:\GitPro\Python\PythonApiTest\TestCase\Qone.yaml
-#Casefile: /Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/case.xlsx
+Casefile: D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx
+#Casefile: /Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.xlsx
 #临时文件路径
 #tempfile: /Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml
 tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
