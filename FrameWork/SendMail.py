@@ -8,7 +8,9 @@
 import smtplib
 from email.mime.text import MIMEText
 
-"""
+"""  
+
+
 def sendMail(text):
     sender = 'shuangshuangwei@quarkfinance.com'
     receiver = ['@myhost.cn']
