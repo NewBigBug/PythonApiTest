@@ -5,7 +5,7 @@
 # @Software: PyCharm
 
 
-import unittest
+
 import HTMLTestRunner
 import time
 import unittest
