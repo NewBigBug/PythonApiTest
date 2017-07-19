@@ -26,6 +26,7 @@ def response_parse(resp, respdict):
     checkpoint = respdict['Checkpoint']
     needcollection = []
 
+
     """
     # 先判断返回值resp的内容格式，收集参数只支持json
     """
@@ -37,9 +38,6 @@ def response_parse(resp, respdict):
                 resptext = [resp.status_code, resp.text]
                 LogMsg.logger.info(resptext)
                 if 'status_code' in checkpoint.keys():
-
-
-
                     if checkpoint['status_code'] == resptext[0]:
                         check_diff['status_code'] = {
                             'respdata': resptext[0],

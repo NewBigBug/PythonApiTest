@@ -252,9 +252,14 @@ function showClassDetail(cid, count) {
         if (toHide) {
             document.getElementById('div_'+tid).style.display = 'none'
             document.getElementById(tid).className = 'hiddenRow';
+            ttid = tid + '.' +'1'
+			document.getElementById(ttid).className = 'hiddenRow';
         }
         else {
             document.getElementById(tid).className = '';
+            ttid = tid + '.' +'1'
+			document.getElementById(ttid).className = '';
+			
         }
     }
 }
@@ -479,14 +484,14 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
-    <td>CaseName</td>
-    <td>Request_Url</td>
-    <td>CasePath</td>
-    <td>CheckResult</td>
-    <td>CaseResult</td>
+    <td><font color='green'>CaseName</font></td>
+    <td><font color='green'>Request_Url</font></td>
+    <td><font color='green'>CasePath</font></td>
+    <td><font color='green'>CheckResult</font></td>
+    <td><font color='green'>CaseResult</font></td>
 </tr>    
-<tr id='%(tid)s' class='%(Class)s'> 
-    <td colspan='5' align='center' class='%(Class)s'>
+<tr id='%(iid)s' class='%(Class)s'> 
+    <td colspan='5' align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
         %(status)s</a>
@@ -510,14 +515,14 @@ a.popup_link:hover {
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
-    <td>CaseName</td>
-    <td>Request_Url</td>
-    <td>CasePath</td>
-    <td>CheckResult</td>
-    <td>CaseResult</td>
+    <td><font color='green'>CaseName</font></td>
+    <td><font color='green'>Request_Url</font></td>
+    <td><font color='green'>CasePath</font></td>
+    <td><font color='green'>CheckResult</font></td>
+    <td><font color='green'>CaseResult</font></td>
 </tr>    
-<tr id='%(tidr)s' class='%(Class)s'> 
-    <td colspan='5' align='center' class='%(Class)s'>%(status)s</td>
+<tr id='%(iid)s' class='%(Class)s'> 
+    <td colspan='5' align='center'>%(status)s</td>
 </tr>
 
 """  # variables: (tid, Class, style, desc, status)
@@ -633,7 +638,7 @@ class HTMLTestRunner(Template_mixin):
     """
     """
 
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
+    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None, caseinfo=None):
         self.stream = stream
         self.verbosity = verbosity
         if title is None:
@@ -776,8 +781,8 @@ class HTMLTestRunner(Template_mixin):
         # e.g. 'pt1.1', 'ft1.1', etc
 
         has_output = bool(o or e)
-        tid = (n == 0 and 'p' or 'f') + 't%s.%s.%s' % (cid + 1, tid + 1, tid)
-        tidr = (n == 0 and 'p' or 'f') + 't%s.%s.%s' % (cid + 1, tid + 1, tid + 1)
+        tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
+        iid = tid + '.' + '1'
         name = t.id().split('.')[-1]
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
@@ -806,7 +811,7 @@ class HTMLTestRunner(Template_mixin):
 
         row = tmpl % dict(
             tid=tid,
-            tidr=tidr,
+            iid=iid,
             Class=(n == 0 and 'hiddenRow' or 'none'),
             style=n == 2 and 'errorCase' or (n == 1 and 'failCase' or 'none'),
             desc=desc,

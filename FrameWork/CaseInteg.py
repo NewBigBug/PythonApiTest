@@ -85,13 +85,14 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     LogMsg.logger.info('请求数据已发送')
     LogMsg.logger.info('请求返回数据：' + str(case_sd))
     # 处理返回数据
-    case_rp = ResponseParse.response_parse(case_sd, caselinespilt[2])
-    LogMsg.logger.info('已获取请求返回值')
+
+    #case_rp = ResponseParse.response_parse(case_sd, caselinespilt[2])
+    #LogMsg.logger.info('已获取请求返回值')
     # 处理结果内容
-    case_rs = ResultGenerate.result_generate(caselinespilt[0], case_rp[1])
-    LogMsg.logger.info('返回值已处理')
+    #case_rs = ResultGenerate.result_generate(caselinespilt[0], case_rp[1])
+    #LogMsg.logger.info('返回值已处理')
     
-    return case_rs, case_rp[0]
+    return case_sd, caselinespilt[2], caselinespilt[0]
 
 
 def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):

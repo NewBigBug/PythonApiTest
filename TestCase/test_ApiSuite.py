@@ -42,11 +42,13 @@ class ServerTest(unittest.TestCase):
     def test_api_rq(self, case_line):
         uspa = UserParam.param_generate()
         case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, uspa, usrconfig, config)
+
+
         case_result_list.append(case_result[0][0])
         udatadic.update(case_result[1])
         FileController.write_result_to_excel(config['tempfile'], case_result_list)
+        return case_result[0][0]
 
-        sfdsf
 
 
 

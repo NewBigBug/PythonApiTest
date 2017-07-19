@@ -18,7 +18,7 @@ import FileController
 
 def result_generate(case_info, check_diff):
 
-    case_info['CheckResult'] = check_diff
+    case_info.update(check_diff)
 
     """
     workbook = write_excle_file()
@@ -54,20 +54,10 @@ def result_generate(case_info, check_diff):
     for key, value in case_info.items():
         rmg = rmg + str(key) + ':' + str(value)+'\t'
 
-    for key, value in case_info['CheckResult'].items():
-        CaseResult = 'Pass'
-        if not value['checkresult']:
-            CaseResult = 'Fail'
-            break
-    mssge = rmg + 'CaseResult:' + CaseResult
-    LogMsg.logger.info('测试结果：' + mssge)
-    case_info['CaseResult'] = CaseResult
-
-    resultlist=[case_info, mssge]
-
+    resultlist=[case_info]
     #写入执行记录
     recode = {
-        case_info['Request_Url']: case_info['CaseResult']
+        case_info['Request_Url']: case_info['checkresult']
     }
     FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
 
