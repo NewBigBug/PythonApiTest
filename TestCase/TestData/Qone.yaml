@@ -19,7 +19,8 @@ No.1:
   Depends:
   Response_Type: 'Json'
   Checkpoint:
-    success: 'True'
+    ERROR_CODE: '10000'
+    ERROR_MESSAGE: '系统繁忙，请稍候重试'
   Active: 'TRUE'
 
 No.2:
@@ -42,5 +43,6 @@ No.2:
   Depends:
   Response_Type: 'Json'
   Checkpoint:
-    success: 'True'
+    ERROR_CODE: '10000'
+    ERROR_MESSAGE: '系统繁忙，请稍候重试'
   Active: 'TRUE'

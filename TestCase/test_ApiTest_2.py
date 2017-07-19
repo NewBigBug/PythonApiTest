@@ -47,6 +47,7 @@ class ServerTest(unittest.TestCase):
         """
         # 先判断返回值resp的内容格式，收集参数只支持json
         """
+        #API_Purpose = case_info['CaseName']
         if 'Response_Type' in respdict.keys() and (respdict['Response_Type'] is not None):
             if respdict['Response_Type'] == 'Html':
                 if 'Need_Collection' in respdict.keys() and (respdict['Need_Collection'] is not None):
@@ -109,14 +110,12 @@ class ServerTest(unittest.TestCase):
                 respjson['status_code'] = resp.status_code
 
                 for key, point in checkpoint.items():
-                    if self.assertTrue(key in respjson):
-                        resppame = respjson[key]
-                        self.assertEquals(resppame, point, 'respdata: ' + resppame + 'Checkdata: ' + point + ' 比对失败')
-                        check_diff[key] = {
-                            'respdata': resppame,
-                            'checkdata': point,
-                            'checkresult': 'Pass'
-                        }
+                    self.assertTrue(key in respjson, '未找到参数')
+                    resppame = respjson[key]
+                    self.assertEquals(resppame, point, 'respdata: ' + resppame + 'Checkdata: ' + point + ' 比对失败')
+                    check_diff = {
+                        'checkresult': 'Pass'
+                    }
                 for i in range(len(needcollection)):
                     key = needcollection[i]
                     if key in respjson:
@@ -126,14 +125,13 @@ class ServerTest(unittest.TestCase):
         else:
             LogMsg.logger.error('用例中未指定 Response_Type 类型')
         LogMsg.logger.info(collectionparm)
-        responseparse = [collectionparm, check_diff]
+        if check_diff:
+            case_rs = ResultGenerate.result_generate(case_info, check_diff)
+            LogMsg.logger.info('返回值已处理')
 
-        case_rs = ResultGenerate.result_generate(case_info, responseparse[1])
-        LogMsg.logger.info('返回值已处理')
-
-        case_result_list.append(case_rs[0])
-        udatadic.update(responseparse[0])
-        FileController.write_result_to_excel(config['tempfile'], case_result_list)
+            case_result_list.append(case_rs[0])
+            udatadic.update(collectionparm)
+            FileController.write_result_to_excel(config['tempfile'], case_result_list)
 
     def tearDown(self):
         self.api_client.close()
