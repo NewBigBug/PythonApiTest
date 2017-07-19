@@ -90,7 +90,7 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     # 处理结果内容
     case_rs = ResultGenerate.result_generate(caselinespilt[0], case_rp[1])
     LogMsg.logger.info('返回值已处理')
-
+    
     return case_rs, case_rp[0]
 
 

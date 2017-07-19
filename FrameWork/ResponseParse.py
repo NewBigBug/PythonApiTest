@@ -16,6 +16,7 @@ respdict={
 }
 """
 import LogMsg
+import unittest
 
 
 def response_parse(resp, respdict):
@@ -36,6 +37,9 @@ def response_parse(resp, respdict):
                 resptext = [resp.status_code, resp.text]
                 LogMsg.logger.info(resptext)
                 if 'status_code' in checkpoint.keys():
+
+
+
                     if checkpoint['status_code'] == resptext[0]:
                         check_diff['status_code'] = {
                             'respdata': resptext[0],

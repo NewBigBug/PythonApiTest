@@ -7,6 +7,7 @@
 
 import unittest
 import HTMLTestRunner
+import HTMLTestRunner1
 import time
 import unittest
 import requests
@@ -45,6 +46,10 @@ class ServerTest(unittest.TestCase):
         udatadic.update(case_result[1])
         FileController.write_result_to_excel(config['tempfile'], case_result_list)
 
+        sfdsf
+
+
+
     def tearDown(self):
         self.api_client.close()
 
@@ -59,6 +64,6 @@ if __name__ == '__main__':
     reportPath = 'D:/GitPro/Python/PythonApiTest/output/' + today + '.html'
     # with open(reportPath, 'wb') as fp:
     fp = open(reportPath, mode='wb')
-    runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告')
+    runner = HTMLTestRunner1.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告')
     runner.run(suite())
     fp.close()
