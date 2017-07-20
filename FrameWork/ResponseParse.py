@@ -88,6 +88,7 @@ def response_parse(resp, respdict):
             else:
                 LogMsg.logger.info('用例文件中未配置需要收集的参数，若有后续依赖，执行会报错')
             respjson = resp.json()
+            LogMsg.logger.info('返回值Json字符串：')
             LogMsg.logger.info(respjson)
             respjson['status_code'] = resp.status_code
 

@@ -108,7 +108,8 @@ def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
                 flag = True
                 for i in range(len(depends)):
                     if depends[i] in load_list:
-                        if load_list[depends[i]] == 'Pass':
+                        re = load_list[depends[i]].split(',')
+                        if re[len(re)-1] == 'Pass':
                             flag = True
                         else:
                             flag = False

@@ -3,11 +3,11 @@
 # @Author  : Charles
 # @File    : ResultGenerate.py
 # @Software: PyCharm
+import json
 import os
 
 import LogMsg
 import FileController
-
 
 """
 生成测试结果
@@ -17,32 +17,21 @@ import FileController
 
 
 def result_generate(case_info, check_diff):
+    recode = {}
+    print(check_diff)
 
-    case_info.update(check_diff)
-
-    """
-    workbook = write_excle_file()
-    sheetname = ''
-    if '\\' in case_info['CasePath']:
-        pathspilt=case_info['CasePath'].split('\\')
-        sheetname=pathspilt[len(pathspilt)-1]
-    elif '/' in case_info['CasePath']:
-        pathspilt = case_info['CasePath'].split('/')
-        sheetname = pathspilt[len(pathspilt) - 1]
+    if check_diff:
+        case_info.update(check_diff)
     else:
-        LogMsg.logger.error('文件路径截取出错，无法创建结果sheet表 ' + case_info['CasePath'])
+        case_info['caseresult'] = 'Fail'
 
-    workbooksheet = workbook.add_sheet(sheetname)
-    
-    """
     """
     case_info={
         'CasePath': caselines['CasePath'],
         'CaseNumb': caselines['CaseNo'],
         'CaseName': caselines['API_Purpose']
         'Request_Url': '/api/login'
-        'Temp_Filepath' ''
-        
+        'Temp_Filepath' ''      
         'checkresult': Pass
                         
     }
@@ -50,26 +39,13 @@ def result_generate(case_info, check_diff):
 
     rmg = ''
     for key, value in case_info.items():
-        rmg = rmg + str(key) + ':' + str(value)+'\t'
+        rmg = rmg + str(key) + ':' + str(value) + '\t'
     LogMsg.logger.info(rmg)
-    resultlist=[case_info]
-    #写入执行记录
-    recode = {
-        case_info['Request_Url']: case_info['checkresult']
+    resultlist = [case_info]
+    # 写入执行记录
+    mstr = case_info['CasePath'] + ',' + case_info['CaseNumb'] + ',' + case_info['CaseName'] + ',' + case_info['caseresult']
+    recode[case_info['Request_Url']] = mstr
 
-    }
     FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
 
     return resultlist
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,7 +31,7 @@ def create_yaml_file(yaml_file):
 def write_yaml_file(data, yaml_file):
     with open(yaml_file, mode='a', encoding='utf-8') as stream:
         LogMsg.logger.info('写入yaml文件：' + yaml_file)
-        return yaml.dump(data, stream)
+        return yaml.dump(data, stream, allow_unicode=True, encoding='utf-8')
 
 
 # 加载excel

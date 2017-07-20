@@ -24,7 +24,7 @@ def request_generate(requestdict, usrconfig):
     requestkwargs = {}
     # usrconfig为字典类型
     # usrconfig = load_yaml_file('../Config/config.yaml')
-    #print(requestdict)
+    # print(requestdict)
     """
     # 处理url
     """
@@ -82,7 +82,7 @@ def request_generate(requestdict, usrconfig):
     # 处理请求数据
     # requestdict['Request_Body'],需要转成数据处理方法 DataGenerate
     """
-    if 'Body_Type' in requestdict and requestdict['Body_Type'] is not None:
+    if 'Body_Type' in requestdict and requestdict['Body_Type'] is not None and requestdict['Body_Type'] != '':
         if requestdict['Body_Type'] == 'Data':
             requestkwargs['data'] = requestdict['Request_Body']
         elif requestdict['Body_Type'] == 'Json':
@@ -94,7 +94,7 @@ def request_generate(requestdict, usrconfig):
         LogMsg.logger.info('config配置文件中缺失请求数据配置，如果请求需要，用例会失败')
 
     # 返回请求参数表
-    #LogMsg.logger.info('3242432234234234')
+    # LogMsg.logger.info('3242432234234234')
     LogMsg.logger.info(requestkwargs)
     return requestkwargs
 
@@ -102,7 +102,7 @@ def request_generate(requestdict, usrconfig):
 # 发送请求
 def request_send(client, req_kwargs):
     url = req_kwargs.pop('url')
-    #print(type(url))
+    # print(type(url))
     method = req_kwargs.pop('method')
     # session client
     # client = requests.Session

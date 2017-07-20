@@ -64,6 +64,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 # URL: http://tungwaiyip.info/software/HTMLTestRunner.html
+import FileController
 
 __author__ = "Wai Yip Tung"
 __version__ = "0.8.3"
@@ -487,10 +488,14 @@ a.popup_link:hover {
     <td><font color='green'>CaseName</font></td>
     <td><font color='green'>Request_Url</font></td>
     <td><font color='green'>CasePath</font></td>
-    <td><font color='green'>CheckResult</font></td>
+    <td><font color='green'>CaseNumb</font></td>
     <td><font color='green'>CaseResult</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
+    <td align='center'>%(casename)s</td>
+    <td align='center'>%(request_url)s</td>
+    <td align='center'>%(casepath)s</td>
+    <td align='center'>%(casenumb)s</td>
     <td colspan='5' align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
@@ -518,11 +523,15 @@ a.popup_link:hover {
     <td><font color='green'>CaseName</font></td>
     <td><font color='green'>Request_Url</font></td>
     <td><font color='green'>CasePath</font></td>
-    <td><font color='green'>CheckResult</font></td>
+    <td><font color='green'>CaseNumb</font></td>
     <td><font color='green'>CaseResult</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
-    <td colspan='5' align='center'>%(status)s</td>
+    <td align='center'>%(casename)s</td>
+    <td align='center'>%(request_url)s</td>
+    <td align='center'>%(casepath)s</td>
+    <td align='center'>%(casenumb)s</td>
+    <td align='center'>%(status)s</td>
 </tr>
 
 """  # variables: (tid, Class, style, desc, status)
@@ -600,6 +609,7 @@ class _TestResult(TestResult):
         TestResult.addSuccess(self, test)
         output = self.complete_output()
         self.result.append((0, test, output, ''))
+        print(self.result)
         if self.verbosity > 1:
             sys.stderr.write('ok ')
             sys.stderr.write(str(test))
@@ -638,7 +648,7 @@ class HTMLTestRunner(Template_mixin):
     """
     """
 
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None, caseinfo=None):
+    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
         self.stream = stream
         self.verbosity = verbosity
         if title is None:
@@ -779,13 +789,15 @@ class HTMLTestRunner(Template_mixin):
 
     def _generate_report_test(self, rows, cid, tid, n, t, o, e):
         # e.g. 'pt1.1', 'ft1.1', etc
-
+        #print(n)
         has_output = bool(o or e)
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         iid = tid + '.' + '1'
         name = t.id().split('.')[-1]
+
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
+
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
 
         # o and e should be byte string because they are collected from stdout and stderr?
@@ -825,6 +837,13 @@ class HTMLTestRunner(Template_mixin):
 
     def _generate_ending(self):
         return self.ENDING_TMPL
+
+
+    def get_case_info(self):
+        Temp_Filepath = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
+        load_list = FileController.load_yaml_file(Temp_Filepath)
+        for key, value in load_list:
+
 
 
 ##############################################################################
