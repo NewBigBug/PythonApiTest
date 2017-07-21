@@ -1,2 +1,1 @@
-{/api/CobraUser/Login: 'D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx_case,No.1,登录,Pass'}
-{/api/CobraUser/Login1: 'D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx_case,No.2,登录,Fail'}
+test_api_rq_1: /api/CobraUser/Login,D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx_case,No.1,登录,Pass

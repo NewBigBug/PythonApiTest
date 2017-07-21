@@ -14,7 +14,7 @@ tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
 Secrete: 'B4B83DC748B8E511A2846C0B840997C3'
 #用户自定义参数
 UserParm:
-  $deviceversion$: '107'
-  $account$: '13817645775'
-  $password$: 'qaz123'
+  $deviceversion$: '112'
+  $account$: '15502168672'
+  $password$: 'zaq123'
   $veron$: '1.0'

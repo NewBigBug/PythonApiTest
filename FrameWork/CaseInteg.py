@@ -6,7 +6,7 @@
 
 import DataGenerate
 import RequestGenerate
-import ResponseParse
+
 import ResultGenerate
 import FileController
 import LogMsg
@@ -70,7 +70,7 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     LogMsg.logger.info('请求表单已处理')
     LogMsg.logger.info(case_dg)
     #print(case_dg)
-    case_dg1=case_dg
+    case_dg1 = case_dg
     udatadic['$sign$'] = UserParam.sign_generate(case_dg1, config['Secrete'])
     #print(udatadic['$sign$'])
     # 重新调用一次
@@ -107,15 +107,16 @@ def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
 
                 flag = True
                 for i in range(len(depends)):
-                    if depends[i] in load_list:
-                        re = load_list[depends[i]].split(',')
-                        if re[len(re)-1] == 'Pass':
-                            flag = True
+                    for value in load_list:
+                        if depends[i] in value:
+                            r = value.split(',')
+                            re = r[len(r)-1]
+                            if re == 'Pass':
+                                flag = True
+                            else:
+                                flag = False
                         else:
                             flag = False
-                    else:
-                        flag = False
-
                 if flag:
                     return spilt_case(api_client, caselines, udatadic, usrconfig, config)
                 else:

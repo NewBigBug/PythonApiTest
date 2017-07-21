@@ -7,7 +7,7 @@ import FileController
 import ddt
 import LogMsg
 import ResultGenerate
-import HTMLTestRunner1
+import HTMLTestRunner_u
 import time
 
 """
@@ -144,6 +144,6 @@ if __name__ == '__main__':
     reportPath = 'D:/GitPro/Python/PythonApiTest/output/' + today + '.html'
     # with open(reportPath, 'wb') as fp:
     fp = open(reportPath, mode='wb')
-    runner = HTMLTestRunner1.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告')
+    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告')
     runner.run(suite())
     fp.close()

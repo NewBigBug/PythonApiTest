@@ -7,7 +7,6 @@ import FileController
 
 
 class UtilsTest(unittest.TestCase):
-
     """
     def test_load_testcasesfile(self):
 
@@ -63,7 +62,7 @@ class UtilsTest(unittest.TestCase):
         d2 = testset_list['..\\TestCase\\TestData\\case.xlsx_case']['No.1']
         print(testset_list)
         print(type(d2['Active']))
-    """
+
 
     def test_create_yaml_file(self):
         case_info = {
@@ -87,3 +86,9 @@ class UtilsTest(unittest.TestCase):
         #print(ss)
 
 
+
+    def test_list_all_dict(self):
+        dictjson =
+            'BODY': '{"RESULT":true,"MESSAGE":"登录成功","MODEL":{"ID":1196,"NAME":"魏双双","TELPHONE":"15502168672","CREATED_TIME":"2017-06-19 09:53:38","CITY":"QuarkFinance","ID_NO":"41152119910617391X","STAFF_NO":"2016050301","IS_SET_GESTURE_PASSWORD":true,"IS_SIGN_IN":false,"PHONE_OS":0,"DEPARTMENT_NAME":"技术部","USER_ACCOUNT_DEPARTMENT_ID":"83","USER_COMPANY_ID":"323ea269-5aea-4f60-b6d8-31d3215e208d","USER_ACCOUNT":"shuangshuangwei","IS_ACTIVED":1,"AGREEMENT_ON_CONFIDENTIALITY":"Y"}}',
+            'RESPONSE_STATUS': 'OK', 'ELAPSE_TIME': '', 'ERROR_CODE': None, 'ERROR_MESSAGE': None}
+    """

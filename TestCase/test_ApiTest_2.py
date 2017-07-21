@@ -1,16 +1,18 @@
-import inspect
+import json
 import unittest
 import requests
 import sys
 
+import simplejson as simplejson
+
 import CaseGoto
 import CaseInteg
 import UserParam
-import FileController
+import Utils
 import ddt
 import LogMsg
 import ResultGenerate
-#import HTMLTestRunner1
+import HTMLTestRunner_u
 import time
 
 """
@@ -36,9 +38,10 @@ class ServerTest(unittest.TestCase):
         self.udatadic.update(udatadic_colle)
         self.api_client = requests.Session()
 
-    @ddt.data(case_lines_list[0],case_lines_list[1])
+    @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
-
+        self.caseindex = sys._getframe().f_code.co_name+'_'+str(case_lines_list.index(case_line)+1)
+        LogMsg.logger.info('caseindex' + self.caseindex)
         uspa = UserParam.param_generate()
         case_result = CaseInteg.case_Prepare(self.api_client, case_line, self.udatadic, uspa, usrconfig, config)
         resp = case_result[0]
@@ -66,13 +69,13 @@ class ServerTest(unittest.TestCase):
                     del self.check_diff['status_code']
                     for key, point in checkpoint.items():
                         self.assertIn(point, resptext[1], '检查点比对失败')
-                        check_diff = {
+                        self.check_diff = {
                             'caseresult': 'Pass'
                         }
                 else:
                     for key, point in checkpoint.items():
                         self.assertIn(point, resptext[1], '检查点比对失败')
-                        check_diff = {
+                        self.check_diff = {
                             'caseresult': 'Pass'
                         }
         elif respdict['Response_Type'] == 'Json':
@@ -83,10 +86,10 @@ class ServerTest(unittest.TestCase):
             respjson = resp.json()
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
-
             for key, point in checkpoint.items():
-                self.assertIn(key, respjson, '未找到参数')
-                resppame = respjson[key]
+                resppame = Utils.list_all_dict(key, respjson)
+                #self.assertIn(key, respjson, '未找到参数')
+                #resppame = respjson[key]
                 self.assertEqual(resppame, point, '检查点比对失败')
                 self.check_diff = {
                     'caseresult': 'Pass'
@@ -100,14 +103,15 @@ class ServerTest(unittest.TestCase):
         LogMsg.logger.info(self.collectionparm)
 
     def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.case_info, self.check_diff)
+        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
+        #case_report.update(case_rs)
+        LogMsg.logger.info(case_rs)
         LogMsg.logger.info('返回值已处理')
-        case_result_list.append(case_rs)
+        #case_result_list.append(case_rs)
         udatadic_colle.update(self.collectionparm)
         self.api_client.close()
 
 
-"""
 def suite():
     suite = unittest.TestLoader().loadTestsFromTestCase(ServerTest)
     return suite
@@ -115,10 +119,10 @@ def suite():
 
 if __name__ == '__main__':
     today = time.strftime('%Y%m%d%H%m%S', time.localtime(time.time()))
+    tempfile = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
     reportPath = 'D:/GitPro/Python/PythonApiTest/output/' + today + '.html'
     # with open(reportPath, 'wb') as fp:
     fp = open(reportPath, mode='wb')
-    runner = HTMLTestRunner1.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告')
+    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告', tempfile=tempfile)
     runner.run(suite())
     fp.close()
-"""

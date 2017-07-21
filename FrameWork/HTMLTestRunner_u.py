@@ -609,7 +609,7 @@ class _TestResult(TestResult):
         TestResult.addSuccess(self, test)
         output = self.complete_output()
         self.result.append((0, test, output, ''))
-        print(self.result)
+        #print(self.result)
         if self.verbosity > 1:
             sys.stderr.write('ok ')
             sys.stderr.write(str(test))
@@ -648,7 +648,9 @@ class HTMLTestRunner(Template_mixin):
     """
     """
 
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None):
+    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None, tempfile=None):
+        self.tempfile = tempfile
+
         self.stream = stream
         self.verbosity = verbosity
         if title is None:
@@ -816,6 +818,8 @@ class HTMLTestRunner(Template_mixin):
         else:
             ue = e
 
+        case_info = self.get_case_info(self.tempfile, desc)
+
         script = self.REPORT_TEST_OUTPUT_TMPL % dict(
             id=tid,
             output=saxutils.escape(uo + ue),
@@ -829,6 +833,11 @@ class HTMLTestRunner(Template_mixin):
             desc=desc,
             script=script,
 
+            casename=case_info[0],
+            request_url=case_info[1],
+            casepath=case_info[2],
+            casenumb=case_info[3],
+
             status=self.STATUS[n],
         )
         rows.append(row)
@@ -838,11 +847,14 @@ class HTMLTestRunner(Template_mixin):
     def _generate_ending(self):
         return self.ENDING_TMPL
 
-
-    def get_case_info(self):
-        Temp_Filepath = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
-        load_list = FileController.load_yaml_file(Temp_Filepath)
-        for key, value in load_list:
+    def get_case_info(self, tempfile, desc):
+        load_list = FileController.load_yaml_file(tempfile)
+        value = load_list[desc].split(',')
+        casename = value[3]
+        request_url = value[0]
+        casepath = value[1]
+        casenumb = value[2]
+        return casename, request_url, casepath, casenumb
 
 
 

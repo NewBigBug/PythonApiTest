@@ -49,7 +49,7 @@ def case_goto():
 
     # 分割config数据
     usrconfig = {
-        'Host': testconfig.pop('Host'),
+        'Host': testconfig.pop('Host')
     }
     if 'Header' in testconfig:
         usrconfig['Header']: testconfig.pop('Header')

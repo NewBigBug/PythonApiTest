@@ -21,7 +21,7 @@ class TestLoad_case_by_path(TestCase):
         #d1=testset_list['..\\TestCase\\TestData\\case.yaml']['No.1']
         #print(type(d1['Active']))
 
-    """
+
 
     def test_load_testcases_by_path_file_01(self):
 
@@ -49,3 +49,9 @@ class TestLoad_case_by_path(TestCase):
         print(testset_list)
         #print(type(d2['Active']))
 
+    """
+
+    def test_load_yaml_file(self):
+        path = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
+        testset_list = FileController.load_yaml_file(path)
+        print(type(testset_list))
