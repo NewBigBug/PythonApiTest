@@ -87,7 +87,10 @@ class ServerTest(unittest.TestCase):
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
             for key, point in checkpoint.items():
+                #print(str(key)+str(point))
                 resppame = Utils.list_all_dict(key, respjson)
+                print(type(resppame))
+                print(resppame)
                 #self.assertIn(key, respjson, '未找到参数')
                 #resppame = respjson[key]
                 self.assertEqual(resppame, point, '检查点比对失败')
@@ -104,12 +107,13 @@ class ServerTest(unittest.TestCase):
 
     def tearDown(self):
         case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-        #case_report.update(case_rs)
+
         LogMsg.logger.info(case_rs)
         LogMsg.logger.info('返回值已处理')
-        #case_result_list.append(case_rs)
         udatadic_colle.update(self.collectionparm)
         self.api_client.close()
+
+
 
 
 def suite():
@@ -119,8 +123,8 @@ def suite():
 
 if __name__ == '__main__':
     today = time.strftime('%Y%m%d%H%m%S', time.localtime(time.time()))
-    tempfile = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
-    reportPath = 'D:/GitPro/Python/PythonApiTest/output/' + today + '.html'
+    tempfile = '/Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml'
+    reportPath = '/Users/Sky/developer/PycharmProjects/PythonApiTest/output/' + today + '.html'
     # with open(reportPath, 'wb') as fp:
     fp = open(reportPath, mode='wb')
     runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告', tempfile=tempfile)

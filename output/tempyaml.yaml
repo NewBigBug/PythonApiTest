@@ -1,1 +1,1 @@
-test_api_rq_1: /api/CobraUser/Login,D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx_case,No.1,登录,Pass
+test_api_rq_1: /api/CobraUser/Login,/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.yaml,No.1,login,Pass

@@ -22,30 +22,28 @@ def time_generate1():
 
 
 # 遍历字典
-def list_all_dict(key, dict_a):
-    key_value = ''
-    if isinstance(dict_a, dict):
-        if key in dict_a:
-            key_value = dict_a[key]
-            return key_value
-        else:
-            for keyset in dict_a:
-                valueset = dict_a[keyset]
-                #print(valueset)
-                list_all_dict(key, valueset)
-    elif isinstance(dict_a, str):
-        print(dict_a)
-        if ':' in dict_a:
-            value = simplejson.loads(dict_a)
-            # print(value)
-            # print(type(value))
-            list_all_dict(key, value)
-        else:
-            LogMsg.logger.info(key + '  in  ' + dict_a + '  遍历结束')
 
+def list_all_dict(key, dict_a):
+    global key_value
+    if isinstance(dict_a, dict) or (isinstance(dict_a, str) and '{' in dict_a):
+        if isinstance(dict_a, str):
+            value_dict = simplejson.loads(dict_a)
+        else:
+            value_dict = dict_a
+
+        for key_set in value_dict:
+            if key in value_dict:
+                key_value = value_dict[key]
+                #print('1'+str(key_value))
+                #print(type(key_value))
+                print(key_value)
+                #return str(key_value)
+                break
+            else:
+                value_set = value_dict[key_set]
+                list_all_dict(key, value_set)
+    return str(key_value)
 
 # 生成手机号
-
-
 
 # 生成身份证

@@ -251,14 +251,15 @@ function showClassDetail(cid, count) {
     for (var i = 0; i < count; i++) {
         tid = id_list[i];
         if (toHide) {
-            document.getElementById('div_'+tid).style.display = 'none'
+            document.getElementById('div_'+tid).style.display = 'none';
             document.getElementById(tid).className = 'hiddenRow';
-            ttid = tid + '.' +'1'
+            ttid = tid + '.' +'1';
+            document.getElementById('div_'+ttid).style.display = 'none';
 			document.getElementById(ttid).className = 'hiddenRow';
         }
         else {
             document.getElementById(tid).className = '';
-            ttid = tid + '.' +'1'
+            ttid = tid + '.' +'1';
 			document.getElementById(ttid).className = '';
 			
         }
@@ -609,7 +610,7 @@ class _TestResult(TestResult):
         TestResult.addSuccess(self, test)
         output = self.complete_output()
         self.result.append((0, test, output, ''))
-        #print(self.result)
+        # print(self.result)
         if self.verbosity > 1:
             sys.stderr.write('ok ')
             sys.stderr.write(str(test))
@@ -791,7 +792,7 @@ class HTMLTestRunner(Template_mixin):
 
     def _generate_report_test(self, rows, cid, tid, n, t, o, e):
         # e.g. 'pt1.1', 'ft1.1', etc
-        #print(n)
+        # print(n)
         has_output = bool(o or e)
         tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         iid = tid + '.' + '1'
@@ -855,7 +856,6 @@ class HTMLTestRunner(Template_mixin):
         casepath = value[1]
         casenumb = value[2]
         return casename, request_url, casepath, casenumb
-
 
 
 ##############################################################################
