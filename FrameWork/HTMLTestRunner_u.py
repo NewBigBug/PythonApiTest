@@ -497,7 +497,7 @@ a.popup_link:hover {
     <td align='center'>%(request_url)s</td>
     <td align='center'>%(casepath)s</td>
     <td align='center'>%(casenumb)s</td>
-    <td colspan='5' align='center'>
+    <td align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
         %(status)s</a>

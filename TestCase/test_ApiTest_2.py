@@ -87,12 +87,7 @@ class ServerTest(unittest.TestCase):
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
             for key, point in checkpoint.items():
-                #print(str(key)+str(point))
                 resppame = Utils.list_all_dict(key, respjson)
-                print(type(resppame))
-                print(resppame)
-                #self.assertIn(key, respjson, '未找到参数')
-                #resppame = respjson[key]
                 self.assertEqual(resppame, point, '检查点比对失败')
                 self.check_diff = {
                     'caseresult': 'Pass'
