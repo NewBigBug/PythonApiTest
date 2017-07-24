@@ -46,6 +46,7 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
         'CaseNumb': caselines['CaseNo'],
         'CaseName': caselines['API_Purpose'],
         'Request_Url': caselines['Request_Url'],
+        'Checkpoint': caselines['Checkpoint'],
         'Temp_Filepath': caselines['Temp_Filepath']
     }
     caselinespilt.append(case_info)
@@ -102,7 +103,7 @@ def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
             if caselines['Depends'] is None or caselines['Depends'] == '':
                 return spilt_case(api_client, caselines, udatadic, usrconfig, config)
             else:
-                depends = caselines['Depends'].split(',')
+                depends = caselines['Depends'].split(';')
                 load_list = FileController.load_yaml_file(caselines['Temp_Filepath'])
 
                 flag = True

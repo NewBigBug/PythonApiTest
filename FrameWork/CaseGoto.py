@@ -42,8 +42,9 @@ UserParm:
 # caselines, udatadic, usrconfig
 
 def case_goto():
-    testconfig = FileController.load_yaml_file('../TestCase/Config/config.yaml')
-
+    configpath='../TestCase/Config/config.yaml'
+    testconfig = FileController.load_yaml_file(configpath)
+    LogMsg.logger.info('加载配置文件：'+ configpath)
     # 创建临时yaml文件
     tempfile_generate(testconfig['tempfile'])
 

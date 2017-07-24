@@ -486,17 +486,17 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
+    <td><font color='green'>CaseNumb</font></td>
     <td><font color='green'>CaseName</font></td>
     <td><font color='green'>Request_Url</font></td>
-    <td><font color='green'>CasePath</font></td>
-    <td><font color='green'>CaseNumb</font></td>
+    <td><font color='green'>CheckPoint</font></td>
     <td><font color='green'>CaseResult</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
+    <td align='center'>%(casenumb)s</td>
     <td align='center'>%(casename)s</td>
     <td align='center'>%(request_url)s</td>
     <td align='center'>%(casepath)s</td>
-    <td align='center'>%(casenumb)s</td>
     <td align='center'>
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
@@ -521,17 +521,17 @@ a.popup_link:hover {
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
+    <td><font color='green'>CaseNumb</font></td>
     <td><font color='green'>CaseName</font></td>
     <td><font color='green'>Request_Url</font></td>
-    <td><font color='green'>CasePath</font></td>
-    <td><font color='green'>CaseNumb</font></td>
+    <td><font color='green'>CheckPoint</font></td>
     <td><font color='green'>CaseResult</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
+    <td align='center'>%(casenumb)s</td>
     <td align='center'>%(casename)s</td>
     <td align='center'>%(request_url)s</td>
     <td align='center'>%(casepath)s</td>
-    <td align='center'>%(casenumb)s</td>
     <td align='center'>%(status)s</td>
 </tr>
 
@@ -801,6 +801,7 @@ class HTMLTestRunner(Template_mixin):
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
 
+
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
 
         # o and e should be byte string because they are collected from stdout and stderr?
@@ -850,7 +851,7 @@ class HTMLTestRunner(Template_mixin):
 
     def get_case_info(self, tempfile, desc):
         load_list = FileController.load_yaml_file(tempfile)
-        value = load_list[desc].split(',')
+        value = load_list[desc].split(';')
         casename = value[3]
         request_url = value[0]
         casepath = value[1]

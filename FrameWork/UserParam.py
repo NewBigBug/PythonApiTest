@@ -32,8 +32,8 @@ def param_generate():
 # 生成sign值
 def sign_generate(case_lines, secret):
     caselines = copy.deepcopy(case_lines['Request_Body'])
-    if 'Sign' in caselines:
-        del caselines['Sign']
+    if 'SIGN' in caselines:
+        del caselines['SIGN']
     new_caseline = sorted(caselines)
     #print(new_caseline)
     #print(new_caseline)

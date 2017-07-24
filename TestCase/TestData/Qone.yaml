@@ -14,12 +14,35 @@ No.1:
     VERSION: "$veron$"
     U_ID: "ANDROID"
     PASSWORD: "$password$"
-    Sign: '$sign$'
+    SIGN: '$sign$'
+  Need_Collection: 'USER_ACCOUNT'
+  Depends:
+  Response_Type: 'Json'
+  Checkpoint:
+    status_code: '200'
+    NAME: '魏双双'
+    ERROR_MESSAGE: 'None'
+  Active: 'TRUE'
+
+#GetConllectionByUserId
+No.2:
+  API_Purpose: 'GetEnableConllection'
+  Request_Url: '/api/CobraAd/GetEnableConllection'
+  Request_method: 'POST'
+  Header:
+  Body_Type: 'Json'
+  Request_Body:
+    APP_KEY: "10001"
+    DEVICE_VERSION: "$deviceversion$"
+    FORMAT: "json"
+    TIMESTAMP: "$tm$"
+    VERSION: "$veron$"
+    U_ID: "$USER_ACCOUNT$"
+    SIGN: '$sign$'
   Need_Collection:
   Depends:
   Response_Type: 'Json'
   Checkpoint:
-    RESPONSE_STATUS: 'OK'
-    NAME: '魏双双'
+    status_code: '200'
     ERROR_MESSAGE: 'None'
   Active: 'TRUE'

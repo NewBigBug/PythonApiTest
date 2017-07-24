@@ -71,7 +71,7 @@ def data_generate(datadict, udatadic):
                             data_dict[key] = value.replace(ukey, uvalue)
 
         if '$' in str(data_dict):
-            LogMsg.logger.error('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
+            LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
 
         else:
             LogMsg.logger.info(data_dict)

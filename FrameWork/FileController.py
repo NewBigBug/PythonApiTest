@@ -17,7 +17,7 @@ import Utils
 # 加载yaml
 def load_yaml_file(yaml_file):
     with open(yaml_file, mode='r', encoding='utf-8') as stream:
-        LogMsg.logger.info('读取yaml文件：' + yaml_file)
+        #LogMsg.logger.info('读取yaml文件：' + yaml_file)
         return yaml.load(stream)
 
 
@@ -31,7 +31,7 @@ def create_yaml_file(yaml_file):
 def write_yaml_file(data, yaml_file):
     with open(yaml_file, mode='a', encoding='utf-8') as stream:
         LogMsg.logger.info('写入yaml文件：' + yaml_file)
-        return yaml.dump(data, stream, allow_unicode=True, encoding='utf-8',default_flow_style=False)
+        return yaml.dump(data, stream, allow_unicode=True, encoding='utf-8', default_flow_style=False)
 
 
 # 加载excel
@@ -87,11 +87,12 @@ def load_case_by_path(path):
         casefile_list = load_foler_files(path)
         for i in range(len(casefile_list)):
             file_casedict[casefile_list[i]] = load_yaml_file(casefile_list[i])
-
+            LogMsg.logger.info('读取yaml文件：' + casefile_list[i])
     elif os.path.isfile(path):
         file_suffix = os.path.splitext(path)[1]
         if file_suffix in ['.yaml', '.yml']:
             file_casedict[path] = load_yaml_file(path)
+            LogMsg.logger.info('读取yaml文件：' + path)
         elif file_suffix in ['.xlsx', '.xls']:
             xlrd_stream = load_excel_file(path)
             for i in range(len(xlrd_stream.sheets())):
@@ -110,7 +111,7 @@ def load_case_by_path(path):
                         case_line[columnname] = columnvalue
                     case_line_no['No.' + str(j)] = case_line
                 file_casedict[path + '_' + sheetname] = case_line_no
-                # print(file_casedict)
+
         else:
             LogMsg.logger.error('用例文件格式不正确：' + path)
 

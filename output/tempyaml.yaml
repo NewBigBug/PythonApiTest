@@ -1,1 +1,4 @@
-test_api_rq_1: /api/CobraUser/Login,/Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.yaml,No.1,login,Pass
+test_api_rq_1: '/api/CobraUser/Login;{''status_code'': ''200'', ''NAME'': ''魏双双'',
+  ''ERROR_MESSAGE'': ''None''};No.1;login;Pass'
+test_api_rq_2: '/api/CobraAd/GetEnableConllection;{''status_code'': ''200'', ''ERROR_MESSAGE'':
+  ''None''};No.2;GetEnableConllection;Pass'

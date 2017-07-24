@@ -2,9 +2,6 @@ import json
 import unittest
 import requests
 import sys
-
-import simplejson as simplejson
-
 import CaseGoto
 import CaseInteg
 import UserParam
@@ -36,18 +33,18 @@ class ServerTest(unittest.TestCase):
         self.udatadic = {}
         self.udatadic.update(configdatadic)
         self.udatadic.update(udatadic_colle)
+        LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
         self.api_client = requests.Session()
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
-        self.caseindex = sys._getframe().f_code.co_name+'_'+str(case_lines_list.index(case_line)+1)
-        LogMsg.logger.info('caseindex' + self.caseindex)
+        self.caseindex = sys._getframe().f_code.co_name + '_' + str(case_lines_list.index(case_line) + 1)
+        LogMsg.logger.info('caseindex: ' + self.caseindex)
         uspa = UserParam.param_generate()
         case_result = CaseInteg.case_Prepare(self.api_client, case_line, self.udatadic, uspa, usrconfig, config)
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]
-
         self.collectionparm = {}
         self.check_diff = {}
         checkpoint = respdict['Checkpoint']
@@ -94,21 +91,18 @@ class ServerTest(unittest.TestCase):
                 }
             for i in range(len(needcollection)):
                 key = needcollection[i]
-                if key in respjson:
-                    self.collectionparm['$' + key + '$'] = respjson[key]
+                coll_key = Utils.list_all_dict(key, respjson)
+                if coll_key:
+                    self.collectionparm['$' + key + '$'] = coll_key
                 else:
                     LogMsg.logger.info('返回值中不存在该参数 ' + key)
-        LogMsg.logger.info(self.collectionparm)
+        LogMsg.logger.info('收集参数： ' + str(self.collectionparm))
+        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
+        LogMsg.logger.info(case_rs)
+        udatadic_colle.update(self.collectionparm)
 
     def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-
-        LogMsg.logger.info(case_rs)
-        LogMsg.logger.info('返回值已处理')
-        udatadic_colle.update(self.collectionparm)
         self.api_client.close()
-
-
 
 
 def suite():
@@ -117,11 +111,12 @@ def suite():
 
 
 if __name__ == '__main__':
-    today = time.strftime('%Y%m%d%H%m%S', time.localtime(time.time()))
-    tempfile = '/Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml'
-    reportPath = '/Users/Sky/developer/PycharmProjects/PythonApiTest/output/' + today + '.html'
+    today = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+    tempfile = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
+    reportPath = 'D:\GitPro\Python\PythonApiTest\output\\' + 'API_TEST_' + today + '.html'
     # with open(reportPath, 'wb') as fp:
     fp = open(reportPath, mode='wb')
-    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告', tempfile=tempfile)
+    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告',
+                                             tempfile=tempfile)
     runner.run(suite())
     fp.close()

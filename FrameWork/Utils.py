@@ -34,10 +34,6 @@ def list_all_dict(key, dict_a):
         for key_set in value_dict:
             if key in value_dict:
                 key_value = value_dict[key]
-                #print('1'+str(key_value))
-                #print(type(key_value))
-                print(key_value)
-                #return str(key_value)
                 break
             else:
                 value_set = value_dict[key_set]
