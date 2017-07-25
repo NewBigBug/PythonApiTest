@@ -28,6 +28,7 @@ No.2:
   Request_Url: '/api/preappmain/create'
   Request_method: 'POST'
   Header:
+    Content-Type: 'application/json'
   Body_Type: 'Json'
   Request_Body:
     APP_KEY: "10001"

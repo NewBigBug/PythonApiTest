@@ -85,9 +85,9 @@ class ServerTest(unittest.TestCase):
             for key, point in checkpoint.items():
                 resppame = Utils.list_all_dict(key, respjson)
                 self.assertEqual(resppame, point, '检查点比对失败')
-                self.check_diff = {
-                    'caseresult': 'Pass'
-                }
+            self.check_diff = {
+                'caseresult': 'Pass'
+            }
             for i in range(len(needcollection)):
                 key = needcollection[i]
                 coll_key = Utils.list_all_dict(key, respjson)
@@ -96,11 +96,11 @@ class ServerTest(unittest.TestCase):
                 else:
                     LogMsg.logger.info('返回值中不存在该参数 ' + key)
         LogMsg.logger.info('收集参数： ' + str(self.collectionparm))
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-        LogMsg.logger.info(case_rs)
         udatadic_colle.update(self.collectionparm)
 
     def tearDown(self):
+        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
+        LogMsg.logger.info(case_rs)
         self.api_client.close()
 
 

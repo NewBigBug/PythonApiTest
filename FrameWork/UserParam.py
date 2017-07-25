@@ -41,7 +41,7 @@ def sign_generate(case_lines, secret):
         secretStr = secretStr + key + str(caselines[key])
     scStr = secret + secretStr + secret
     LogMsg.logger.info(scStr)
-    print(scStr)
+    #print(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
     md5Str = m.hexdigest().upper()
     return md5Str
