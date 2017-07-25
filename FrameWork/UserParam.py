@@ -12,20 +12,20 @@ import copy
 
 def param_generate():
     paramdict = {
-        '$tm$': Utils.time_generate()
+        '$tm$': Utils.time_generate(),
+        '$idcd$': Utils.identity_card(),
+        '$uname$': Utils.chinese_name(3)
     }
     return paramdict
 
 
 """
-
     Request_Body': {
         'name': 'user1',
         'password': '123456'
         'key1':'value1'
         'key1':'value2'
-        }
-    
+        }   
 """
 
 
@@ -35,13 +35,22 @@ def sign_generate(case_lines, secret):
     if 'SIGN' in caselines:
         del caselines['SIGN']
     new_caseline = sorted(caselines)
-    #print(new_caseline)
-    #print(new_caseline)
     secretStr = ''
     for i in range(len(new_caseline)):
         key = new_caseline[i]
         secretStr = secretStr + key + str(caselines[key])
     scStr = secret + secretStr + secret
+    LogMsg.logger.info(scStr)
+    print(scStr)
+    m = hashlib.md5(scStr.encode(encoding='utf-8'))
+    md5Str = m.hexdigest().upper()
+    return md5Str
+
+
+#############
+def sign_generate_01(case_lines, secret):
+
+    scStr = secret + case_lines + secret
     LogMsg.logger.info(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
     md5Str = m.hexdigest().upper()

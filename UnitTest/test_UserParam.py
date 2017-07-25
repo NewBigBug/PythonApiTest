@@ -14,17 +14,11 @@ class Test_UsrPara(unittest.TestCase):
 
     def test_sign_generate(self):
 
-        datadic={
-            'name': '$name',
-            'password': '$password',
-            'pm1': '$child',
-            'pm2': '23423',
-            'pm3': {'k1':{'k2':{'k3':{'k4':'$k4'}}}}
-        }
+        datadic = 'APP_KEY10001DEVICE_VERSION112FORMATjsonID_NO320205197206148617MEDIA_DATA[{"MEDIA":"","MEDIA_TYPE":1},{"MEDIA":"","MEDIA_TYPE":2}]MOBILE13817645775NAME超武喻TIMESTAMP2017-07-25 16:44:30U_IDv-yunliuVERSION1.0'
 
-        secret='fsafdsfr345525'
+        secret='B4B83DC748B8E511A2846C0B840997C3'
 
-        cc=UserParam.sign_generate(datadic, secret)
+        cc=UserParam.sign_generate_01(datadic, secret)
         print(cc)
 
     """

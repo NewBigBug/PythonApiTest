@@ -20,14 +20,12 @@ No.1:
   Response_Type: 'Json'
   Checkpoint:
     status_code: '200'
-    NAME: '魏双双'
     ERROR_MESSAGE: 'None'
   Active: 'TRUE'
-
 #GetConllectionByUserId
 No.2:
-  API_Purpose: 'GetEnableConllection'
-  Request_Url: '/api/CobraAd/GetEnableConllection'
+  API_Purpose: 'create'
+  Request_Url: '/api/preappmain/create'
   Request_method: 'POST'
   Header:
   Body_Type: 'Json'
@@ -35,6 +33,10 @@ No.2:
     APP_KEY: "10001"
     DEVICE_VERSION: "$deviceversion$"
     FORMAT: "json"
+    ID_NO: "$idcd$"
+    MEDIA_DATA: '[{"MEDIA":"","MEDIA_TYPE":1},{"MEDIA":"","MEDIA_TYPE":2}]'
+    MOBILE: "15502168672"
+    NAME: '$uname$'
     TIMESTAMP: "$tm$"
     VERSION: "$veron$"
     U_ID: "$USER_ACCOUNT$"

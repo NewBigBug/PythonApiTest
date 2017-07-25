@@ -30,11 +30,11 @@ requestdict={
 
 
 
-
+"""
 
 def data_generate(datadict, udatadic):
     #print(datadict)
-    if 'Request_Body' in datadict.keys() and (datadict['Request_Body'] is not None and datadict['Request_Body'] != ''):
+    if 'Request_Body' in datadict.keys() and datadict['Request_Body']:
         data_dict = datadict.pop('Request_Body')
         for key, value in data_dict.items():
             # 只遍历4层，超出4层不考虑
@@ -81,6 +81,43 @@ def data_generate(datadict, udatadic):
 
         LogMsg.logger.warn('用例无请求数据')
         return datadict
+"""
+
+
+def data_generate(datadict, udatadic):
+    #print(datadict)
+    if 'Request_Body' in datadict.keys() and datadict['Request_Body']:
+        data_dict = datadict.pop('Request_Body')
+        data_dict = dic_replace(data_dict, udatadic)
+        if '$' in str(data_dict):
+            LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
+        else:
+            LogMsg.logger.info(data_dict)
+        datadict['Request_Body'] = data_dict
+    else:
+        LogMsg.logger.warn('用例无请求数据')
+    return datadict
+
+
+def dic_replace(dict_c, udatadic):
+    for key, value in dict_c.items():
+        if isinstance(value, dict):
+            dic_replace(dict_c, udatadic)
+        else:
+            if '$' in value:
+                for ukey, uvalue in udatadic.items():
+                    if ukey in value:
+                        dict_c[key] = value.replace(ukey, uvalue)
+    return dict_c
+
+
+
+
+
+
+
+
+
 
 
 

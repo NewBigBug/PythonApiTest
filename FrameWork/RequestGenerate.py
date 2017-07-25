@@ -3,6 +3,8 @@
 # @Author  : Charles
 # @File    : RequestGenerate.py
 # @Software: PyCharm
+import json
+
 import LogMsg
 import requests
 

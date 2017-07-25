@@ -1,7 +1,7 @@
 import os
 import unittest
 
-import yaml
+import Utils
 
 import FileController
 
@@ -91,4 +91,18 @@ class UtilsTest(unittest.TestCase):
         dictjson =
             'BODY': '{"RESULT":true,"MESSAGE":"登录成功","MODEL":{"ID":1196,"NAME":"魏双双","TELPHONE":"15502168672","CREATED_TIME":"2017-06-19 09:53:38","CITY":"QuarkFinance","ID_NO":"41152119910617391X","STAFF_NO":"2016050301","IS_SET_GESTURE_PASSWORD":true,"IS_SIGN_IN":false,"PHONE_OS":0,"DEPARTMENT_NAME":"技术部","USER_ACCOUNT_DEPARTMENT_ID":"83","USER_COMPANY_ID":"323ea269-5aea-4f60-b6d8-31d3215e208d","USER_ACCOUNT":"shuangshuangwei","IS_ACTIVED":1,"AGREEMENT_ON_CONFIDENTIALITY":"Y"}}',
             'RESPONSE_STATUS': 'OK', 'ELAPSE_TIME': '', 'ERROR_CODE': None, 'ERROR_MESSAGE': None}
+
+
+    def test_chinese_name(self):
+        s=Utils.chinese_name(3)
+        print(s)
+
+    def test_phone_generate(self):
+        s=Utils.phone_generate()
+        print(s)
+
     """
+
+    def test_identity_card(self):
+        Utils.identity_card()
+

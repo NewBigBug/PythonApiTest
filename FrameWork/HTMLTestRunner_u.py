@@ -64,6 +64,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 # URL: http://tungwaiyip.info/software/HTMLTestRunner.html
+import os
+
 import FileController
 
 __author__ = "Wai Yip Tung"
@@ -693,6 +695,10 @@ class HTMLTestRunner(Template_mixin):
         Return report attributes as a list of (name, value).
         Override this to add custom attributes.
         """
+        #
+        #logpath = os.path.dirname('self.tempfile') + 'ApiTest.log'
+        #logpath ='<a href="logpath">ApiTestLog</a>'
+        #
         startTime = str(self.startTime)[:19]
         duration = str(self.stopTime - self.startTime)
         status = []
@@ -737,6 +743,7 @@ class HTMLTestRunner(Template_mixin):
                 name=saxutils.escape(name),
                 value=saxutils.escape(value),
             )
+
             a_lines.append(line)
         heading = self.HEADING_TMPL % dict(
             title=saxutils.escape(self.title),
