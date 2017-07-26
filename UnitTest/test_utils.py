@@ -102,7 +102,10 @@ class UtilsTest(unittest.TestCase):
         print(s)
 
     """
+    def test_address_generate(self):
+        a=Utils.address_generate()
+        print(a)
 
     def test_identity_card(self):
-        Utils.identity_card()
-
+        a=Utils.identity_card()
+        print(a)

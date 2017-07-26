@@ -1,3 +1,4 @@
-test_api_rq_1: '/api/CobraUser/Login;{''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'':
-  ''None'', ''NAME'': ''刘云''};No.1;登录;Pass'
-test_api_rq_2: '/api/preappmain/create;{''ERROR_MESSAGE'': None};No.2;创建客户;Fail'
+test_api_rq_1: '/api/CobraUser/Login;{''status_code'': ''200'', ''ERROR_MESSAGE'':
+  ''None''};No.1;login;Pass'
+test_api_rq_2: '/api/preappmain/create;{''status_code'': ''200'', ''ERROR_MESSAGE'':
+  ''None''};No.2;create;Pass'

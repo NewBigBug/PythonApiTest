@@ -5,6 +5,8 @@
 # @Software: PyCharm
 
 import hashlib
+import json
+
 import Utils
 import LogMsg
 import copy
@@ -38,12 +40,18 @@ def sign_generate(case_lines, secret):
     secretStr = ''
     for i in range(len(new_caseline)):
         key = new_caseline[i]
-        secretStr = secretStr + key + str(caselines[key])
+        if isinstance(caselines[key], str):
+            value = caselines[key]
+        else:
+            value = str(caselines[key]).replace('\'', '\"').replace(' ', '')
+        secretStr = secretStr + key + value
     scStr = secret + secretStr + secret
     LogMsg.logger.info(scStr)
     #print(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
+    #print(scStr)
     md5Str = m.hexdigest().upper()
+    #print(md5Str)
     return md5Str
 
 

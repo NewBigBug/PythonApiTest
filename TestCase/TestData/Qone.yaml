@@ -4,6 +4,7 @@ No.1:
   Request_Url: '/api/CobraUser/Login'
   Request_method: 'POST'
   Header:
+    Content-Type: 'application/json; charset=UTF-8'
   Body_Type: 'Json'
   Request_Body:
     APP_KEY: "10001"
@@ -28,16 +29,22 @@ No.2:
   Request_Url: '/api/preappmain/create'
   Request_method: 'POST'
   Header:
-    Content-Type: 'application/json'
+    Content-Type: 'application/json; charset=UTF-8'
   Body_Type: 'Json'
   Request_Body:
     APP_KEY: "10001"
     DEVICE_VERSION: "$deviceversion$"
     FORMAT: "json"
     ID_NO: "$idcd$"
-    MEDIA_DATA: '[{"MEDIA":"","MEDIA_TYPE":1},{"MEDIA":"","MEDIA_TYPE":2}]'
+    MEDIA_DATA:
+      -
+        MEDIA: ""
+        MEDIA_TYPE: 1
+      -
+        MEDIA: ""
+        MEDIA_TYPE: 2
     MOBILE: "15502168672"
-    NAME: '$uname$'
+    NAME: 'dsgsdg'
     TIMESTAMP: "$tm$"
     VERSION: "$veron$"
     U_ID: "$USER_ACCOUNT$"
