@@ -41,7 +41,7 @@ def result_generate(caseindex, case_info, check_diff):
     LogMsg.logger.info(rmg)
     #resultlist = [case_info]
     # 写入执行记录
-    recode={}
+    recode = {}
     mstr = case_info['Request_Url'] + ';' + str(case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info['caseresult']
     recode[case_info['CaseIndex']] = mstr
     LogMsg.logger.info(recode)

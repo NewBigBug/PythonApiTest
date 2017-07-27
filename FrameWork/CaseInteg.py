@@ -99,32 +99,29 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
 def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
     udatadic.update(uspa)
     if caselines is not None:
-        if caselines['Active'] == 'TRUE':
-            if caselines['Depends'] is None or caselines['Depends'] == '':
-                return spilt_case(api_client, caselines, udatadic, usrconfig, config)
-            else:
-                depends = caselines['Depends'].split(';')
-                load_list = FileController.load_yaml_file(caselines['Temp_Filepath'])
+        #print(caselines)
+        if caselines['Depends'] is None or caselines['Depends'] == '':
+            return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+        else:
+            depends = caselines['Depends'].split(';')
+            load_list = FileController.load_yaml_file(caselines['Temp_Filepath'])
 
-                flag = True
-                for i in range(len(depends)):
-                    for value in load_list:
-                        if depends[i] in value:
-                            r = value.split(',')
-                            re = r[len(r)-1]
-                            if re == 'Pass':
-                                flag = True
-                            else:
-                                flag = False
+            flag = True
+            for i in range(len(depends)):
+                for value in load_list:
+                    if depends[i] in value:
+                        r = value.split(',')
+                        re = r[len(r) - 1]
+                        if re == 'Pass':
+                            flag = True
                         else:
                             flag = False
-                if flag:
-                    return spilt_case(api_client, caselines, udatadic, usrconfig, config)
-                else:
-                    LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
-
-        else:
-            LogMsg.logger.info('用例非活动状态 ' + caselines['CasePath'] + caselines['CaseNo'] + caselines['API_Purpose'])
+                    else:
+                        flag = False
+            if flag:
+                return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+            else:
+                LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
 
     else:
         LogMsg.logger.error('无用例数据')

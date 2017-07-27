@@ -23,7 +23,8 @@ def load_yaml_file(yaml_file):
 
 # 创建yaml文件
 def create_yaml_file(yaml_file):
-    with open(yaml_file, mode='x', encoding='utf-8'):
+    with open(yaml_file, mode='x', encoding='utf-8') as stream:
+        stream.close()
         LogMsg.logger.info('创建yaml文件：' + yaml_file)
 
 

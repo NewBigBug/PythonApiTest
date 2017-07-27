@@ -30,8 +30,8 @@ def request_generate(requestdict, usrconfig):
     """
     # 处理url
     """
-    if 'Host' in usrconfig and (usrconfig['Host'] is not None):
-        if 'Request_Url' in requestdict and (requestdict['Request_Url'] is not None):
+    if 'Host' in usrconfig and usrconfig['Host']:
+        if 'Request_Url' in requestdict and requestdict['Request_Url']:
             if 'http' in requestdict['Request_Url']:
                 Url = requestdict['Request_Url']
             else:
@@ -67,11 +67,11 @@ def request_generate(requestdict, usrconfig):
     """
     # 处理请求头文件
     """
-    if 'Header' in requestdict and requestdict['Header'] is not None:
+    if 'Header' in requestdict and requestdict['Header']:
         Headers = requestdict['Header']
         requestkwargs['headers'] = Headers
     else:
-        if 'Header' in usrconfig and usrconfig['Header'] is not None:
+        if 'Header' in usrconfig and usrconfig['Header']:
             Headers = usrconfig['Header']
             requestkwargs['headers'] = Headers
         else:

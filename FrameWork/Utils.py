@@ -4,7 +4,25 @@
 # @File    : Utils.py
 # @Software: PyCharm
 
-#生成当前时间 #遍历字典取值检查点 #生成手机号 #生成中文名字 # 生成身份证 # 生成地址 # 生成固定电话 # 生成公司名称 # 生成公司邮箱
+# 生成当前时间
+# time_generate() return tm
+# 遍历字典取值检查点
+# list_all_dict(key, dict_a) return str(key_value)
+# 生成手机号
+# phone_generate()
+# 生成中文名字
+# chinese_name(num)
+# 生成身份证
+# identity_card()
+# 生成地址
+# address_generate()
+# 生成固定电话
+# fixedline_phone()
+# 生成公司名称
+# company_name()
+# 生成公司邮箱
+# email_generate()
+
 
 import random
 import time
@@ -31,7 +49,6 @@ def list_all_dict(key, dict_a):
             value_dict = simplejson.loads(dict_a)
         else:
             value_dict = dict_a
-
         for key_set in value_dict:
             if key in value_dict:
                 key_value = value_dict[key]
@@ -1016,10 +1033,29 @@ def address_generate():
 
     return address
 
+
 # 生成固定电话
+def fixedline_phone():
+    areacode = ['0310', '0311', '0312', '0313', '0314', '0315', '0316', '0317', '0318', '0319', '0335', '0570', '0571',
+                '0572', '0573', '0574', '0575', '0576', '0577', '0578', '0579', '0580', '0410', '0411', '0412', '0413',
+                '0414', '0415', '0416', '0417', '0418', '0419', '0421', '0427', '0429', '0710', '0711', '0712', '0713',
+                '0714', '0715', '0716', '0717', '0718', '0719', '0722', '0724', '0728', '0510', '0511', '0512', '0513',
+                '0514', '0515', '0516', '0517', '0517', '0518', '0519', '0523']
+
+    numb = str(random.randint(1000001, 9000001))
+    fixedline_phone_numb = random.choice(areacode) + '-' + numb
+    return fixedline_phone_numb
+
 
 # 生成公司名称
+def company_name():
+    choice = list(random.choice(discode).values())
+    addr = str(choice[0])
+    company_name = addr + str(random.randint(1000, 9000)) + '股份有限公司'
+    return company_name()
+
 
 # 生成公司邮箱
-
-
+def email_generate():
+    email = str(random.randint(10000001, 10000001)) + '163.com'
+    return email

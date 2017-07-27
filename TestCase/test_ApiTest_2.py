@@ -35,9 +35,8 @@ class ServerTest(unittest.TestCase):
         LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
         self.api_client = requests.Session()
 
-        #self.api_client.verify = False
+        self.api_client.verify = False
         #self.api_client.request()
-
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):

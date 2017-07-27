@@ -488,11 +488,11 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
-    <td><font color='green'>CaseNumb</font></td>
-    <td><font color='green'>CaseName</font></td>
-    <td><font color='green'>Request_Url</font></td>
-    <td><font color='green'>CheckPoint</font></td>
-    <td><font color='green'>CaseResult</font></td>
+    <td><font color='green'>用例编号</font></td>
+    <td><font color='green'>用例名称</font></td>
+    <td><font color='green'>请求API</font></td>
+    <td><font color='green'>断言内容</font></td>
+    <td><font color='green'>测试结果</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
     <td align='center'>%(casenumb)s</td>
@@ -523,11 +523,11 @@ a.popup_link:hover {
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s' rowspan='2'><div class='test_cases'>%(desc)s</div></td>
-    <td><font color='green'>CaseNumb</font></td>
-    <td><font color='green'>CaseName</font></td>
-    <td><font color='green'>Request_Url</font></td>
-    <td><font color='green'>CheckPoint</font></td>
-    <td><font color='green'>CaseResult</font></td>
+    <td><font color='green'>用例编号</font></td>
+    <td><font color='green'>用例名称</font></td>
+    <td><font color='green'>请求API</font></td>
+    <td><font color='green'>断言内容</font></td>
+    <td><font color='green'>测试结果</font></td>
 </tr>    
 <tr id='%(iid)s' class='%(Class)s'> 
     <td align='center'>%(casenumb)s</td>

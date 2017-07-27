@@ -101,11 +101,21 @@ class UtilsTest(unittest.TestCase):
         s=Utils.phone_generate()
         print(s)
 
-    """
+
     def test_address_generate(self):
         a=Utils.address_generate()
         print(a)
 
     def test_identity_card(self):
         a=Utils.identity_card()
+        print(a)
+
+
+    def test_fixedline_phone(self):
+        a = Utils.fixedline_phone()
+        print(a)
+    """
+
+    def test_identity_card(self):
+        a = Utils.identity_card()
         print(a)

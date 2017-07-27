@@ -1,4 +1,20 @@
-test_api_rq_1: '/api/CobraUser/Login;{''status_code'': ''200'', ''ERROR_MESSAGE'':
-  ''None''};No.1;login;Pass'
-test_api_rq_2: '/api/preappmain/create;{''status_code'': ''200'', ''ERROR_MESSAGE'':
-  ''None''};No.2;create;Pass'
+test_api_rq_1: '/api/CobraUser/Login;{''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'':
+  ''None'', ''NAME'': ''刘云''};No.1;Login;Pass'
+test_api_rq_10: '/api/preappmain/getsavebankcard;{''status_code'': ''201'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.10;getsavebankcard;Fail'
+test_api_rq_2: '/api/CobraProduct/GetConllectionByUserId;{''ERROR_CODE'': ''None'',
+  ''ERROR_MESSAGE'': ''None''};No.2;GetConllectionByUserId;Pass'
+test_api_rq_3: '/api/CobraCrDataDic/getareacodeconllection;{''ERROR_CODE'': ''None'',
+  ''ERROR_MESSAGE'': ''None''};No.3;getareacodeconllection;Pass'
+test_api_rq_4: '/api/CobraAd/GetEnableConllection;{''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'':
+  ''None''};No.4;GetEnableConllection;Pass'
+test_api_rq_5: '/api/notification/getnotreadcount;{''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'':
+  ''None''};No.5;getnotreadcount;Pass'
+test_api_rq_6: '/api/preappmain/create;{''ERROR_MESSAGE'': ''None'', ''ERROR_CODE'':
+  ''None'', ''RESULT'': ''True''};No.6;create;Pass'
+test_api_rq_7: '/api/preappmain/continue;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''MESSAGE'': ''操作成功''};No.7;continue;Pass'
+test_api_rq_8: '/api/preappmain/getdetail;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.8;getdetail;Pass'
+test_api_rq_9: '/api/preappmain/getsaveproduct;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.9;getsaveproduct;Pass'

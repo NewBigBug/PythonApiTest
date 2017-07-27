@@ -44,7 +44,7 @@ UserParm:
 def case_goto():
     configpath='../TestCase/Config/config.yaml'
     testconfig = FileController.load_yaml_file(configpath)
-    LogMsg.logger.info('加载配置文件：'+ configpath)
+    LogMsg.logger.info('加载配置文件：' + configpath)
     # 创建临时yaml文件
     tempfile_generate(testconfig['tempfile'])
 
@@ -53,7 +53,7 @@ def case_goto():
         'Host': testconfig.pop('Host')
     }
     if 'Header' in testconfig:
-        usrconfig['Header']: testconfig.pop('Header')
+        usrconfig['Header'] = testconfig.pop('Header')
     else:
         LogMsg.logger.info('Header 配置文件中未配置，可能引起出错')
 
@@ -70,15 +70,19 @@ def case_goto():
     case_lines_list = []
     caselibrarypath = testconfig.pop('Casefile')
     caselibrary = FileController.load_case_by_path(caselibrarypath)
-    # print(caselibrary)
     for key, value in caselibrary.items():
         file_path = str(key)
         for key1, value1 in value.items():
-            case_line = {'CasePath': file_path, 'CaseNo': key1}
-            case_line.update(value1)
-            case_line['Temp_Filepath'] = testconfig['tempfile']
-            LogMsg.logger.info('CaseList: ' + str(case_line))
-            case_lines_list.append(case_line)
+            flag = value1['Active']
+            if flag == 'TRUE':
+                case_line = {'CasePath': file_path, 'CaseNo': key1}
+                case_line.update(value1)
+                case_line['Temp_Filepath'] = testconfig['tempfile']
+                LogMsg.logger.info('CaseList: ' + str(case_line))
+                case_lines_list.append(case_line)
+            else:
+                LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + value1['Request_Url'])
+
     return usrconfig, configdatadic, case_lines_list, testconfig
 
 
