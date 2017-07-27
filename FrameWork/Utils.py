@@ -30,18 +30,7 @@ import simplejson
 from datetime import timedelta, date
 
 
-# 生成当前时间
-def time_generate():
-    tm = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-    return tm
-
-
-def time_generate1():
-    tm = time.strftime('%Y%m%d', time.localtime(time.time()))
-    return tm
-
-
-# 遍历字典取值检查点
+# 遍历字典根据检查点key值取返回值数据
 def list_all_dict(key, dict_a):
     global key_value
     if isinstance(dict_a, dict) or (isinstance(dict_a, str) and '{' in dict_a):
@@ -57,6 +46,30 @@ def list_all_dict(key, dict_a):
                 value_set = value_dict[key_set]
                 list_all_dict(key, value_set)
     return str(key_value)
+
+
+# 遍历字典替换其中参数,传入原字典，参数字典
+def dic_replace(dict_c, udatadic):
+    for key, value in dict_c.items():
+        if isinstance(value, dict):
+            dic_replace(dict_c, udatadic)
+        else:
+            if '$' in value:
+                for ukey, uvalue in udatadic.items():
+                    if ukey in value:
+                        dict_c[key] = value.replace(ukey, uvalue)
+    return dict_c
+
+
+# 生成当前时间
+def time_generate():
+    tm = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    return tm
+
+
+def time_generate1():
+    tm = time.strftime('%Y%m%d', time.localtime(time.time()))
+    return tm
 
 
 # 生成手机号

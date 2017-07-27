@@ -35,12 +35,12 @@ class ServerTest(unittest.TestCase):
         LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
         self.api_client = requests.Session()
 
-        self.api_client.verify = False
+        #self.api_client.verify = False
         #self.api_client.request()
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
-        self.caseindex = sys._getframe().f_code.co_name + '_' + str(case_lines_list.index(case_line) + 1)
+        self.caseindex = sys._getframe().f_code.co_name + '_' + str(case_lines_list.index(case_line) + 10001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         uspa = UserParam.param_generate()
         case_result = CaseInteg.case_Prepare(self.api_client, case_line, self.udatadic, uspa, usrconfig, config)
@@ -85,6 +85,8 @@ class ServerTest(unittest.TestCase):
             respjson = resp.json()
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
+            # 开始断言
+            checkpoint = Utils.dic_replace(checkpoint, self.udatadic)
             for key, point in checkpoint.items():
                 resppame = Utils.list_all_dict(key, respjson)
                 self.assertEqual(resppame, point, '检查点比对失败')
@@ -113,7 +115,7 @@ def suite():
 
 
 if __name__ == '__main__':
-    today = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+    today = time.strftime('%Y%m%d_%H_%M_%S', time.localtime(time.time()))
     tempfile = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
     reportPath = 'D:\GitPro\Python\PythonApiTest\output\\' + 'API_TEST_' + today + '.html'
     # with open(reportPath, 'wb') as fp:

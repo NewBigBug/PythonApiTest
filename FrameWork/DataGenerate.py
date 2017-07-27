@@ -5,6 +5,7 @@
 # @Software: PyCharm
 
 import LogMsg
+import Utils
 
 """
 根据不同的request类型，分别处理请求数据
@@ -88,7 +89,7 @@ def data_generate(datadict, udatadic):
     #print(datadict)
     if 'Request_Body' in datadict.keys() and datadict['Request_Body']:
         data_dict = datadict.pop('Request_Body')
-        data_dict = dic_replace(data_dict, udatadic)
+        data_dict = Utils.dic_replace(data_dict, udatadic)
         if '$' in str(data_dict):
             LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
         else:
@@ -98,7 +99,7 @@ def data_generate(datadict, udatadic):
         LogMsg.logger.warn('用例无请求数据')
     return datadict
 
-
+"""
 def dic_replace(dict_c, udatadic):
     for key, value in dict_c.items():
         if isinstance(value, dict):
@@ -109,7 +110,7 @@ def dic_replace(dict_c, udatadic):
                     if ukey in value:
                         dict_c[key] = value.replace(ukey, uvalue)
     return dict_c
-
+"""
 
 
 
