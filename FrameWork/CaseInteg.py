@@ -3,6 +3,7 @@
 # @Author  : Charles
 # @File    : CaseInteg.py
 # @Software: PyCharm
+import os
 
 import DataGenerate
 import RequestGenerate
@@ -85,27 +86,18 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     case_sd = RequestGenerate.request_send(api_client, case_rq)
     LogMsg.logger.info('请求数据已发送')
     LogMsg.logger.info('请求返回数据：' + str(case_sd))
-    # 处理返回数据
 
-    #case_rp = ResponseParse.response_parse(case_sd, caselinespilt[2])
-    #LogMsg.logger.info('已获取请求返回值')
-    # 处理结果内容
-    #case_rs = ResultGenerate.result_generate(caselinespilt[0], case_rp[1])
-    #LogMsg.logger.info('返回值已处理')
-    
     return case_sd, caselinespilt[2], caselinespilt[0]
 
 
 def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
     udatadic.update(uspa)
     if caselines is not None:
-        #print(caselines)
         if caselines['Depends'] is None or caselines['Depends'] == '':
             return spilt_case(api_client, caselines, udatadic, usrconfig, config)
         else:
             depends = caselines['Depends'].split(';')
             load_list = FileController.load_yaml_file(caselines['Temp_Filepath'])
-
             flag = True
             for i in range(len(depends)):
                 for value in load_list:
@@ -122,6 +114,6 @@ def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
                 return spilt_case(api_client, caselines, udatadic, usrconfig, config)
             else:
                 LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
-
     else:
         LogMsg.logger.error('无用例数据')
+

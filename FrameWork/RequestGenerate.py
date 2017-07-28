@@ -24,9 +24,6 @@ import requests
 
 def request_generate(requestdict, usrconfig):
     requestkwargs = {}
-    # usrconfig为字典类型
-    # usrconfig = load_yaml_file('../Config/config.yaml')
-    # print(requestdict)
     """
     # 处理url
     """
@@ -79,7 +76,6 @@ def request_generate(requestdict, usrconfig):
             LogMsg.logger.info('config配置文件中缺失 Header 配置，如果请求需要Header，用例会失败')
     # 存入Header数据
 
-
     """
     # 处理请求数据
     # requestdict['Request_Body'],需要转成数据处理方法 DataGenerate
@@ -101,7 +97,11 @@ def request_generate(requestdict, usrconfig):
     return requestkwargs
 
 
-# 发送请求
+"""
+# 数据处理完毕，发送请求
+"""
+
+
 def request_send(client, req_kwargs):
     url = req_kwargs.pop('url')
     # print(type(url))
@@ -111,5 +111,3 @@ def request_send(client, req_kwargs):
     resp = client.request(method, url, **req_kwargs)
     LogMsg.logger.info(resp)
     return resp
-
-

@@ -1,4 +1,4 @@
-test_api_rq_10001: '/api/CobraUser/Login;{''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'':
+test_api_rq_1001: '/api/CobraUser/Login;{''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'':
   ''None'', ''NAME'': ''刘云''};No.1;Login;Pass'
-test_api_rq_10002: '/api/CobraProduct/GetConllectionByUserId;{''ERROR_CODE'': ''None'',
+test_api_rq_1002: '/api/CobraProduct/GetConllectionByUserId;{''ERROR_CODE'': ''None'',
   ''ERROR_MESSAGE'': ''None''};No.2;GetConllectionByUserId;Pass'

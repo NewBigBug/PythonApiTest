@@ -14,49 +14,46 @@ import time
 """
 requests库的session对象能够帮我们跨请求保持某些参数，也会在同一个session实例发出的所有请求之间保持cookies。
 """
-# 用例通用字典
-
-case_result_list = []
-# 获取基础用例集合
-cago = CaseGoto.case_goto()
-usrconfig = cago[0]
-configdatadic = cago[1]
-case_lines_list = cago[2]
-config = cago[3]
-udatadic_colle = {}
-
 
 @ddt.ddt
 class ServerTest(unittest.TestCase):
+
+    # 获取基础用例集合
+    cago = CaseGoto.case_goto()
+    # config中host和header
+    usrconfig = cago[0]
+    # config中配置的用户参数字典
+    configdatadic = cago[1]
+    # 用例列表
+    case_lines_list = cago[2]
+    # config全配置内容
+    config = cago[3]
+    # 参数收集字典
+    udatadic_colle = {}
+
     def setUp(self):
-        """
-        self.udatadic = {}
-        self.udatadic.update(configdatadic)
-        self.udatadic.update(udatadic_colle)
-        LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
-        """
         self.api_client = requests.Session()
 
         #self.api_client.verify = False
-        #self.api_client.request()
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
 
-        self.udatadic = {}
-        self.udatadic.update(configdatadic)
-        self.udatadic.update(udatadic_colle)
-        LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
-
-
-        self.caseindex = sys._getframe().f_code.co_name + '_' + str(case_lines_list.index(case_line) + 1001)
+        udatadic = {}
+        udatadic.update(ServerTest.configdatadic)
+        udatadic.update(ServerTest.udatadic_colle)
+        LogMsg.logger.info('当前参数库： ' + str(udatadic))
+        # 获取用例下标
+        self.caseindex = sys._getframe().f_code.co_name + '_' + str(ServerTest.case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
+        # 调用参数生成方法
         uspa = UserParam.param_generate()
-        case_result = CaseInteg.case_Prepare(self.api_client, case_line, self.udatadic, uspa, usrconfig, config)
+        # 执行请求
+        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, uspa, ServerTest.usrconfig, ServerTest.config)
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]
-        self.collectionparm = {}
+        collectionparm = {}
         self.check_diff = {}
         checkpoint = respdict['Checkpoint']
         needcollection = []
@@ -95,7 +92,7 @@ class ServerTest(unittest.TestCase):
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
             # 开始断言
-            checkpoint = Utils.dic_replace(checkpoint, self.udatadic)
+            checkpoint = Utils.dic_replace(checkpoint, udatadic)
             for key, point in checkpoint.items():
                 resppame = Utils.list_all_dict(key, respjson)
                 self.assertEqual(resppame, point, '检查点比对失败')
@@ -106,11 +103,11 @@ class ServerTest(unittest.TestCase):
                 key = needcollection[i]
                 coll_key = Utils.list_all_dict(key, respjson)
                 if coll_key:
-                    self.collectionparm['$' + key + '$'] = coll_key
+                    collectionparm['$' + key + '$'] = coll_key
                 else:
                     LogMsg.logger.info('返回值中不存在该参数 ' + key)
-        LogMsg.logger.info('收集参数： ' + str(self.collectionparm))
-        udatadic_colle.update(self.collectionparm)
+        LogMsg.logger.info('收集参数： ' + str(collectionparm))
+        ServerTest.udatadic_colle.update(collectionparm)
 
     def tearDown(self):
         case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)

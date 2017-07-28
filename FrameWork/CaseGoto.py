@@ -8,17 +8,6 @@ import os
 import FileController
 import LogMsg
 
-
-# 创建临时yaml文件
-def tempfile_generate(path):
-    if os.path.exists(path):
-        os.remove(path)
-        FileController.create_yaml_file(path)
-    else:
-        FileController.create_yaml_file(path)
-    LogMsg.logger.info('临时文件成功： ' + path)
-
-
 """
 #请求host地址
 Host: http://127.0.0.1:5000
@@ -39,14 +28,18 @@ UserParm:
 """
 
 
-# caselines, udatadic, usrconfig
-
-def     case_goto():
+def case_goto():
     configpath='../TestCase/Config/config.yaml'
     testconfig = FileController.load_yaml_file(configpath)
     LogMsg.logger.info('加载配置文件：' + configpath)
     # 创建临时yaml文件
-    tempfile_generate(testconfig['tempfile'])
+    path=testconfig['tempfile']
+    if os.path.exists(path):
+        os.remove(path)
+        FileController.create_yaml_file(path)
+    else:
+        FileController.create_yaml_file(path)
+    LogMsg.logger.info('临时文件成功： ' + path)
 
     # 分割config数据
     usrconfig = {
@@ -84,6 +77,7 @@ def     case_goto():
                 LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + value1['Request_Url'])
 
     return usrconfig, configdatadic, case_lines_list, testconfig
+    # config中host和header    # config中配置的用户参数字典    # 用例列表    # config剩余配置内容
 
 
 
