@@ -30,6 +30,8 @@ class ServerTest(unittest.TestCase):
     config = cago[3]
     # 参数收集字典
     udatadic_colle = {}
+    # 运行结果临时字典，供检查依赖接口状态
+    run_load_list = {}
 
     def setUp(self):
         self.api_client = requests.Session()
@@ -49,7 +51,8 @@ class ServerTest(unittest.TestCase):
         # 调用参数生成方法
         uspa = UserParam.param_generate()
         # 执行请求
-        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, uspa, ServerTest.usrconfig, ServerTest.config)
+        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, uspa, ServerTest.usrconfig,
+                                             ServerTest.config, ServerTest.run_load_list)
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]
@@ -112,6 +115,7 @@ class ServerTest(unittest.TestCase):
     def tearDown(self):
         case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
         LogMsg.logger.info(case_rs)
+        ServerTest.run_load_list.update(case_rs)
         self.api_client.close()
 
 

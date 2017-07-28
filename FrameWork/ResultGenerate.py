@@ -44,7 +44,7 @@ def result_generate(caseindex, case_info, check_diff):
     recode = {}
     mstr = case_info['Request_Url'] + ';' + str(case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info['caseresult']
     recode[case_info['CaseIndex']] = mstr
-    LogMsg.logger.info(recode)
+    LogMsg.logger.info('用例执行记录： ' + str(recode))
     FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
 
     return recode

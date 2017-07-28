@@ -90,26 +90,26 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     return case_sd, caselinespilt[2], caselinespilt[0]
 
 
-def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config):
+def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config, run_load_list):
     udatadic.update(uspa)
     if caselines is not None:
         if caselines['Depends'] is None or caselines['Depends'] == '':
             return spilt_case(api_client, caselines, udatadic, usrconfig, config)
         else:
-            depends = caselines['Depends'].split(';')
-            load_list = FileController.load_yaml_file(caselines['Temp_Filepath'])
+            depends = caselines['Depends'].split(',')
+            load_list = run_load_list
             flag = True
             for i in range(len(depends)):
-                for value in load_list:
-                    if depends[i] in value:
-                        r = value.split(',')
+                for key in load_list:
+                    r = load_list[key].split(';')
+                    if depends[i] in r:
                         re = r[len(r) - 1]
-                        if re == 'Pass':
-                            flag = True
-                        else:
+                        if re != 'Pass':
                             flag = False
+                            break
                     else:
                         flag = False
+                        break
             if flag:
                 return spilt_case(api_client, caselines, udatadic, usrconfig, config)
             else:

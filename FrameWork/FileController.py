@@ -101,16 +101,18 @@ def load_case_by_path(path):
                 taledata = xlrd_stream.sheet_by_index(i)
                 case_line_no = {}
                 for j in range(1, taledata.nrows):
-                    case_line = {}
-                    for c in range(1, taledata.ncols):
-                        columnname = taledata.cell(0, c).value
-                        column_value = taledata.cell(j, c).value.replace('\n', '').replace('\r', '')
-                        if '{' in column_value:
-                            columnvalue = ast.literal_eval(column_value)
-                        else:
-                            columnvalue = column_value
-                        case_line[columnname] = columnvalue
-                    case_line_no['No.' + str(j)] = case_line
+                    is_null = taledata.cell(j, 0).value
+                    if is_null == str(j):
+                        case_line = {}
+                        for c in range(1, taledata.ncols):
+                            columnname = taledata.cell(0, c).value
+                            column_value = taledata.cell(j, c).value.replace('\n', '').replace('\r', '')
+                            if '{' in column_value:
+                                columnvalue = ast.literal_eval(column_value)
+                            else:
+                                columnvalue = column_value
+                            case_line[columnname] = columnvalue
+                        case_line_no['No.' + str(j)] = case_line
                 file_casedict[path + '_' + sheetname] = case_line_no
 
         else:

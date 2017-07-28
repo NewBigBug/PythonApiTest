@@ -74,7 +74,7 @@ def case_goto():
                 LogMsg.logger.info('CaseList: ' + str(case_line))
                 case_lines_list.append(case_line)
             else:
-                LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + value1['Request_Url'])
+                LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + '  ' + value1['Request_Url'])
 
     return usrconfig, configdatadic, case_lines_list, testconfig
     # config中host和header    # config中配置的用户参数字典    # 用例列表    # config剩余配置内容
