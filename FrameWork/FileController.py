@@ -106,7 +106,7 @@ def load_case_by_path(path):
                         case_line = {}
                         for c in range(1, taledata.ncols):
                             columnname = taledata.cell(0, c).value
-                            column_value = taledata.cell(j, c).value.replace('\n', '').replace('\r', '')
+                            column_value = taledata.cell(j, c).value.replace('\n', '')
                             if '{' in column_value:
                                 columnvalue = ast.literal_eval(column_value)
                             else:
