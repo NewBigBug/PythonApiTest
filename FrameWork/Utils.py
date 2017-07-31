@@ -45,6 +45,7 @@ def list_all_dict(key, dict_a):
             else:
                 value_set = value_dict[key_set]
                 list_all_dict(key, value_set)
+
     return str(key_value)
 
 
@@ -52,12 +53,14 @@ def list_all_dict(key, dict_a):
 def dic_replace(dict_c, udatadic):
     for key, value in dict_c.items():
         if isinstance(value, dict):
-            dic_replace(dict_c, udatadic)
-        else:
+            dic_replace(value, udatadic)
+        elif isinstance(value, str):
             if '$' in value:
                 for ukey, uvalue in udatadic.items():
                     if ukey in value:
                         dict_c[key] = value.replace(ukey, uvalue)
+        else:
+            break
     return dict_c
 
 
@@ -80,7 +83,7 @@ def phone_generate():
 
 
 # 生成中文名字
-def chinese_name(num):
+def chinese_name(num=None):
     xing_names = ['赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许',
                   '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章',
                   '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳',
@@ -144,6 +147,8 @@ def chinese_name(num):
     # 根据传入参数生成名字
     i = 1
     fn = ''
+    if not num:
+        num = 3
     while i < num:
         i = i + 1
         strf = random.choice(ming_names)
@@ -1065,10 +1070,10 @@ def company_name():
     choice = list(random.choice(discode).values())
     addr = str(choice[0])
     company_name = addr + str(random.randint(1000, 9000)) + '股份有限公司'
-    return company_name()
+    return company_name
 
 
 # 生成公司邮箱
 def email_generate():
-    email = str(random.randint(10000001, 10000001)) + '163.com'
+    email = str(random.randint(10000001, 10000001)) + '@163.com'
     return email

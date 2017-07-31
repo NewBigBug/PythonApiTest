@@ -12,12 +12,22 @@ import LogMsg
 import copy
 
 
-def param_generate():
-    paramdict = {
-        '$tm$': Utils.time_generate(),
-        '$idcd$': Utils.identity_card(),
-        '$uname$': Utils.chinese_name(3)
+def param_generate(DL):
+
+    paramdict_str = {
+        '$tm$': 'time_generate',
+        '$idcd$': 'identity_card',
+        '$uname$': 'chinese_name',
+        '$email$': 'email_generate',
+        '$mobile$': 'phone_generate',
+        '$adress$': 'address_generate',
+        '$cpname$': 'company_name',
+        '$fphone$': 'fixedline_phone'
     }
+    paramdict = {}
+    for i in range(len(DL)):
+        if DL[i] in paramdict_str:
+            paramdict[DL[i]] = getattr(Utils, paramdict_str[DL[i]])()
     return paramdict
 
 
@@ -47,11 +57,8 @@ def sign_generate(case_lines, secret):
         secretStr = secretStr + key + value
     scStr = secret + secretStr + secret
     LogMsg.logger.info(scStr)
-    #print(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
-    #print(scStr)
     md5Str = m.hexdigest().upper()
-    #print(md5Str)
     return md5Str
 
 

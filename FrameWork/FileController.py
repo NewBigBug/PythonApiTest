@@ -102,7 +102,7 @@ def load_case_by_path(path):
                 case_line_no = {}
                 for j in range(1, taledata.nrows):
                     is_null = taledata.cell(j, 0).value
-                    if is_null == str(j):
+                    if not is_null.isspace():
                         case_line = {}
                         for c in range(1, taledata.ncols):
                             columnname = taledata.cell(0, c).value

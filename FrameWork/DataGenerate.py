@@ -3,9 +3,12 @@
 # @Author  : Charles
 # @File    : DataGenerate.py
 # @Software: PyCharm
+import sys
 
 import LogMsg
-import Utils
+import re
+import UserParam
+
 
 """
 根据不同的request类型，分别处理请求数据
@@ -28,70 +31,18 @@ requestdict={
     #'Need_Sign': 'TRUE'
 }
 """
-
-
-
-"""
-
-def data_generate(datadict, udatadic):
-    #print(datadict)
-    if 'Request_Body' in datadict.keys() and datadict['Request_Body']:
-        data_dict = datadict.pop('Request_Body')
-        for key, value in data_dict.items():
-            # 只遍历4层，超出4层不考虑
-            if isinstance(value, dict):
-                for key1, value1 in value.items():
-                    if isinstance(value1, dict):
-                        for key2, value2 in value1.items():
-                            if isinstance(value2, dict):
-                                for key3, value3 in value2.items():
-                                    if isinstance(value3, dict):
-                                        LogMsg.logger.error('参数嵌套层数过多')
-                                    else:
-                                        if '$' in value3:
-                                            for ukey, uvalue in udatadic.items():
-                                                if ukey in value3:
-                                                    value2[key3] = value3.replace(ukey, uvalue)
-
-                            else:
-                                if '$' in value2:
-                                    for ukey, uvalue in udatadic.items():
-                                        if ukey in value2:
-                                            value1[key2] = value2.replace(ukey, uvalue)
-
-                    else:
-                        if '$' in value1:
-                            for ukey, uvalue in udatadic.items():
-                                if ukey in value1:
-                                    value[key1] = value1.replace(ukey, uvalue)
-
-            else:
-                if '$' in value:
-                    for ukey, uvalue in udatadic.items():
-                        if ukey in value:
-                            data_dict[key] = value.replace(ukey, uvalue)
-
-        if '$' in str(data_dict):
-            LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
-
-        else:
-            LogMsg.logger.info(data_dict)
-        datadict['Request_Body'] = data_dict
-        return datadict
-    else:
-
-        LogMsg.logger.warn('用例无请求数据')
-        return datadict
-"""
+sys.setrecursionlimit(10000)
 
 
 def data_generate(datadict, udatadic):
-    #print(datadict)
     if 'Request_Body' in datadict.keys() and datadict['Request_Body']:
         data_dict = datadict.pop('Request_Body')
-        data_dict = Utils.dic_replace(data_dict, udatadic)
+        #print(type(data_dict['PRE_APP_CONTACT'][0]))
+
+        data_dict = param_replace(data_dict, udatadic)
+
         if '$' in str(data_dict):
-            LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请再次调用 ' + str(data_dict))
+            LogMsg.logger.info('获取参数值失败,可能含有二次包装数据,请调试 ' + str(data_dict))
         else:
             LogMsg.logger.info(data_dict)
         datadict['Request_Body'] = data_dict
@@ -99,27 +50,51 @@ def data_generate(datadict, udatadic):
         LogMsg.logger.warn('用例无请求数据')
     return datadict
 
-"""
-def dic_replace(dict_c, udatadic):
-    for key, value in dict_c.items():
+
+def param_replace(data_dict, udatadic):
+    for key, value in data_dict.items():
         if isinstance(value, dict):
-            dic_replace(dict_c, udatadic)
-        else:
+            param_replace(value, udatadic)
+
+        elif isinstance(value, list):
+            for i in range(len(value)):
+                param_replace(value[i], udatadic)
+
+        elif isinstance(value, str):
             if '$' in value:
+                D_L = re.findall(r'(\$.*?\$)', value)
+                udata = UserParam.param_generate(D_L)
+                udatadic.update(udata)
                 for ukey, uvalue in udatadic.items():
                     if ukey in value:
-                        dict_c[key] = value.replace(ukey, uvalue)
-    return dict_c
+                        data_dict[key] = value.replace(ukey, uvalue)
+        else:
+            break
+    return data_dict
+
 """
+def type_recur(data, udata):
+    if isinstance(data, dict):
+        param_replace(value, udatadic)
 
+    elif isinstance(value, list):
+        for i in range(len(value)):
+            param_replace(value[i], udatadic)
 
-
-
-
-
-
-
-
+    elif isinstance(value, str):
+        if '$' in value:
+            D_L = re.findall(r'(\$.*?\$)', value)
+            udata = UserParam.param_generate(D_L)
+            udatadic.update(udata)
+            for ukey, uvalue in udatadic.items():
+                if ukey in value:
+                    data_dict[key] = value.replace(ukey, uvalue)
+    else:
+        print(value)
+        value = str(value)
+        param_replace(value, udatadic)
+    
+"""
 
 
 

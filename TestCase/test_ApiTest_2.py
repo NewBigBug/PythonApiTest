@@ -48,7 +48,6 @@ class ServerTest(unittest.TestCase):
         self.udatadic.update(udatadic_colle)
         LogMsg.logger.info('当前参数库： ' + str(self.udatadic))
 
-
         self.caseindex = sys._getframe().f_code.co_name + '_' + str(case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         uspa = UserParam.param_generate()

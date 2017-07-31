@@ -1,4 +1,27 @@
-test_api_rq_1001: '/api/CobraUser/Login;{''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'':
-  ''None'', ''NAME'': ''刘云''};No.1;Login;Pass'
-test_api_rq_1002: '/api/CobraProduct/GetConllectionByUserId;{''ERROR_CODE'': ''None'',
-  ''ERROR_MESSAGE'': ''None''};No.2;GetConllectionByUserId;Pass'
+test_api_rq_1001: '/api/CobraUser/Login;{''status_code'': ''200'', ''RESPONSE_STATUS'':
+  ''OK'', ''ERROR_MESSAGE'': ''None'', ''NAME'': ''刘云''};No.1;Login;Pass'
+test_api_rq_1002: '/api/CobraProduct/GetConllectionByUserId;{''status_code'': ''200'',
+  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.2;GetConllectionByUserId;Pass'
+test_api_rq_1003: '/api/CobraCrDataDic/getareacodeconllection;{''status_code'': ''200'',
+  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.3;getareacodeconllection;Pass'
+test_api_rq_1004: '/api/CobraAd/GetEnableConllection;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.4;GetEnableConllection;Pass'
+test_api_rq_1005: '/api/notification/getnotreadcount;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.5;getnotreadcount;Pass'
+test_api_rq_1006: '/api/preappmain/create;{''status_code'': ''200'', ''ERROR_MESSAGE'':
+  ''None'', ''ERROR_CODE'': ''None'', ''RESULT'': ''True''};No.6;create;Pass'
+test_api_rq_1007: '/api/preappmain/continue;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''MESSAGE'': ''操作成功''};No.7;continue;Pass'
+test_api_rq_1008: '/api/preappmain/getdetail;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.8;getdetail;Pass'
+test_api_rq_1009: '/api/preappmain/getsaveproduct;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''PRE_APP_CODE'': ''20170731000082''};No.9;getsaveproduct;Pass'
+test_api_rq_1010: '/api/preappmain/getsavebankcard;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.10;getsavebankcard;Pass'
+test_api_rq_1011: '/api/preappmain/savecustomer;{''status_code'': ''200'', ''MESSAGE'':
+  ''保存成功'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.11;savecustomer;Pass'
+test_api_rq_1012: '/api/preappmain/saveprocess;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.12;saveprocess;Pass'
+test_api_rq_1013: '/api/preappmain/saveproduct;{''status_code'': ''201'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.13;saveproduct;Fail'
+test_api_rq_1014: 'http://172.16.5.33:8080/nauth/login;{''登录成功信息'': ''您好, 魏双双''};No.1;Login;Pass'

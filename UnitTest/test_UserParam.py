@@ -8,10 +8,11 @@
 import unittest
 import UserParam
 import DataGenerate
-
+import re
 
 class Test_UsrPara(unittest.TestCase):
 
+    """
     def test_sign_generate(self):
 
         datadic = 'APP_KEY10001DEVICE_VERSION112FORMATjsonID_NO659004196004172187MEDIA_DATA[{"MEDIA":"","MEDIA_TYPE":1},{"MEDIA":"","MEDIA_TYPE":2}]MOBILE15502168672NAMEreterteTIMESTAMP2017-07-26 09:59:51U_IDv-yunliuVERSION1.0'
@@ -21,7 +22,7 @@ class Test_UsrPara(unittest.TestCase):
         cc=UserParam.sign_generate_01(datadic, secret)
         print(cc)
 
-    """
+
     def test_01(self):
 
         up = UserParam.param_generate()
@@ -36,3 +37,10 @@ class Test_UsrPara(unittest.TestCase):
         print(cc)
     
     """
+
+    def test_param_generate(self):
+        #UserParam.param_generate()
+        str='$tm$abc$idcd$'
+        D_L = re.findall(r'(\$.*?\$)', str)
+        L = UserParam.param_generate(D_L)
+        print(L)

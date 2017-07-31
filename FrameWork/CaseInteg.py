@@ -3,6 +3,7 @@
 # @Author  : Charles
 # @File    : CaseInteg.py
 # @Software: PyCharm
+import json
 import os
 
 import DataGenerate
@@ -68,48 +69,42 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
 
     # 处理请求的表单数据
     #print(udatadic)
+    LogMsg.logger.info('开始处理请求数据：*********')
     case_dg = DataGenerate.data_generate(caselinespilt[1], udatadic)
-    LogMsg.logger.info('请求表单已处理')
     LogMsg.logger.info(case_dg)
-    #print(case_dg)
-    case_dg1 = case_dg
-    udatadic['$sign$'] = UserParam.sign_generate(case_dg1, config['Secrete'])
-    #print(udatadic['$sign$'])
+    # 生成sign值
+    udatadic['$sign$'] = UserParam.sign_generate(case_dg, config['Secrete'])
     # 重新调用一次
     case_dg = DataGenerate.data_generate(case_dg, udatadic)
-    #print(case_dg)
     # 处理请求数据
+    LogMsg.logger.info('开始处理请求数据：**********')
     case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
-    LogMsg.logger.info('请求数据已解析')
-
+    LogMsg.logger.info(case_rq)
     # 发送请求
+    LogMsg.logger.info('开始发送请求：**********')
     case_sd = RequestGenerate.request_send(api_client, case_rq)
-    LogMsg.logger.info('请求数据已发送')
     LogMsg.logger.info('请求返回数据：' + str(case_sd))
 
     return case_sd, caselinespilt[2], caselinespilt[0]
 
 
-def case_Prepare(api_client, caselines, udatadic,  uspa, usrconfig, config, run_load_list):
-    udatadic.update(uspa)
+def case_Prepare(api_client, caselines, udatadic, usrconfig, config, run_load_list):
+    #udatadic.update(uspa)
     if caselines is not None:
         if caselines['Depends'] is None or caselines['Depends'] == '':
             return spilt_case(api_client, caselines, udatadic, usrconfig, config)
         else:
             depends = caselines['Depends'].split(',')
             load_list = run_load_list
-            flag = True
+            flag = False
             for i in range(len(depends)):
                 for key in load_list:
                     r = load_list[key].split(';')
                     if depends[i] in r:
                         re = r[len(r) - 1]
-                        if re != 'Pass':
-                            flag = False
+                        if re == 'Pass':
+                            flag = True
                             break
-                    else:
-                        flag = False
-                        break
             if flag:
                 return spilt_case(api_client, caselines, udatadic, usrconfig, config)
             else:

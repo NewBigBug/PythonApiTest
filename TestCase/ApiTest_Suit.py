@@ -15,6 +15,7 @@ import time
 requests库的session对象能够帮我们跨请求保持某些参数，也会在同一个session实例发出的所有请求之间保持cookies。
 """
 
+
 @ddt.ddt
 class ServerTest(unittest.TestCase):
 
@@ -36,7 +37,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.Session()
 
-        #self.api_client.verify = False
+        self.api_client.verify = False
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
@@ -48,10 +49,8 @@ class ServerTest(unittest.TestCase):
         # 获取用例下标
         self.caseindex = sys._getframe().f_code.co_name + '_' + str(ServerTest.case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
-        # 调用参数生成方法
-        uspa = UserParam.param_generate()
         # 执行请求
-        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, uspa, ServerTest.usrconfig,
+        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, ServerTest.usrconfig,
                                              ServerTest.config, ServerTest.run_load_list)
         resp = case_result[0]
         respdict = case_result[1]
@@ -70,11 +69,11 @@ class ServerTest(unittest.TestCase):
             if 'Need_Collection' in respdict.keys() and respdict['Need_Collection']:
                 LogMsg.logger.info('Response_Type:Html 不支持参数收集')
             else:
-                resptext = [resp.status_code, resp.text]
+                resptext = [str(resp.status_code), resp.text]
                 LogMsg.logger.info(resptext)
                 if 'status_code' in checkpoint.keys():
                     self.assertEqual(checkpoint['status_code'], resptext[0], '检查点比对失败')
-                    del self.check_diff['status_code']
+                    del checkpoint['status_code']
                     for key, point in checkpoint.items():
                         self.assertIn(point, resptext[1], '检查点比对失败')
                         self.check_diff = {
@@ -116,6 +115,7 @@ class ServerTest(unittest.TestCase):
         case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
         LogMsg.logger.info(case_rs)
         ServerTest.run_load_list.update(case_rs)
+        #print(ServerTest.run_load_list)
         self.api_client.close()
 
 
