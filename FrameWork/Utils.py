@@ -26,27 +26,28 @@
 
 import random
 import time
+import datetime
+
 import simplejson
-from datetime import timedelta, date
 
 
 # 遍历字典根据检查点key值取返回值数据
 def list_all_dict(key, dict_a):
-    global key_value
-    if isinstance(dict_a, dict) or (isinstance(dict_a, str) and '{' in dict_a):
-        if isinstance(dict_a, str):
-            value_dict = simplejson.loads(dict_a)
+    global kv
+    kv = '未找到参数值'
+    for key_set in dict_a:
+        if key_set == key:
+            kv = str(dict_a[key])
+            break
+        elif isinstance(dict_a[key_set], dict):
+            d = dict_a[key_set]
+            list_all_dict(key, d)
+        elif isinstance(dict_a[key_set], str) and '{' in dict_a[key_set]:
+            d = simplejson.loads(dict_a[key_set])
+            list_all_dict(key, d)
         else:
-            value_dict = dict_a
-        for key_set in value_dict:
-            if key in value_dict:
-                key_value = value_dict[key]
-                break
-            else:
-                value_set = value_dict[key_set]
-                list_all_dict(key, value_set)
-
-    return str(key_value)
+            pass
+    return kv
 
 
 # 遍历字典替换其中参数,传入原字典，参数字典
@@ -60,7 +61,7 @@ def dic_replace(dict_c, udatadic):
                     if ukey in value:
                         dict_c[key] = value.replace(ukey, uvalue)
         else:
-            break
+            pass
     return dict_c
 
 
@@ -71,7 +72,8 @@ def time_generate():
 
 
 def time_generate1():
-    tm = time.strftime('%Y%m%d', time.localtime(time.time()))
+    tm = datetime.datetime.now() - datetime.timedelta(hours=8)
+    tm = tm.strftime('%Y-%m-%d %H:%M:%S')
     return tm
 
 
@@ -1029,7 +1031,7 @@ def identity_card():
     choice = list(random.choice(discode).keys())
     iid = str(choice[0])  # 地区码
     iid = iid + str(random.randint(1930, 2013))  # 年份项
-    dt = date.today() + timedelta(days=random.randint(1, 366))  # 月份和日期项
+    dt = datetime.date.today() + datetime.timedelta(days=random.randint(1, 366))  # 月份和日期项
     iid = iid + dt.strftime('%m%d')
     iid = iid + str(random.randint(100, 300))  # 顺序号
     count = 0
@@ -1039,7 +1041,7 @@ def identity_card():
     for i in range(0, len(iid)):
         count = count + int(iid[i]) * weight[i]
     iid = iid + checkcode[str(count % 11)]  # 算出校验码
-    return iid
+    return str(iid)
 
 
 # 生成地址

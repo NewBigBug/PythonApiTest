@@ -69,32 +69,9 @@ def param_replace(data_dict, udatadic):
                     if ukey in value:
                         data_dict[key] = value.replace(ukey, uvalue)
         else:
-            break
+            LogMsg.logger.error('其他数据类型： ' + str(value))
+
     return data_dict
-
-"""
-def type_recur(data, udata):
-    if isinstance(data, dict):
-        param_replace(value, udatadic)
-
-    elif isinstance(value, list):
-        for i in range(len(value)):
-            param_replace(value[i], udatadic)
-
-    elif isinstance(value, str):
-        if '$' in value:
-            D_L = re.findall(r'(\$.*?\$)', value)
-            udata = UserParam.param_generate(D_L)
-            udatadic.update(udata)
-            for ukey, uvalue in udatadic.items():
-                if ukey in value:
-                    data_dict[key] = value.replace(ukey, uvalue)
-    else:
-        print(value)
-        value = str(value)
-        param_replace(value, udatadic)
-    
-"""
 
 
 

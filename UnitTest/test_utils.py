@@ -114,8 +114,14 @@ class UtilsTest(unittest.TestCase):
     def test_fixedline_phone(self):
         a = Utils.fixedline_phone()
         print(a)
-    """
+
 
     def test_identity_card(self):
         a = Utils.identity_card()
+        print(a)
+
+    """
+
+    def test_time_generate1(self):
+        a = Utils.time_generate1()
         print(a)

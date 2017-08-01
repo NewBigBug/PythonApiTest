@@ -13,9 +13,9 @@ import copy
 
 
 def param_generate(DL):
-
     paramdict_str = {
         '$tm$': 'time_generate',
+        #'$tm$': 'time_generate1',
         '$idcd$': 'identity_card',
         '$uname$': 'chinese_name',
         '$email$': 'email_generate',
@@ -52,8 +52,9 @@ def sign_generate(case_lines, secret):
         key = new_caseline[i]
         if isinstance(caselines[key], str):
             value = caselines[key]
+
         else:
-            value = str(caselines[key]).replace('\'', '\"').replace(' ', '')
+            value = str(caselines[key]).replace('\'', '\"').replace(': ', ':').replace(', ', ',')
         secretStr = secretStr + key + value
     scStr = secret + secretStr + secret
     LogMsg.logger.info(scStr)
@@ -64,7 +65,6 @@ def sign_generate(case_lines, secret):
 
 #############
 def sign_generate_01(case_lines, secret):
-
     scStr = secret + case_lines + secret
     LogMsg.logger.info(scStr)
     m = hashlib.md5(scStr.encode(encoding='utf-8'))
