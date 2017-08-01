@@ -45,6 +45,13 @@ def list_all_dict(key, dict_a):
         elif isinstance(dict_a[key_set], str) and '{' in dict_a[key_set]:
             d = simplejson.loads(dict_a[key_set])
             list_all_dict(key, d)
+        elif isinstance(dict_a[key_set], list):
+            for i in range(len(dict_a[key_set])):
+                if isinstance(dict_a[key_set][i], str) and '{' in dict_a[key_set][i]:
+                    d = simplejson.loads(dict_a[key_set])
+                    list_all_dict(key, d)
+                else:
+                    pass
         else:
             pass
     return kv
