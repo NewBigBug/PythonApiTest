@@ -122,6 +122,8 @@ class UtilsTest(unittest.TestCase):
 
     """
 
-    def test_time_generate1(self):
-        a = Utils.time_generate1()
+    def test_list_all_dict(self):
+        key = ''
+        dict
+        a = Utils.list_all_dict()
         print(a)

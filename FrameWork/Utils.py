@@ -34,26 +34,27 @@ import simplejson
 # 遍历字典根据检查点key值取返回值数据
 def list_all_dict(key, dict_a):
     global kv
-    kv = '未找到参数值'
     for key_set in dict_a:
-        if key_set == key:
+        if key in dict_a:
             kv = str(dict_a[key])
             break
-        elif isinstance(dict_a[key_set], dict):
-            d = dict_a[key_set]
-            list_all_dict(key, d)
-        elif isinstance(dict_a[key_set], str) and '{' in dict_a[key_set]:
-            d = simplejson.loads(dict_a[key_set])
-            list_all_dict(key, d)
-        elif isinstance(dict_a[key_set], list):
-            for i in range(len(dict_a[key_set])):
-                if isinstance(dict_a[key_set][i], str) and '{' in dict_a[key_set][i]:
-                    d = simplejson.loads(dict_a[key_set])
-                    list_all_dict(key, d)
-                else:
-                    pass
         else:
-            pass
+            if isinstance(dict_a[key_set], dict):
+                list_all_dict(key, dict_a[key_set])
+            elif isinstance(dict_a[key_set], str) and '{' in dict_a[key_set]:
+                list_all_dict(key, simplejson.loads(dict_a[key_set]))
+            elif isinstance(dict_a[key_set], list):
+                for i in range(len(dict_a[key_set])):
+                    if isinstance(dict_a[key_set][i], str) and '{' in dict_a[key_set][i]:
+                        if list_all_dict(key, simplejson.loads(dict_a[key_set])):
+                            break
+                    elif isinstance(dict_a[key_set][i], dict):
+                        if list_all_dict(key, dict_a[key_set][i]):
+                            break
+                    else:
+                        pass
+            else:
+                pass
     return kv
 
 

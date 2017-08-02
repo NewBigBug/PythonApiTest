@@ -1,6 +1,9 @@
 import unittest
 import requests
 import sys
+
+import simplejson
+
 import CaseGoto
 import CaseInteg
 import UserParam

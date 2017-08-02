@@ -14,8 +14,8 @@ import copy
 
 def param_generate(DL):
     paramdict_str = {
-        '$tm$': 'time_generate',
-        #'$tm$': 'time_generate1',
+        #'$tm$': 'time_generate',
+        '$tm$': 'time_generate1',
         '$idcd$': 'identity_card',
         '$uname$': 'chinese_name',
         '$email$': 'email_generate',
