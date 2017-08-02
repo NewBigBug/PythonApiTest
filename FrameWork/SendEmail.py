@@ -3,7 +3,7 @@
 # @Author  : Charles
 # @File    : SendEmail.py
 # @Software: PyCharm
-from email.mime.base import MIMEBase
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib

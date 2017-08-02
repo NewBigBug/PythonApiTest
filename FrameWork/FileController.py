@@ -16,13 +16,13 @@ import Utils
 
 # 加载日志text
 def load_text_file(text_file):
-    with open(text_file, mode='r', encoding='utf-8') as stream:
+    with open(text_file, mode='rb') as stream:
         return stream
 
 
 # 加载html
 def load_html_file(html_file):
-    with open(html_file, mode='r', encoding='utf-8') as stream:
+    with open(html_file, mode='rb') as stream:
         return stream
 
 

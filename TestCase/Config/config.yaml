@@ -1,0 +1,23 @@
+#请求host地址
+Host: https://sitqone.quarkfinance.com
+#Host: https://sitqone-wh.quarkfinance.com
+#用例文件路径
+Casefile: D:\GitPro\Python\PythonApiTest\TestCase\TestData\Qone.xlsx
+#Casefile: /Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.yaml
+#执行记录临时文件路径
+#tempfile: /Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml
+tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
+#请求header内容
+Header:
+  Content-Type: 'application/json; charset=UTF-8'
+#秘钥
+Secrete: 'B4B83DC748B8E511A2846C0B840997C3'
+#Secrete: '9CCD33625B6527F7134630E94A544820'
+#用户自定义参数
+UserParm:
+  #上海Sit106,武汉Sit112
+  #$deviceversion$: '112'
+  $deviceversion$: '106'
+  $account$: '13817645775'
+  $password$: 'qaz123'
+  $veron$: '1.0'
