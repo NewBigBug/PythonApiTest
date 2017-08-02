@@ -10,11 +10,14 @@ import os
 import logging
 
 #创建一个logger
+import time
+
 logger = logging.getLogger('apitest')
 logger.setLevel(logging.DEBUG)  # Log等级总开关
 
 #创建一个handler，用于写入日志文件
-logfile = '../output/ApiTest.log'
+today = time.strftime('%Y%m%d_%H', time.localtime(time.time()))
+logfile = '..\output\\' + 'API_TEST_' + today + '.log'
 fh = logging.FileHandler(logfile, mode='w', encoding='UTF-8')
 fh.setLevel(logging.DEBUG)  # 输出到file的log   等级的开关
 

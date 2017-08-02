@@ -14,6 +14,18 @@ import LogMsg
 import Utils
 
 
+# 加载日志text
+def load_text_file(text_file):
+    with open(text_file, mode='r', encoding='utf-8') as stream:
+        return stream
+
+
+# 加载html
+def load_html_file(html_file):
+    with open(html_file, mode='r', encoding='utf-8') as stream:
+        return stream
+
+
 # 加载yaml
 def load_yaml_file(yaml_file):
     with open(yaml_file, mode='r', encoding='utf-8') as stream:

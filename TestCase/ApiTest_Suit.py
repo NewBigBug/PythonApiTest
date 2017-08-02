@@ -6,7 +6,7 @@ import simplejson
 
 import CaseGoto
 import CaseInteg
-import UserParam
+import SendEmail
 import Utils
 import ddt
 import LogMsg
@@ -40,7 +40,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.Session()
 
-        #self.api_client.verify = False
+        self.api_client.verify = False
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
@@ -128,11 +128,13 @@ def suite():
 
 
 if __name__ == '__main__':
-    today = time.strftime('%Y%m%d_%H_%M_%S', time.localtime(time.time()))
+    today = time.strftime('%Y%m%d_%H', time.localtime(time.time()))
     tempfile = 'D:\GitPro\Python\PythonApiTest\output\\tempyaml.yaml'
     reportPath = 'D:\GitPro\Python\PythonApiTest\output\\' + 'API_TEST_' + today + '.html'
+    logFilePath = '..\output\\' + 'API_TEST_' + today + '.log'
     fp = open(reportPath, mode='wb')
     runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告',
                                              tempfile=tempfile)
     runner.run(suite())
     fp.close()
+    SendEmail.post_mail(reportPath, logFilePath)
