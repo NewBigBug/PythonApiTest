@@ -40,7 +40,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.Session()
 
-        self.api_client.verify = False
+        #self.api_client.verify = False
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
@@ -100,7 +100,7 @@ class ServerTest(unittest.TestCase):
             checkpoint = Utils.dic_replace(checkpoint, udatadic)
             for key, point in checkpoint.items():
                 resppame = Utils.list_all_dict(key, respjson)
-                self.assertEqual(resppame, point, '检查点比对失败' + str(resppame) + str(point))
+                self.assertEqual(resppame, point, '检查点比对失败  ' + '返回值： ' + str(resppame) + '检查值： ' + str(point))
             self.check_diff = {
                 'caseresult': 'Pass'
             }

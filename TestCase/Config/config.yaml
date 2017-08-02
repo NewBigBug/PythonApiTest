@@ -10,8 +10,8 @@ tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
 Header:
   Content-Type: 'application/json; charset=UTF-8'
 #秘钥
-#Secrete: 'B4B83DC748B8E511A2846C0B840997C3'
-Secrete: '9CCD33625B6527F7134630E94A544820'
+Secrete: 'B4B83DC748B8E511A2846C0B840997C3'
+#Secrete: '9CCD33625B6527F7134630E94A544820'
 #用户自定义参数
 UserParm:
   $deviceversion$: '112'
