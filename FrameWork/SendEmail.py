@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 # @Time    : 2017/8/2 16:21
 # @Author  : Charles
 # @File    : SendEmail.py
@@ -11,8 +11,8 @@ import FileController
 
 
 def post_mail(reportFile, logFile):
-    subject = '[ApiTest]接口自动化测试报告'
-    sender = 'BigBug'
+    subject = 'ApiTest-接口自动化测试报告'
+    sender = 'BigBug@quarkfinance.com'
     receiver = ['shuangshuangwei@quarkfinance.com']
     mailToCc = ['']
 
@@ -28,6 +28,7 @@ def post_mail(reportFile, logFile):
     log_stream = FileController.load_text_file(logFile)
     report_stream = FileController.load_html_file(reportFile)
     # 邮件正文
+    report_stream = report_stream.replace("class=\'hiddenRow\'", "class=\''")
     msgzw = MIMEText(report_stream, 'html', 'utf-8')
     msg.attach(msgzw)
     # 邮件附件
@@ -40,7 +41,7 @@ def post_mail(reportFile, logFile):
 
     # 构造邮件
     msg['Subject'] = subject
-    msg['From'] = sender
+    msg['From'] = 'ApiTest'
     msg['To'] = ';'.join(receiver)
     msg['Cc'] = ';'.join(mailToCc)
     smtp = smtplib.SMTP()

@@ -9,4 +9,7 @@ import SendEmail
 
 class TestSendEmail(unittest.TestCase):
     def test_sendemail(self):
-        SendEmail.post_mail()
+        reportPath = '..\output\API_TEST_20170802_17.html'
+        logFilePath = '..\output\API_TEST_20170802_17.log'
+
+        SendEmail.post_mail(reportPath, logFilePath)
