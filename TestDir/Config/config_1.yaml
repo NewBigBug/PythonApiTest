@@ -1,0 +1,22 @@
+#请求host地址,用例中优先级较高，若用例中为空，从此处取值
+#Host: ''
+Host: ''
+#用例文件路径
+Casefile: D:\GitPro\Python\PythonApiTest\TestDir\TestData\Qone.xlsx
+#Casefile: /Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.yaml
+#执行记录临时文件路径,必须
+#tempfile: /Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml
+tempfile: D:\GitPro\Python\PythonApiTest\output\tempyaml.yaml
+#请求header内容,用例中优先级较高，若用例中为空，从此处取值
+Header:
+  Content-Type: 'application/json; charset=UTF-8'
+#秘钥
+Secrete: ''
+#Secrete: ''
+#用户自定义参数
+UserParm:
+  #
+  $deviceversion$: ''
+  $account$: ''
+  $password$: ''
+  $veron$: ''
