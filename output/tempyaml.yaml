@@ -1,4 +1,38 @@
 test_api_rq_1001: '/api/CobraUser/Login;{''status_code'': ''200'', ''RESPONSE_STATUS'':
   ''OK'', ''ERROR_MESSAGE'': ''None'', ''NAME'': ''刘云''};No.1;Login;Pass'
-test_api_rq_1002: '/api/preappmain/create;{''status_code'': ''200'', ''ERROR_MESSAGE'':
+test_api_rq_1002: '/api/PreAppMain/Query;{''status_code'': ''200'', ''TOTAL_COUNT'':
+  ''276'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.2;预申请列表;Fail'
+test_api_rq_1003: '/api/PreAppMain/Query;{''status_code'': ''200'', ''TOTAL_COUNT'':
+  ''18'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.3;客户列表;Fail'
+test_api_rq_1004: '/api/PreAppMain/getcontractcollection;{''status_code'': ''200'',
+  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.4;贷后列表;Pass'
+test_api_rq_1005: '/api/cobrafeedback/addorupdate;{''status_code'': ''200'', ''MESSAGE'':
+  ''提交成功'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.5;意见反馈;Pass'
+test_api_rq_1006: '/api/CobraProduct/GetConllectionByUserId;{''status_code'': ''200'',
+  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.6;GetConllectionByUserId;Pass'
+test_api_rq_1007: '/api/CobraCrDataDic/getareacodeconllection;{''status_code'': ''200'',
+  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.7;getareacodeconllection;Pass'
+test_api_rq_1008: '/api/CobraAd/GetEnableConllection;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.8;GetEnableConllection;Pass'
+test_api_rq_1009: '/api/notification/getnotreadcount;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''NOTIFICATION_TYPE'': ''1''};No.9;getnotreadcount;Pass'
+test_api_rq_1010: '/api/preappmain/create;{''status_code'': ''200'', ''ERROR_MESSAGE'':
   ''None'', ''ERROR_CODE'': ''None'', ''RESULT'': ''True''};No.10;create;Pass'
+test_api_rq_1011: '/api/preappmain/continue;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''MESSAGE'': ''操作成功''};No.11;continue;Pass'
+test_api_rq_1012: '/api/preappmain/getdetail;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.12;getdetail;Pass'
+test_api_rq_1013: '/api/preappmain/getsaveproduct;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None'', ''PRE_APP_CODE'': ''20170803000044''};No.13;getsaveproduct;Pass'
+test_api_rq_1014: '/api/preappmain/getsavebankcard;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.14;getsavebankcard;Pass'
+test_api_rq_1015: '/api/preappmain/savecustomer;{''status_code'': ''200'', ''MESSAGE'':
+  ''保存成功'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.15;savecustomer;Pass'
+test_api_rq_1016: '/api/preappmain/saveprocess;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.16;saveprocess;Pass'
+test_api_rq_1017: '/api/preappmain/saveproduct;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.17;saveproduct;Pass'
+test_api_rq_1018: '/api/preappmain/saveprocess;{''status_code'': ''200'', ''RESULT'':
+  ''True'', ''MESSAGE'': ''保存成功'', ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''};No.18;saveprocess;Pass'
+test_api_rq_1019: '/api/preappmain/getsavebankcard;{''status_code'': ''200'', ''ERROR_CODE'':
+  ''None'', ''ERROR_MESSAGE'': ''None''};No.19;getsavebankcard;Pass'

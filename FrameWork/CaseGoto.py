@@ -29,7 +29,7 @@ UserParm:
 
 
 def case_goto():
-    configpath='../TestCase/Config/config.yaml'
+    configpath='../TestDir/Config/config.yaml'
     testconfig = FileController.load_yaml_file(configpath)
     LogMsg.logger.info('加载配置文件：' + configpath)
     # 创建临时yaml文件

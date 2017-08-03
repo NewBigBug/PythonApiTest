@@ -40,7 +40,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.Session()
 
-        self.api_client.verify = False
+        #self.api_client.verify = False
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
@@ -118,6 +118,4 @@ class ServerTest(unittest.TestCase):
         case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
         LogMsg.logger.info(case_rs)
         ServerTest.run_load_list.update(case_rs)
-        #print(ServerTest.run_load_list)
         self.api_client.close()
-
