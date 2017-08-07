@@ -124,7 +124,7 @@ def load_case_by_path(path):
                             else:
                                 columnvalue = column_value
                             case_line[columnname] = columnvalue
-                        case_line_no['No.' + str(j)] = case_line
+                        case_line_no['No.' + taledata.cell(j, 0).value] = case_line
                 file_casedict[path + '_' + sheetname] = case_line_no
 
         else:

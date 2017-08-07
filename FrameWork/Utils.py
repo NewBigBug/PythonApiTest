@@ -34,6 +34,7 @@ import simplejson
 # 遍历字典根据检查点key值取返回值数据
 def list_all_dict(key, dict_a):
     global kv
+    kv = ''
     for key_set in dict_a:
         if key in dict_a:
             kv = str(dict_a[key])

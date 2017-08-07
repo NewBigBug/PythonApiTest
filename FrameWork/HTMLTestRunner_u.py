@@ -475,12 +475,12 @@ a.popup_link:hover {
 
     REPORT_CLASS_TMPL = u"""
 <tr class='%(style)s'>
-    <td>%(desc)s</td>
-    <td>%(count)s</td>
-    <td>%(Pass)s</td>
-    <td>%(fail)s</td>
+    <td width='200'>%(desc)s</td>
+    <td width='100'>%(count)s</td>
+    <td width='100'>%(Pass)s</td>
+    <td width='200'>%(fail)s</td>
     <td>%(error)s</td>
-    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">详情</a></td>
+    <td width='100'><a href="javascript:showClassDetail('%(cid)s',%(count)s)">详情</a></td>
 </tr>
 """  # variables: (style, desc, count, Pass, fail, error, cid)
     # url=interface_init.initial.html_runner_url
@@ -860,7 +860,7 @@ class HTMLTestRunner(Template_mixin):
         load_list = FileController.load_yaml_file(tempfile)
         value = load_list[desc].split(';')
         casename = value[3]
-        request_url = value[0]
+        request_url = value[0].split('_')[0]
         casepath = value[1]
         casenumb = value[2]
         return casename, request_url, casepath, casenumb

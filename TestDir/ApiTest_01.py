@@ -21,7 +21,6 @@ requests库的session对象能够帮我们跨请求保持某些参数，也会�
 
 @ddt.ddt
 class ServerTest(unittest.TestCase):
-
     # 获取基础用例集合
     cago = CaseGoto.case_goto()
     # config中host和header
@@ -40,7 +39,7 @@ class ServerTest(unittest.TestCase):
     def setUp(self):
         self.api_client = requests.Session()
 
-        #self.api_client.verify = False
+        # self.api_client.verify = False
 
     @ddt.data(*case_lines_list)
     def test_api_rq(self, case_line):
@@ -74,43 +73,47 @@ class ServerTest(unittest.TestCase):
             else:
                 resptext = [str(resp.status_code), resp.text]
                 LogMsg.logger.info(resptext)
-                if 'status_code' in checkpoint.keys():
+                if 'status_code' in checkpoint:
                     self.assertEqual(checkpoint['status_code'], resptext[0], '检查点比对失败')
-                    del checkpoint['status_code']
-                    for key, point in checkpoint.items():
-                        self.assertIn(point, resptext[1], '检查点比对失败')
-                        self.check_diff = {
-                            'caseresult': 'Pass'
-                        }
-                else:
-                    for key, point in checkpoint.items():
-                        self.assertIn(point, resptext[1], '检查点比对失败')
-                        self.check_diff = {
-                            'caseresult': 'Pass'
-                        }
+                if 'In' in checkpoint and checkpoint['In']:
+                    checkin_list = checkpoint['In']
+                    for i in range(len(checkin_list)):
+                        self.assertIn(checkin_list[i], resptext[1], '检查点比对失败' + ' 检查值： ' + checkin_list[i])
+                self.check_diff = {
+                    'caseresult': 'Pass'
+                }
         elif respdict['Response_Type'] == 'Json':
             if 'Need_Collection' in respdict and respdict['Need_Collection']:
                 needcollection = respdict['Need_Collection'].split(',')
             else:
                 LogMsg.logger.info('用例文件中未配置需要收集的参数，若有后续依赖，执行会报错')
             respjson = resp.json()
+            resptext = resp.text
             LogMsg.logger.info('返回值Json字符串：' + str(respjson))
             respjson['status_code'] = resp.status_code
             # 开始断言
             checkpoint = Utils.dic_replace(checkpoint, udatadic)
-            for key, point in checkpoint.items():
-                resppame = Utils.list_all_dict(key, respjson)
-                self.assertEqual(resppame, point, '检查点比对失败  ' + '返回值： ' + str(resppame) + '检查值： ' + str(point))
+            if 'Equal' in checkpoint and checkpoint['Equal']:
+                for key, point in checkpoint['Equal'].items():
+                    resppame = Utils.list_all_dict(key, respjson)
+                    self.assertEqual(resppame, point, '检查点比对失败: ' + '返回值： ' + str(resppame) + ' 检查值： ' + str(point))
+            if 'In' in checkpoint and checkpoint['In']:
+                checkin_list = checkpoint['In']
+                for i in range(len(checkin_list)):
+                    self.assertIn(checkin_list[i], resptext, '检查点比对失败' + ' 检查值： ' + checkin_list[i])
             self.check_diff = {
                 'caseresult': 'Pass'
             }
             for i in range(len(needcollection)):
                 key = needcollection[i]
-                coll_key = Utils.list_all_dict(key, respjson)
-                if coll_key:
-                    collectionparm['$' + key + '$'] = coll_key
+                if key in udatadic:
+                    collectionparm[key] = udatadic[key]
                 else:
-                    LogMsg.logger.info('返回值中不存在该参数 ' + key)
+                    coll_key = Utils.list_all_dict(key, respjson)
+                    if coll_key:
+                        collectionparm['$' + key + '$'] = coll_key
+                    else:
+                        LogMsg.logger.error('参数未收集成功 ' + key)
         LogMsg.logger.info('收集参数： ' + str(collectionparm))
         ServerTest.udatadic_colle.update(collectionparm)
 

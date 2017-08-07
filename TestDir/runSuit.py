@@ -28,4 +28,4 @@ if __name__ == '__main__':
                                              tempfile=tempfile)
     runner.run(suite())
     fp.close()
-    SendEmail.post_mail(reportPath, logFilePath)
+    #SendEmail.post_mail(reportPath, logFilePath)
