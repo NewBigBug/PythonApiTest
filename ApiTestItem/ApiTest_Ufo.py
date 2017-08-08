@@ -46,14 +46,14 @@ class UfoApiTest(unittest.TestCase):
     @ddt.data(*case_lines_list)
     def test_api_rq_ufo(self, case_line):
         # 获取当前执行用例下标
-        self.caseindex = sys._getframe().f_code.co_name + '_' + str(UfoAPiTest.case_lines_list.index(case_line) + 1001)
+        self.caseindex = sys._getframe().f_code.co_name + '_' + str(UfoApiTest.case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         # 执行测试
-        TestBase.casetestBase(self, self.api_client, UfoAPiTest.configdatadic, UfoAPiTest.udatadic_colle, case_line,
-                              UfoAPiTest.usrconfig, UfoAPiTest.config, UfoAPiTest.run_load_list)
+        TestBase.casetestBase(self, self.api_client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
+                              UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.run_load_list)
 
     def tearDown(self):
-        TestBase.endtest(self, self.caseindex, self.case_info, self.check_diff, UfoAPiTest.run_load_list)
+        TestBase.endtest(self, self.caseindex, self.case_info, self.check_diff, UfoApiTest.run_load_list)
         self.api_client.close()
 
 
