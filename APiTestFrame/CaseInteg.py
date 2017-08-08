@@ -3,14 +3,9 @@
 # @Author  : Charles
 # @File    : CaseInteg.py
 # @Software: PyCharm
-import json
-import os
 
 import DataGenerate
 import RequestGenerate
-
-import ResultGenerate
-import FileController
 import LogMsg
 import UserParam
 

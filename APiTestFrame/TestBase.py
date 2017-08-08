@@ -7,7 +7,6 @@
 import CaseInteg
 import LogMsg
 import unittest
-
 import ResultGenerate
 import Utils
 

@@ -6,7 +6,6 @@
 
 import ast
 import os
-
 import xlrd as xlrd
 import xlwt
 import yaml

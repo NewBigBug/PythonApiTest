@@ -3,10 +3,9 @@
 # @Author  : Charles
 # @File    : RequestGenerate.py
 # @Software: PyCharm
-import json
 
 import LogMsg
-import requests
+
 
 """
 该参数应为示例字典格式

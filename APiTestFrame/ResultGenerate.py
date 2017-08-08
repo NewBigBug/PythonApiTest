@@ -3,8 +3,6 @@
 # @Author  : Charles
 # @File    : ResultGenerate.py
 # @Software: PyCharm
-import json
-import os
 
 import LogMsg
 import FileController

@@ -4,7 +4,6 @@
 # @File    : DataGenerate.py
 # @Software: PyCharm
 import sys
-
 import LogMsg
 import re
 import UserParam

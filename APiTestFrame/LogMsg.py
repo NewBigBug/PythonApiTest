@@ -4,9 +4,6 @@
 # @File    : LogMsg.py
 # @Software: PyCharm
 
-
-import os
-
 import logging
 
 #创建一个logger

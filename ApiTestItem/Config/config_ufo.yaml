@@ -1,0 +1,21 @@
+#请求host地址,用例中优先级较高，若用例中为空，从此处取值
+Host: https://ufoapi05.quarkfinance.com
+#用例文件路径
+Casefile: D:\GitPro\Python\PythonApiTest\APiTestItem\CaseFolder\Ufo.xlsx
+#Casefile: /Users/Sky/developer/PycharmProjects/PythonApiTest/TestCase/TestData/Qone.yaml
+#执行记录临时文件路径,必须
+#tempfile: /Users/Sky/developer/PycharmProjects/PythonApiTest/output/tempyaml.yaml
+tempfile: D:\GitPro\Python\PythonApiTest\output\runtemp.yaml
+#请求header内容,用例中优先级较高，若用例中为空，从此处取值
+Header:
+  Content-Type: 'application/json; charset=UTF-8'
+#秘钥
+#Secrete: 'B4B83DC748B8E511A2846C0B840997C3'
+Secrete: '9CCD33625B6527F7134630E94A544820'
+#用户自定义参数
+#UserParm:
+  #当前上海Sit106,武汉Sit112
+  #$deviceversion$: '112'
+  #$account$: '13817645775'
+  #$password$: 'zaq123'
+  #$veron$: '1.0'

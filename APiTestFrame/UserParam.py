@@ -5,8 +5,6 @@
 # @Software: PyCharm
 
 import hashlib
-import json
-
 import Utils
 import LogMsg
 import copy
