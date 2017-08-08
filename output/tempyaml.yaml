@@ -1,5 +1,0 @@
-test_api_rq_1001: '/api/CobraUser/Login_1;{''Equal'': {''status_code'': ''200'', ''RESPONSE_STATUS'':
-  ''OK'', ''ERROR_MESSAGE'': ''None'', ''NAME'': ''刘云'', ''TELPHONE'': ''13817645775''},
-  ''In'': [''刘云'', ''登录成功12'']};No.1;Login;Fail'
-test_api_rq_1002: 'http://172.16.5.33:8080/nauth/login_1;{''status_code'': ''200'',
-  ''In'': [''您好, 魏双双'', ''一级菜单焦点'']};No.1;个金登录;Pass'

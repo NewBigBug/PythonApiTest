@@ -1,59 +1,27 @@
-import unittest
-import requests
-import sys
+# -*- coding: utf-8 -*-
+# @Time    : 2017/8/7 17:45
+# @Author  : Charles
+# @File    : BaseTest.py
+# @Software: PyCharm
 
-import simplejson
-
-import CaseGoto
 import CaseInteg
-import SendEmail
-import Utils
-import ddt
 import LogMsg
+import unittest
+
 import ResultGenerate
-import HTMLTestRunner_u
-import time
-
-"""
-requests库的session对象能够帮我们跨请求保持某些参数，也会在同一个session实例发出的所有请求之间保持cookies。
-"""
+import Utils
 
 
-@ddt.ddt
-class ServerTest(unittest.TestCase):
-    # 获取基础用例集合
-    cago = CaseGoto.case_goto()
-    # config中host和header
-    usrconfig = cago[0]
-    # config中配置的用户参数字典
-    configdatadic = cago[1]
-    # 用例列表
-    case_lines_list = cago[2]
-    # config全配置内容
-    config = cago[3]
-    # 参数收集字典
-    udatadic_colle = {}
-    # 运行结果临时字典，供检查依赖接口状态
-    run_load_list = {}
-
-    def setUp(self):
-        self.api_client = requests.Session()
-
-        # self.api_client.verify = False
-
-    @ddt.data(*case_lines_list)
-    def test_api_rq(self, case_line):
-
+class TestBase(unittest.TestCase):
+    def casetestBase(self, api_client, configdatadic, udatadic_colle, case_line, usrconfig, config, run_load_list):
+        # 用户参数库
         udatadic = {}
-        udatadic.update(ServerTest.configdatadic)
-        udatadic.update(ServerTest.udatadic_colle)
+        udatadic.update(configdatadic)
+        udatadic.update(udatadic_colle)
         LogMsg.logger.info('当前参数库： ' + str(udatadic))
-        # 获取用例下标
-        self.caseindex = sys._getframe().f_code.co_name + '_' + str(ServerTest.case_lines_list.index(case_line) + 1001)
-        LogMsg.logger.info('caseindex: ' + self.caseindex)
         # 执行请求
-        case_result = CaseInteg.case_Prepare(self.api_client, case_line, udatadic, ServerTest.usrconfig,
-                                             ServerTest.config, ServerTest.run_load_list)
+        case_result = CaseInteg.case_Prepare(api_client, case_line, udatadic, usrconfig,
+                                             config, run_load_list)
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]
@@ -61,7 +29,6 @@ class ServerTest(unittest.TestCase):
         self.check_diff = {}
         checkpoint = respdict['Checkpoint']
         needcollection = []
-
         """
         # 先判断返回值resp的内容格式，收集参数只支持json
         """
@@ -73,12 +40,18 @@ class ServerTest(unittest.TestCase):
             else:
                 resptext = [str(resp.status_code), resp.text]
                 LogMsg.logger.info(resptext)
-                if 'status_code' in checkpoint:
-                    self.assertEqual(checkpoint['status_code'], resptext[0], '检查点比对失败')
-                if 'In' in checkpoint and checkpoint['In']:
+                if 'Equal' in checkpoint and checkpoint['Equal']:
+                    self.assertIn('status_code', checkpoint['Equal'], 'status_code检查内容为空')
+                    self.assertEqual(checkpoint['Equal']['status_code'], resptext[0], '检查点比对失败')
+                elif 'In' in checkpoint and checkpoint['In']:
                     checkin_list = checkpoint['In']
                     for i in range(len(checkin_list)):
                         self.assertIn(checkin_list[i], resptext[1], '检查点比对失败' + ' 检查值： ' + checkin_list[i])
+                else:
+                    LogMsg.logger.error('检查点格式不正确或为空')
+                    self.assertIsNone(checkpoint, '检查点内容格式不正确')
+                    self.assertIsNotNone(checkpoint, '检查点内容为空')
+
                 self.check_diff = {
                     'caseresult': 'Pass'
                 }
@@ -97,10 +70,15 @@ class ServerTest(unittest.TestCase):
                 for key, point in checkpoint['Equal'].items():
                     resppame = Utils.list_all_dict(key, respjson)
                     self.assertEqual(resppame, point, '检查点比对失败: ' + '返回值： ' + str(resppame) + ' 检查值： ' + str(point))
-            if 'In' in checkpoint and checkpoint['In']:
+            elif 'In' in checkpoint and checkpoint['In']:
                 checkin_list = checkpoint['In']
                 for i in range(len(checkin_list)):
                     self.assertIn(checkin_list[i], resptext, '检查点比对失败' + ' 检查值： ' + checkin_list[i])
+            else:
+                LogMsg.logger.error('检查点格式不正确或为空')
+                self.assertIsNone(checkpoint, '检查点内容格式不正确')
+                self.assertIsNotNone(checkpoint, '检查点内容为空')
+
             self.check_diff = {
                 'caseresult': 'Pass'
             }
@@ -115,10 +93,9 @@ class ServerTest(unittest.TestCase):
                     else:
                         LogMsg.logger.error('参数未收集成功 ' + key)
         LogMsg.logger.info('收集参数： ' + str(collectionparm))
-        ServerTest.udatadic_colle.update(collectionparm)
+        udatadic_colle.update(collectionparm)
 
-    def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
+    def endtest(self, caseindex, case_info, check_diff, run_load_list):
+        case_rs = ResultGenerate.result_generate(caseindex, case_info, check_diff)
         LogMsg.logger.info(case_rs)
-        ServerTest.run_load_list.update(case_rs)
-        self.api_client.close()
+        run_load_list.update(case_rs)

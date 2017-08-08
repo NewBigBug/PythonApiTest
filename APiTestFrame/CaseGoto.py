@@ -28,8 +28,8 @@ UserParm:
 """
 
 
-def case_goto():
-    configpath='../TestDir/Config/config.yaml'
+def case_goto(configpath):
+
     testconfig = FileController.load_yaml_file(configpath)
     LogMsg.logger.info('加载配置文件：' + configpath)
     # 创建临时yaml文件
@@ -52,7 +52,7 @@ def case_goto():
 
     # config参数数据
     configdatadic = {}
-    if 'UserParm' in testconfig:
+    if 'UserParm' in testconfig and testconfig['UserParm']:
         UserParm = testconfig.pop('UserParm')
         for key, value in UserParm.items():
             configdatadic[key] = UserParm[key]

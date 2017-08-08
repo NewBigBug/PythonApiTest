@@ -475,12 +475,12 @@ a.popup_link:hover {
 
     REPORT_CLASS_TMPL = u"""
 <tr class='%(style)s'>
-    <td width='200'>%(desc)s</td>
+    <td width='150'>%(desc)s</td>
     <td width='100'>%(count)s</td>
     <td width='100'>%(Pass)s</td>
-    <td width='200'>%(fail)s</td>
+    <td>%(fail)s</td>
     <td>%(error)s</td>
-    <td width='100'><a href="javascript:showClassDetail('%(cid)s',%(count)s)">详情</a></td>
+    <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">详情</a></td>
 </tr>
 """  # variables: (style, desc, count, Pass, fail, error, cid)
     # url=interface_init.initial.html_runner_url

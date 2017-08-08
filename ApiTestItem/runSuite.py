@@ -3,24 +3,28 @@
 # @Author  : Charles
 # @File    : runSuit.py
 # @Software: PyCharm
-
+import os
 import unittest
 import time
+
+import ApiTest_Ufo
 import HTMLTestRunner_u
 import SendEmail
-import ApiTest_01
+import ApiTest_Qone
 
 
 # 组建测试suite
 def suite():
-    suite = unittest.TestLoader().loadTestsFromTestCase(ApiTest_01.ServerTest)
+    # Test集合
+    testlist = ['ApiTest_Qone.QoneApiTest', 'ApiTest_Ufo.UfoApiTest']
+    suite = unittest.TestLoader().loadTestsFromNames(testlist)
     return suite
 
 
 # 执行测试集合，生成报告，发送邮件
 if __name__ == '__main__':
-    today = time.strftime('%Y%m%d_%H', time.localtime(time.time()))
-    tempfile = '..\output\\tempyaml.yaml'
+    today = time.strftime('%Y%m%d_%H%M', time.localtime(time.time()))
+    tempfile = '..\output\\runtemp.yaml'
     reportPath = '..\output\\' + 'API_TEST_' + today + '.html'
     logFilePath = '..\output\\' + 'API_TEST_' + today + '.log'
     fp = open(reportPath, mode='wb')
@@ -28,4 +32,6 @@ if __name__ == '__main__':
                                              tempfile=tempfile)
     runner.run(suite())
     fp.close()
-    #SendEmail.post_mail(reportPath, logFilePath)
+    # 删除临时文件
+    os.remove(tempfile)
+    # SendEmail.post_mail(reportPath, logFilePath)
