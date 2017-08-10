@@ -51,9 +51,6 @@ class TestBase(unittest.TestCase):
                         self.assertIn(checkin_list[i], resptext[1], '检查点比对失败,检查值： ' + checkin_list[i])
                 else:
                     LogMsg.logger.error('检查点中不包含In对比内容！')
-                    #self.assertIsNone(checkpoint, '检查点内容格式不正确')
-                    #self.assertIsNotNone(checkpoint, '检查点内容为空')
-
                 self.check_diff = {
                     'caseresult': 'Pass'
                 }

@@ -64,21 +64,6 @@ def case_goto(configpath):
     caselibrarypath = testconfig.pop('Casefile')
     #caselibrary = FileController.load_case_by_path(caselibrarypath)
     case_lines_list = g_case_list(caselibrarypath)
-    """
-    for key, value in caselibrary.items():
-        file_path = str(key)
-        for key1, value1 in value.items():
-            flag = value1['Active']
-            if flag == 'TRUE':
-                case_line = {'CasePath': file_path, 'CaseNo': key1}
-                case_line.update(value1)
-                # case_line['Temp_Filepath'] = testconfig['tempfile']
-                LogMsg.logger.info('CaseList: ' + str(case_line))
-                case_lines_list.append(case_line)
-            else:
-                LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + '  ' + value1['Request_Url'])
-    
-    """
     return usrconfig, configdatadic, case_lines_list, testconfig
     # config中host和header    # config中配置的用户参数字典    # 用例列表    # config剩余配置内容
 
@@ -94,7 +79,6 @@ def g_case_list(caselibrarypath):
         for key1, value1 in value.items():
             case_line = {'CasePath': file_path, 'CaseNo': key1}
             case_line.update(value1)
-            #LogMsg.logger.info('CaseList: ' + str(case_line))
             case_lines_D[value1['Request_Url']+'_' + key1.split('.')[1]] = copy.deepcopy(case_line)
             case_lines_L.append(case_line)
 
