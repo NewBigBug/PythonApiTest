@@ -58,7 +58,6 @@ def case_goto(configpath):
             configdatadic[key] = UserParm[key]
     else:
         LogMsg.logger.info('配置文件中无用户参数化数据')
-
     # 处理用例库
     case_lines_list = []
     caselibrarypath = testconfig.pop('Casefile')

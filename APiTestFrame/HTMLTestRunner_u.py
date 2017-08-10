@@ -647,6 +647,7 @@ class _TestResult(TestResult):
             sys.stderr.write('F')
 
 
+
 class HTMLTestRunner(Template_mixin):
     """
     """

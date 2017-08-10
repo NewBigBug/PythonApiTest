@@ -3,6 +3,7 @@
 # @Author  : Charles
 # @File    : RequestGenerate.py
 # @Software: PyCharm
+import requests
 
 import LogMsg
 
@@ -106,7 +107,7 @@ def request_send(client, req_kwargs):
     # print(type(url))
     method = req_kwargs.pop('method')
     # session client
-    # client = requests.Session
+    #client = requests.Session
     resp = client.request(method, url, **req_kwargs)
     LogMsg.logger.info(resp)
     return resp

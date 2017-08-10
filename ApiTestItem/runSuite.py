@@ -16,7 +16,7 @@ import ApiTest_Qone
 # 组建测试suite
 def suite():
     # Test集合
-    testlist = ['ApiTest_Qone.QoneApiTest', 'ApiTest_Ufo.UfoApiTest']
+    testlist = ['ApiTest_Qone.QoneApiTest', 'ApiTest_Ufo.UfoApiTest', 'ApiTest_Nauth.NauthApiTest']
     suite = unittest.TestLoader().loadTestsFromNames(testlist)
     return suite
 
@@ -28,10 +28,11 @@ if __name__ == '__main__':
     reportPath = '..\output\\' + 'API_TEST_' + today + '.html'
     logFilePath = '..\output\\' + 'API_TEST_' + today + '.log'
     fp = open(reportPath, mode='wb')
-    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, title='Api Test Report', description='接口测试报告',
+    runner = HTMLTestRunner_u.HTMLTestRunner(stream=fp, verbosity=2, title='Api Test Report', description='接口测试报告',
                                              tempfile=tempfile)
     runner.run(suite())
     fp.close()
     # 删除临时文件
     os.remove(tempfile)
-    # SendEmail.post_mail(reportPath, logFilePath)
+    # 发送报告邮件
+    #SendEmail.post_mail(reportPath, logFilePath)

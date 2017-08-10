@@ -7,11 +7,11 @@
 import CaseInteg
 import LogMsg
 import unittest
-import ResultGenerate
 import Utils
 
 
 class TestBase(unittest.TestCase):
+
     def casetestBase(self, api_client, configdatadic, udatadic_colle, case_line, usrconfig, config, run_load_list):
         # 用户参数库
         udatadic = {}
@@ -42,14 +42,17 @@ class TestBase(unittest.TestCase):
                 if 'Equal' in checkpoint and checkpoint['Equal']:
                     self.assertIn('status_code', checkpoint['Equal'], 'status_code检查内容为空')
                     self.assertEqual(checkpoint['Equal']['status_code'], resptext[0], '检查点比对失败')
-                elif 'In' in checkpoint and checkpoint['In']:
+                else:
+                    LogMsg.logger.info('检查点中不包含equal对比内容！')
+
+                if 'In' in checkpoint and checkpoint['In']:
                     checkin_list = checkpoint['In']
                     for i in range(len(checkin_list)):
-                        self.assertIn(checkin_list[i], resptext[1], '检查点比对失败' + ' 检查值： ' + checkin_list[i])
+                        self.assertIn(checkin_list[i], resptext[1], '检查点比对失败,检查值： ' + checkin_list[i])
                 else:
-                    LogMsg.logger.error('检查点格式不正确或为空')
-                    self.assertIsNone(checkpoint, '检查点内容格式不正确')
-                    self.assertIsNotNone(checkpoint, '检查点内容为空')
+                    LogMsg.logger.error('检查点中不包含In对比内容！')
+                    #self.assertIsNone(checkpoint, '检查点内容格式不正确')
+                    #self.assertIsNotNone(checkpoint, '检查点内容为空')
 
                 self.check_diff = {
                     'caseresult': 'Pass'
@@ -65,18 +68,20 @@ class TestBase(unittest.TestCase):
             respjson['status_code'] = resp.status_code
             # 开始断言
             checkpoint = Utils.dic_replace(checkpoint, udatadic)
+
             if 'Equal' in checkpoint and checkpoint['Equal']:
                 for key, point in checkpoint['Equal'].items():
                     resppame = Utils.list_all_dict(key, respjson)
                     self.assertEqual(resppame, point, '检查点比对失败: ' + '返回值： ' + str(resppame) + ' 检查值： ' + str(point))
-            elif 'In' in checkpoint and checkpoint['In']:
+            else:
+                LogMsg.logger.info('检查点中不包含equal对比内容！')
+
+            if 'In' in checkpoint and checkpoint['In']:
                 checkin_list = checkpoint['In']
                 for i in range(len(checkin_list)):
                     self.assertIn(checkin_list[i], resptext, '检查点比对失败' + ' 检查值： ' + checkin_list[i])
             else:
-                LogMsg.logger.error('检查点格式不正确或为空')
-                self.assertIsNone(checkpoint, '检查点内容格式不正确')
-                self.assertIsNotNone(checkpoint, '检查点内容为空')
+                LogMsg.logger.error('检查点中不包含In对比内容！')
 
             self.check_diff = {
                 'caseresult': 'Pass'
@@ -94,7 +99,3 @@ class TestBase(unittest.TestCase):
         LogMsg.logger.info('收集参数： ' + str(collectionparm))
         udatadic_colle.update(collectionparm)
 
-    def endtest(self, caseindex, case_info, check_diff, run_load_list):
-        case_rs = ResultGenerate.result_generate(caseindex, case_info, check_diff)
-        LogMsg.logger.info(case_rs)
-        run_load_list.update(case_rs)

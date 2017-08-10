@@ -9,6 +9,7 @@ import unittest
 import requests
 import sys
 import CaseGoto
+import ResultGenerate
 from TestBase import TestBase
 import ddt
 import LogMsg
@@ -19,7 +20,7 @@ requests库的session对象能够帮我们跨请求保持某些参数，也会�
 
 
 @ddt.ddt
-class UfoApiTest(unittest.TestCase):
+class UfoApiTest(TestBase):
     # 配置文件路径
     configpath = '../ApiTestItem/Config/config_ufo.yaml'
     # 获取基础用例集合
@@ -36,25 +37,37 @@ class UfoApiTest(unittest.TestCase):
     udatadic_colle = {}
     # 运行结果临时字典，供检查依赖接口状态
     run_load_list = {}
+    # Session实例
+    client = None
+
+    @classmethod
+    def setUpClass(cls):
+        UfoApiTest.client = requests.Session()
+        # 是否开启verify,fiddler抓包需取消注释
+        # self.api_client.verify = False
 
     def setUp(self):
-
-        self.api_client = requests.Session()
-
-        # self.api_client.verify = False
+        self.client = UfoApiTest.client
 
     @ddt.data(*case_lines_list)
     def test_api_rq_ufo(self, case_line):
+        # 继承测试基类
+        test_base = super(UfoApiTest, self)
         # 获取当前执行用例下标
-        self.caseindex = sys._getframe().f_code.co_name + '_' + str(UfoApiTest.case_lines_list.index(case_line) + 1001)
+        self.caseindex = sys._getframe().f_code.co_name + '_' + str(
+            UfoApiTest.case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
-        # 执行测试
-        TestBase.casetestBase(self, self.api_client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
-                              UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.run_load_list)
+        # 执行基类测试方法
+        test_base.casetestBase(self.client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
+                               UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.run_load_list)
 
     def tearDown(self):
-        TestBase.endtest(self, self.caseindex, self.case_info, self.check_diff, UfoApiTest.run_load_list)
-        self.api_client.close()
+        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
+        UfoApiTest.run_load_list.update(case_rs)
 
+    @classmethod
+    def tearDownClass(cls):
+        UfoApiTest.client.close()
+        ResultGenerate.write_to_tempfile(UfoApiTest.run_load_list, UfoApiTest.config['tempfile'])
 
 

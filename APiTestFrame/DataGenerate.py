@@ -46,7 +46,7 @@ def data_generate(datadict, udatadic):
             LogMsg.logger.info(data_dict)
         datadict['Request_Body'] = data_dict
     else:
-        LogMsg.logger.warn('用例无请求数据')
+        LogMsg.logger.warning('用例无请求数据')
     return datadict
 
 

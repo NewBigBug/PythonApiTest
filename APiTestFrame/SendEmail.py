@@ -14,7 +14,7 @@ def post_mail(reportFile, logFile):
     subject = 'ApiTest-接口自动化测试报告'
     sender = 'BigBug@quarkfinance.com'
     receiver = ['shuangshuangwei@quarkfinance.com']
-    mailToCc = ['']
+    mailToCc = ['V-YunLiu@quarkfinance.com']
 
     smtpserver = 'mail.quarkfinance.com'
     smtpserver_port = '25'
@@ -33,7 +33,7 @@ def post_mail(reportFile, logFile):
     msg.attach(msgzw)
     # 邮件附件
     msg_logfile = MIMEText(log_stream)
-    msg_logfile.add_header('Content-Disposition', 'attachment', filename='APITest执行日志记录.log')
+    msg_logfile.add_header('Content-Disposition', 'attachment', filename='APITest执行日志.log')
     msg_report = MIMEText(report_stream)
     msg_report.add_header('Content-Disposition', 'attachment', filename='APITest执行报告.html')
     msg.attach(msg_logfile)

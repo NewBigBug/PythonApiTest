@@ -68,9 +68,10 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     case_dg = DataGenerate.data_generate(caselinespilt[1], udatadic)
     LogMsg.logger.info(case_dg)
     # 生成sign值
-    udatadic['$sign$'] = UserParam.sign_generate(case_dg, config['Secrete'])
-    # 重新调用一次
-    case_dg = DataGenerate.data_generate(case_dg, udatadic)
+    if 'Secrete' in config and config['Secrete']:
+        udatadic['$sign$'] = UserParam.sign_generate(case_dg, config['Secrete'])
+        # 重新调用一次
+        case_dg = DataGenerate.data_generate(case_dg, udatadic)
     # 处理请求数据
     LogMsg.logger.info('开始处理请求数据：**********')
     case_rq = RequestGenerate.request_generate(case_dg, usrconfig)

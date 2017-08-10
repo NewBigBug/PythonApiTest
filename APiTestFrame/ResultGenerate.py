@@ -15,6 +15,8 @@ import FileController
 
 
 def result_generate(caseindex, case_info, check_diff):
+    temp_file_path = case_info['Temp_Filepath']
+
     case_info['CaseIndex'] = caseindex
     if check_diff:
         case_info.update(check_diff)
@@ -37,12 +39,17 @@ def result_generate(caseindex, case_info, check_diff):
     for key, value in case_info.items():
         rmg = rmg + str(key) + ':' + str(value) + '\t'
     LogMsg.logger.info(rmg)
-    #resultlist = [case_info]
+    # resultlist = [case_info]
     # 写入执行记录
     recode = {}
-    mstr = case_info['Request_Url'] + '_' + case_info['CaseNumb'].split('.')[1] + ';' + str(case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info['caseresult']
+    mstr = case_info['Request_Url'] + '_' + case_info['CaseNumb'].split('.')[1] + ';' + str(
+        case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info[
+               'caseresult']
     recode[case_info['CaseIndex']] = mstr
     LogMsg.logger.info('用例执行记录： ' + str(recode))
-    FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
-
+    # FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
     return recode
+
+
+def write_to_tempfile(run_load_list, temp_file_path):
+    FileController.write_yaml_file(run_load_list, temp_file_path)
