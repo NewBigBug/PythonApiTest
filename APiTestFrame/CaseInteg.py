@@ -44,7 +44,7 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
         'CaseName': caselines['API_Purpose'],
         'Request_Url': caselines['Request_Url'],
         'Checkpoint': caselines['Checkpoint'],
-        'Temp_Filepath': caselines['Temp_Filepath']
+        'DP': caselines['DP']
     }
     caselinespilt.append(case_info)
     case_request = {
@@ -84,27 +84,31 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
     return case_sd, caselinespilt[2], caselinespilt[0]
 
 
-def case_Prepare(api_client, caselines, udatadic, usrconfig, config, run_load_list):
+def case_Prepare(api_client, caselines, udatadic, usrconfig, config, depends_api_status):
     #udatadic.update(uspa)
     if caselines is not None:
-        if caselines['Depends'] is None or caselines['Depends'] == '':
-            return spilt_case(api_client, caselines, udatadic, usrconfig, config)
-        else:
-            depends = caselines['Depends'].split(',')
-            load_list = run_load_list
-            flag = False
-            for i in range(len(depends)):
-                for key in load_list:
-                    r = load_list[key].split(';')
-                    if depends[i] in r:
-                        re = r[len(r) - 1]
-                        if re == 'Pass':
-                            flag = True
-                            break
-            if flag:
+        if not caselines['DP']:
+            if not caselines['Depends']:
                 return spilt_case(api_client, caselines, udatadic, usrconfig, config)
             else:
-                LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
+                depends = caselines['Depends'].split(',')
+                load_list = depends_api_status
+                flag = False
+                for i in range(len(depends)):
+                    for key in load_list:
+                        r = load_list[key].split(';')
+                        if depends[i] in r:
+                            re = r[len(r) - 1]
+                            if re == 'Pass':
+                                flag = True
+                                break
+                if flag:
+                    return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+                else:
+                    LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
+            depends_api_status.clear()
+        else:
+            return spilt_case(api_client, caselines, udatadic, usrconfig, config)
     else:
         LogMsg.logger.error('无用例数据')
 

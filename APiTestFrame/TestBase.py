@@ -12,7 +12,7 @@ import Utils
 
 class TestBase(unittest.TestCase):
 
-    def casetestBase(self, api_client, configdatadic, udatadic_colle, case_line, usrconfig, config, run_load_list):
+    def casetestBase(self, api_client, configdatadic, udatadic_colle, case_line, usrconfig, config, depends_api_status):
         # 用户参数库
         udatadic = {}
         udatadic.update(configdatadic)
@@ -20,7 +20,7 @@ class TestBase(unittest.TestCase):
         LogMsg.logger.info('当前参数库： ' + str(udatadic))
         # 执行请求
         case_result = CaseInteg.case_Prepare(api_client, case_line, udatadic, usrconfig,
-                                             config, run_load_list)
+                                             config, depends_api_status)
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]

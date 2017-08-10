@@ -28,8 +28,10 @@ class QoneApiTest(TestBase):
     config = cago[3]
     # 参数收集字典
     udatadic_colle = {}
-    # 运行结果临时字典，供检查依赖接口状态
+    # 运行结果临时字典，执行结束存入yaml临时文件
     run_load_list = {}
+    # 存入依赖接口执行状态
+    depends_api_status = {}
     # Session实例
     client = None
 
@@ -52,11 +54,12 @@ class QoneApiTest(TestBase):
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         # 执行基类测试方法
         test_base.casetestBase(self.client, QoneApiTest.configdatadic, QoneApiTest.udatadic_colle, case_line,
-                               QoneApiTest.usrconfig, QoneApiTest.config, QoneApiTest.run_load_list)
+                               QoneApiTest.usrconfig, QoneApiTest.config, QoneApiTest.depends_api_status)
 
     def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-        QoneApiTest.run_load_list.update(case_rs)
+        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, QoneApiTest.run_load_list,
+                                       QoneApiTest.depends_api_status)
+        #QoneApiTest.run_load_list.update(case_rs)
 
     @classmethod
     def tearDownClass(cls):

@@ -14,8 +14,7 @@ import FileController
 """
 
 
-def result_generate(caseindex, case_info, check_diff):
-    temp_file_path = case_info['Temp_Filepath']
+def result_generate(caseindex, case_info, check_diff, run_load_list, depends_api_status):
 
     case_info['CaseIndex'] = caseindex
     if check_diff:
@@ -47,8 +46,11 @@ def result_generate(caseindex, case_info, check_diff):
                'caseresult']
     recode[case_info['CaseIndex']] = mstr
     LogMsg.logger.info('用例执行记录： ' + str(recode))
-    # FileController.write_yaml_file(recode, case_info['Temp_Filepath'])
-    return recode
+    Flag = case_info['DP']
+    if Flag:
+        depends_api_status.update(recode)
+    else:
+        run_load_list.update(recode)
 
 
 def write_to_tempfile(run_load_list, temp_file_path):

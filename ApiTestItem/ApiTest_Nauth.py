@@ -34,7 +34,7 @@ class NauthApiTest(TestBase):
     config = cago[3]
     # 参数收集字典
     udatadic_colle = {}
-    # 运行结果临时字典，供检查依赖接口状态
+    # 运行结果临时字典,执行完毕存入yaml临时文件
     run_load_list = {}
     # Session实例
     client = None

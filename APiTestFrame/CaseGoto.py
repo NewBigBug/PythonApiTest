@@ -5,6 +5,8 @@
 # @Software: PyCharm
 import os
 
+import copy
+
 import FileController
 import LogMsg
 
@@ -59,9 +61,10 @@ def case_goto(configpath):
     else:
         LogMsg.logger.info('配置文件中无用户参数化数据')
     # 处理用例库
-    case_lines_list = []
     caselibrarypath = testconfig.pop('Casefile')
-    caselibrary = FileController.load_case_by_path(caselibrarypath)
+    #caselibrary = FileController.load_case_by_path(caselibrarypath)
+    case_lines_list = g_case_list(caselibrarypath)
+    """
     for key, value in caselibrary.items():
         file_path = str(key)
         for key1, value1 in value.items():
@@ -69,14 +72,55 @@ def case_goto(configpath):
             if flag == 'TRUE':
                 case_line = {'CasePath': file_path, 'CaseNo': key1}
                 case_line.update(value1)
-                case_line['Temp_Filepath'] = testconfig['tempfile']
+                # case_line['Temp_Filepath'] = testconfig['tempfile']
                 LogMsg.logger.info('CaseList: ' + str(case_line))
                 case_lines_list.append(case_line)
             else:
                 LogMsg.logger.info('用例非活动状态: ' + value1['API_Purpose'] + '  ' + value1['Request_Url'])
-
+    
+    """
     return usrconfig, configdatadic, case_lines_list, testconfig
     # config中host和header    # config中配置的用户参数字典    # 用例列表    # config剩余配置内容
 
 
+# 重写用例处理参数，将测试接口的依赖接口插入列表中，并在每条用例后添加Flag，是否为依赖关系插入执行的接口 DP=False/True
+def g_case_list(caselibrarypath):
+    case_lines_list = []
+    case_lines_L = []
+    case_lines_D = {}
+    caselibrary = FileController.load_case_by_path(caselibrarypath)
+    for key, value in caselibrary.items():
+        file_path = str(key)
+        for key1, value1 in value.items():
+            case_line = {'CasePath': file_path, 'CaseNo': key1}
+            case_line.update(value1)
+            #LogMsg.logger.info('CaseList: ' + str(case_line))
+            case_lines_D[value1['Request_Url']+'_' + key1.split('.')[1]] = copy.deepcopy(case_line)
+            case_lines_L.append(case_line)
+
+    for i in range(len(case_lines_L)):
+        flag1 = case_lines_L[i]['Active']
+        if flag1 == 'TRUE':
+            # 原测试的接口DP=False,依赖插入的接口DP=True
+            case_lines_L[i]['DP'] = False
+            if case_lines_L[i]['Depends']:
+                depends_api = []
+                depends = case_lines_L[i]['Depends'].split(',')
+                for j in range(len(depends)):
+                    if depends[j] in case_lines_D:
+                        api = case_lines_D[depends[j]]
+                        api['DP'] = True
+                        depends_api.append(api)
+                        LogMsg.logger.info('CaseList: ' + str(api))
+                    else:
+                        LogMsg.logger.error('未找到依赖接口: ' + depends[j])
+                case_lines_list.extend(depends_api)
+                case_lines_list.append(case_lines_L[i])
+                LogMsg.logger.info('CaseList: ' + str(case_lines_L[i]))
+            else:
+                case_lines_list.append(case_lines_L[i])
+                LogMsg.logger.info('CaseList: ' + str(case_lines_L[i]))
+        else:
+            LogMsg.logger.info('用例非活动状态: ' + str(case_lines_L[i]))
+    return case_lines_list
 
