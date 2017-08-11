@@ -42,16 +42,18 @@ def result_generate(caseindex, case_info, check_diff, run_load_list, depends_api
         # 写入执行记录
         recode = {}
         mstr = case_info['Request_Url'] + '_' + case_info['CaseNumb'].split('.')[1] + ';' + str(
-            case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info[
-                   'caseresult']
+            case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + \
+               str(case_info['DP']) + ';' + case_info['caseresult']
         recode[case_info['CaseIndex']] = mstr
         LogMsg.logger.info('用例执行记录： ' + str(recode))
         Flag = case_info['DP']
         if Flag:
             depends_api_status.update(recode)
+            run_load_list.update(recode)
         else:
             run_load_list.update(recode)
 
 
 def write_to_tempfile(run_load_list, temp_file_path):
-    FileController.write_yaml_file(run_load_list, temp_file_path)
+    if run_load_list:
+        FileController.write_yaml_file(run_load_list, temp_file_path)

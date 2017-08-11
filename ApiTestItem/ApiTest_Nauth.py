@@ -43,7 +43,7 @@ class NauthApiTest(TestBase):
         super(NauthApiTest, self).creat_session()
 
     @ddt.data(*case_lines_list)
-    def test_api_rq_qone(self, case_line):
+    def test_api_rq_nauth(self, case_line):
         # 继承测试基类
         test_base = super(NauthApiTest, self)
         # 获取当前执行用例下标
@@ -53,12 +53,12 @@ class NauthApiTest(TestBase):
         # 执行基类测试方法
         test_base.casetestBase(self.client, NauthApiTest.configdatadic, NauthApiTest.udatadic_colle, case_line,
                                NauthApiTest.usrconfig, NauthApiTest.config, NauthApiTest.depends_api_status)
-        # 处理测试结果
-        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, NauthApiTest.run_load_list,
-                                       NauthApiTest.depends_api_status)
 
     def tearDown(self):
         super(NauthApiTest, self).close_session()
+        # 处理测试结果
+        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, NauthApiTest.run_load_list,
+                                       NauthApiTest.depends_api_status)
 
     @classmethod
     def tearDownClass(cls):

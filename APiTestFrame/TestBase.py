@@ -50,10 +50,18 @@ class TestBase(unittest.TestCase):
         resp = case_result[0]
         respdict = case_result[1]
         self.case_info = case_result[2]
+        flag = case_result[3]
+
         collectionparm = {}
         self.check_diff = {}
-        checkpoint = respdict['Checkpoint']
         needcollection = []
+        checkpoint = respdict['Checkpoint']
+
+        """
+        # 先判断是否为依赖失败跳过执行的接口
+        """
+        self.assertTrue(flag, '依赖API接口执行失败，该用例未执行，请检查日志')
+
         """
         # 先判断返回值resp的内容格式，收集参数只支持json
         """

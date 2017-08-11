@@ -34,7 +34,7 @@ import UserParam
 """
 
 
-def spilt_case(api_client, caselines, udatadic, usrconfig, config):
+def spilt(caselines):
     caselinespilt = []
     LogMsg.logger.info(caselines)
     # 分割用例数据
@@ -61,35 +61,41 @@ def spilt_case(api_client, caselines, udatadic, usrconfig, config):
         'Checkpoint': caselines['Checkpoint']
     }
     caselinespilt.append(case_response)
+    return caselinespilt
 
-    # 处理请求的表单数据
-    #print(udatadic)
-    LogMsg.logger.info('开始处理请求数据：*********')
-    case_dg = DataGenerate.data_generate(caselinespilt[1], udatadic)
-    LogMsg.logger.info(case_dg)
-    # 生成sign值
-    if 'Secrete' in config and config['Secrete']:
-        udatadic['$sign$'] = UserParam.sign_generate(case_dg, config['Secrete'])
-        # 重新调用一次
-        case_dg = DataGenerate.data_generate(case_dg, udatadic)
-    # 处理请求数据
-    LogMsg.logger.info('开始处理请求数据：**********')
-    case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
-    LogMsg.logger.info(case_rq)
-    # 发送请求
-    LogMsg.logger.info('开始发送请求：**********')
-    case_sd = RequestGenerate.request_send(api_client, case_rq)
-    LogMsg.logger.info('请求返回数据：' + str(case_sd))
 
-    return case_sd, caselinespilt[2], caselinespilt[0]
+def spilt_case(api_client, caselines, udatadic, usrconfig, config, flag):
+    caselinespilt = spilt(caselines)
+    if flag:
+        # 处理请求的表单数据
+        # print(udatadic)
+        LogMsg.logger.info('开始处理请求数据：*********')
+        case_dg = DataGenerate.data_generate(caselinespilt[1], udatadic)
+        LogMsg.logger.info(case_dg)
+        # 生成sign值
+        if 'Secrete' in config and config['Secrete']:
+            udatadic['$sign$'] = UserParam.sign_generate(case_dg, config['Secrete'])
+            # 重新调用一次
+            case_dg = DataGenerate.data_generate(case_dg, udatadic)
+        # 处理请求数据
+        LogMsg.logger.info('开始处理请求数据：**********')
+        case_rq = RequestGenerate.request_generate(case_dg, usrconfig)
+        LogMsg.logger.info(case_rq)
+        # 发送请求
+        LogMsg.logger.info('开始发送请求：**********')
+        case_sd = RequestGenerate.request_send(api_client, case_rq)
+        LogMsg.logger.info('请求返回数据：' + str(case_sd))
+        return case_sd, caselinespilt[2], caselinespilt[0], flag
+    else:
+        return '', caselinespilt[2], caselinespilt[0], flag
 
 
 def case_Prepare(api_client, caselines, udatadic, usrconfig, config, depends_api_status):
-    #udatadic.update(uspa)
+    # udatadic.update(uspa)
     if caselines is not None:
         if not caselines['DP']:
             if not caselines['Depends']:
-                return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+                return spilt_case(api_client, caselines, udatadic, usrconfig, config, True)
             else:
                 depends = caselines['Depends'].split(',')
                 load_list = depends_api_status
@@ -102,14 +108,14 @@ def case_Prepare(api_client, caselines, udatadic, usrconfig, config, depends_api
                             if re == 'Pass':
                                 flag = True
                                 break
+                depends_api_status.clear()
                 if flag:
-                    return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+                    return spilt_case(api_client, caselines, udatadic, usrconfig, config, True)
                 else:
-                    assert flag, '依赖API接口' + str(depends) + '执行失败'
-                    LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口将不会执行：' + str(caselines['Request_Url']))
-            depends_api_status.clear()
+                    LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口未执行：' + str(caselines['Request_Url']))
+                    return spilt_case(api_client, caselines, udatadic, usrconfig, config, False)
+                    #assert flag, '依赖API接口' + str(depends) + '执行失败'
         else:
-            return spilt_case(api_client, caselines, udatadic, usrconfig, config)
+            return spilt_case(api_client, caselines, udatadic, usrconfig, config, True)
     else:
         LogMsg.logger.error('无用例数据')
-

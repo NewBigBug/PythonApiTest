@@ -66,6 +66,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # URL: http://tungwaiyip.info/software/HTMLTestRunner.html
 import os
 
+import copy
+
 import FileController
 
 __author__ = "Wai Yip Tung"
@@ -717,11 +719,15 @@ class HTMLTestRunner(Template_mixin):
         ]
 
     def generateReport(self, test, result):
+
+        load_list = self.get_case_info(self.tempfile)
+        result = self.gen_result(result, load_list)
+
         report_attrs = self.getReportAttributes(result)
         generator = 'HTMLTestRunner %s' % __version__
         stylesheet = self._generate_stylesheet()
         heading = self._generate_heading(report_attrs)
-        report = self._generate_report(result)
+        report = self._generate_report(result, load_list)
         ending = self._generate_ending()
         output = self.HTML_TMPL % dict(
             title=saxutils.escape(self.title),
@@ -753,7 +759,7 @@ class HTMLTestRunner(Template_mixin):
         )
         return heading
 
-    def _generate_report(self, result):
+    def _generate_report(self, result, load_list):
         rows = []
         sortedResult = self.sortResult(result.result)
         for cid, (cls, cls_results) in enumerate(sortedResult):
@@ -787,7 +793,7 @@ class HTMLTestRunner(Template_mixin):
             rows.append(row)
 
             for tid, (n, t, o, e) in enumerate(cls_results):
-                self._generate_report_test(rows, cid, tid, n, t, o, e)
+                self._generate_report_test(rows, cid, tid, n, t, o, e, load_list)
 
         report = self.REPORT_TMPL % dict(
             test_list=''.join(rows),
@@ -798,7 +804,7 @@ class HTMLTestRunner(Template_mixin):
         )
         return report
 
-    def _generate_report_test(self, rows, cid, tid, n, t, o, e):
+    def _generate_report_test(self, rows, cid, tid, n, t, o, e, load_list):
         # e.g. 'pt1.1', 'ft1.1', etc
         # print(n)
         has_output = bool(o or e)
@@ -808,7 +814,6 @@ class HTMLTestRunner(Template_mixin):
 
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
-
 
         tmpl = has_output and self.REPORT_TEST_WITH_OUTPUT_TMPL or self.REPORT_TEST_NO_OUTPUT_TMPL
 
@@ -828,7 +833,11 @@ class HTMLTestRunner(Template_mixin):
         else:
             ue = e
 
-        case_info = self.get_case_info(self.tempfile, desc)
+        value = load_list[desc].split(';')
+        casename = value[3]
+        request_url = value[0].split('_')[0]
+        casepath = value[1]
+        casenumb = value[2]
 
         script = self.REPORT_TEST_OUTPUT_TMPL % dict(
             id=tid,
@@ -843,10 +852,10 @@ class HTMLTestRunner(Template_mixin):
             desc=desc,
             script=script,
 
-            casename=case_info[0],
-            request_url=case_info[1],
-            casepath=case_info[2],
-            casenumb=case_info[3],
+            casename=casename,
+            request_url=request_url,
+            casepath=casepath,
+            casenumb=casenumb,
 
             status=self.STATUS[n],
         )
@@ -857,14 +866,40 @@ class HTMLTestRunner(Template_mixin):
     def _generate_ending(self):
         return self.ENDING_TMPL
 
-    def get_case_info(self, tempfile, desc):
+    def get_case_info(self, tempfile):
         load_list = FileController.load_yaml_file(tempfile)
-        value = load_list[desc].split(';')
-        casename = value[3]
-        request_url = value[0].split('_')[0]
-        casepath = value[1]
-        casenumb = value[2]
-        return casename, request_url, casepath, casenumb
+        return load_list
+
+    def gen_result(self, result, load_list):
+        keys_set = []
+        for key, value in load_list.items():
+            r = value.split(';')
+            if r[len(r) - 2] == 'True':
+                keys_set.append(key)
+        r_s = []
+        for i_j in range(len(result.result)):
+            # 状态
+            r_0 = result.result[i_j][0]
+            # class
+            r_1 = result.result[i_j][1]
+
+            name = r_1.id().split('.')[-1]
+            doc = r_1.shortDescription() or ""
+            desc = doc and ('%s: %s' % (name, doc)) or name
+
+            if desc in keys_set:
+                #print(desc)
+                #print(result.result[i])
+                r_s.append(result.result[i_j])
+                if r_0 == 0:
+                    result.success_count = result.success_count - 1
+                elif r_0 == 1:
+                    result.failure_count = result.failure_count - 1
+                else:
+                    result.error_count = result.error_count - 1
+        for rm in r_s:
+            result.result.remove(rm)
+        return result
 
 
 ##############################################################################

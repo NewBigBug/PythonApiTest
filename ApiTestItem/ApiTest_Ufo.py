@@ -46,7 +46,7 @@ class UfoApiTest(TestBase):
         super(UfoApiTest, self).creat_session()
 
     @ddt.data(*case_lines_list)
-    def test_api_rq_qone(self, case_line):
+    def test_api_rq_ufo(self, case_line):
         # 继承测试基类
         test_base = super(UfoApiTest, self)
         # 获取当前执行用例下标
@@ -57,12 +57,11 @@ class UfoApiTest(TestBase):
         test_base.casetestBase(self.client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
                                UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.depends_api_status)
 
+    def tearDown(self):
+        super(UfoApiTest, self).close_session()
         # 处理测试结果
         ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, UfoApiTest.run_load_list,
                                        UfoApiTest.depends_api_status)
-
-    def tearDown(self):
-        super(UfoApiTest, self).close_session()
 
     @classmethod
     def tearDownClass(cls):
