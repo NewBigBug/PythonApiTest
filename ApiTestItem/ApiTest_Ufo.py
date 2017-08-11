@@ -57,11 +57,12 @@ class UfoApiTest(TestBase):
         test_base.casetestBase(self.client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
                                UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.depends_api_status)
 
-    def tearDown(self):
-        super(UfoApiTest, self).close_session()
+        # 处理测试结果
         ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, UfoApiTest.run_load_list,
                                        UfoApiTest.depends_api_status)
-        #QoneApiTest.run_load_list.update(case_rs)
+
+    def tearDown(self):
+        super(UfoApiTest, self).close_session()
 
     @classmethod
     def tearDownClass(cls):

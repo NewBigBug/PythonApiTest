@@ -47,12 +47,12 @@ class QoneApiTest(TestBase):
         # 执行基类测试方法
         test_base.casetestBase(self.client, QoneApiTest.configdatadic, QoneApiTest.udatadic_colle, case_line,
                                QoneApiTest.usrconfig, QoneApiTest.config, QoneApiTest.depends_api_status)
+        # 处理测试结果
+        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, QoneApiTest.run_load_list,
+                                       QoneApiTest.depends_api_status)
 
     def tearDown(self):
         super(QoneApiTest, self).close_session()
-        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, QoneApiTest.run_load_list,
-                                       QoneApiTest.depends_api_status)
-        #QoneApiTest.run_load_list.update(case_rs)
 
     @classmethod
     def tearDownClass(cls):

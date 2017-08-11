@@ -15,42 +15,42 @@ import FileController
 
 
 def result_generate(caseindex, case_info, check_diff, run_load_list, depends_api_status):
+    if case_info:
+        case_info['CaseIndex'] = caseindex
+        if check_diff:
+            case_info.update(check_diff)
+        else:
+            case_info['caseresult'] = 'Fail'
 
-    case_info['CaseIndex'] = caseindex
-    if check_diff:
-        case_info.update(check_diff)
-    else:
-        case_info['caseresult'] = 'Fail'
+        """
+        case_info={
+            'CaseIndex': caseindex
+            'CasePath': caselines['CasePath'],
+            'CaseNumb': caselines['CaseNo'],
+            'CaseName': caselines['API_Purpose']
+            'Request_Url': '/api/login'
+            'Temp_Filepath' ''      
+            'checkresult': Pass                      
+        }
+        """
 
-    """
-    case_info={
-        'CaseIndex': caseindex
-        'CasePath': caselines['CasePath'],
-        'CaseNumb': caselines['CaseNo'],
-        'CaseName': caselines['API_Purpose']
-        'Request_Url': '/api/login'
-        'Temp_Filepath' ''      
-        'checkresult': Pass                      
-    }
-    """
-
-    rmg = ''
-    for key, value in case_info.items():
-        rmg = rmg + str(key) + ':' + str(value) + '\t'
-    LogMsg.logger.info(rmg)
-    # resultlist = [case_info]
-    # 写入执行记录
-    recode = {}
-    mstr = case_info['Request_Url'] + '_' + case_info['CaseNumb'].split('.')[1] + ';' + str(
-        case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info[
-               'caseresult']
-    recode[case_info['CaseIndex']] = mstr
-    LogMsg.logger.info('用例执行记录： ' + str(recode))
-    Flag = case_info['DP']
-    if Flag:
-        depends_api_status.update(recode)
-    else:
-        run_load_list.update(recode)
+        rmg = ''
+        for key, value in case_info.items():
+            rmg = rmg + str(key) + ':' + str(value) + '\t'
+        LogMsg.logger.info(rmg)
+        # resultlist = [case_info]
+        # 写入执行记录
+        recode = {}
+        mstr = case_info['Request_Url'] + '_' + case_info['CaseNumb'].split('.')[1] + ';' + str(
+            case_info['Checkpoint']) + ';' + case_info['CaseNumb'] + ';' + case_info['CaseName'] + ';' + case_info[
+                   'caseresult']
+        recode[case_info['CaseIndex']] = mstr
+        LogMsg.logger.info('用例执行记录： ' + str(recode))
+        Flag = case_info['DP']
+        if Flag:
+            depends_api_status.update(recode)
+        else:
+            run_load_list.update(recode)
 
 
 def write_to_tempfile(run_load_list, temp_file_path):
