@@ -53,7 +53,7 @@ class UfoApiTest(TestBase):
         self.caseindex = sys._getframe().f_code.co_name + '_' + str(
             UfoApiTest.case_lines_list.index(case_line) + 1001)
         LogMsg.logger.info('caseindex: ' + self.caseindex)
-        # 执行基类测试方法
+        # 执行测试基类方法
         test_base.casetestBase(self.client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
                                UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.depends_api_status)
 
