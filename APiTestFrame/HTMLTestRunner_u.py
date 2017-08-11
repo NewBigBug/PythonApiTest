@@ -888,8 +888,6 @@ class HTMLTestRunner(Template_mixin):
             desc = doc and ('%s: %s' % (name, doc)) or name
 
             if desc in keys_set:
-                #print(desc)
-                #print(result.result[i])
                 r_s.append(result.result[i_j])
                 if r_0 == 0:
                     result.success_count = result.success_count - 1
