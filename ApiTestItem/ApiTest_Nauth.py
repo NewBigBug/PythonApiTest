@@ -36,20 +36,14 @@ class NauthApiTest(TestBase):
     udatadic_colle = {}
     # 运行结果临时字典,执行完毕存入yaml临时文件
     run_load_list = {}
-    # Session实例
-    client = None
-
-    @classmethod
-    def setUpClass(cls):
-        NauthApiTest.client = requests.Session()
-        # 是否开启verify,fiddler抓包需取消注释
-        # self.api_client.verify = False
+    # 存入依赖接口执行状态
+    depends_api_status = {}
 
     def setUp(self):
-        self.client = NauthApiTest.client
+        super(NauthApiTest, self).creat_session()
 
     @ddt.data(*case_lines_list)
-    def test_api_rq_nauth(self, case_line):
+    def test_api_rq_qone(self, case_line):
         # 继承测试基类
         test_base = super(NauthApiTest, self)
         # 获取当前执行用例下标
@@ -58,15 +52,13 @@ class NauthApiTest(TestBase):
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         # 执行基类测试方法
         test_base.casetestBase(self.client, NauthApiTest.configdatadic, NauthApiTest.udatadic_colle, case_line,
-                               NauthApiTest.usrconfig, NauthApiTest.config, NauthApiTest.run_load_list)
+                               NauthApiTest.usrconfig, NauthApiTest.config, NauthApiTest.depends_api_status)
 
     def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-        NauthApiTest.run_load_list.update(case_rs)
+        super(NauthApiTest, self).close_session()
+        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, NauthApiTest.run_load_list,
+                                       NauthApiTest.depends_api_status)
 
     @classmethod
     def tearDownClass(cls):
-        NauthApiTest.client.close()
         ResultGenerate.write_to_tempfile(NauthApiTest.run_load_list, NauthApiTest.config['tempfile'])
-
-

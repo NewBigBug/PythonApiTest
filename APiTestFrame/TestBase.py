@@ -3,6 +3,8 @@
 # @Author  : Charles
 # @File    : BaseTest.py
 # @Software: PyCharm
+import copy
+import requests
 
 import CaseInteg
 import LogMsg
@@ -11,12 +13,36 @@ import Utils
 
 
 class TestBase(unittest.TestCase):
+    Flag = False
+    dp_flag = None
+    client = None
 
+    # 创建Session实例
+    @classmethod
+    def creat_session(cls):
+        if not TestBase.Flag:
+            cls.client = requests.Session()
+            # self.api_client.verify = False
+            TestBase.client = cls.client
+            TestBase.Flag = True
+
+    # 关闭session实例
+    @classmethod
+    def close_session(cls):
+        if not TestBase.dp_flag:
+            TestBase.client.close()
+            TestBase.Flag = False
+
+    # 测试执行函数
     def casetestBase(self, api_client, configdatadic, udatadic_colle, case_line, usrconfig, config, depends_api_status):
         # 用户参数库
         udatadic = {}
         udatadic.update(configdatadic)
         udatadic.update(udatadic_colle)
+        # 用例执行之后清空收集的参数表，防止后续有依赖的其他的接口参数取值重复
+        TestBase.dp_flag = case_line['DP']
+        if not case_line['DP']:
+            udatadic_colle.clear()
         LogMsg.logger.info('当前参数库： ' + str(udatadic))
         # 执行请求
         case_result = CaseInteg.case_Prepare(api_client, case_line, udatadic, usrconfig,

@@ -37,20 +37,16 @@ class UfoApiTest(TestBase):
     udatadic_colle = {}
     # 运行结果临时字典，供检查依赖接口状态
     run_load_list = {}
+    # 存入依赖接口执行状态
+    depends_api_status = {}
     # Session实例
     client = None
 
-    @classmethod
-    def setUpClass(cls):
-        UfoApiTest.client = requests.Session()
-        # 是否开启verify,fiddler抓包需取消注释
-        # self.api_client.verify = False
-
     def setUp(self):
-        self.client = UfoApiTest.client
+        super(UfoApiTest, self).creat_session()
 
     @ddt.data(*case_lines_list)
-    def test_api_rq_ufo(self, case_line):
+    def test_api_rq_qone(self, case_line):
         # 继承测试基类
         test_base = super(UfoApiTest, self)
         # 获取当前执行用例下标
@@ -59,15 +55,16 @@ class UfoApiTest(TestBase):
         LogMsg.logger.info('caseindex: ' + self.caseindex)
         # 执行基类测试方法
         test_base.casetestBase(self.client, UfoApiTest.configdatadic, UfoApiTest.udatadic_colle, case_line,
-                               UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.run_load_list)
+                               UfoApiTest.usrconfig, UfoApiTest.config, UfoApiTest.depends_api_status)
 
     def tearDown(self):
-        case_rs = ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff)
-        UfoApiTest.run_load_list.update(case_rs)
+        super(UfoApiTest, self).close_session()
+        ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, UfoApiTest.run_load_list,
+                                       UfoApiTest.depends_api_status)
+        #QoneApiTest.run_load_list.update(case_rs)
 
     @classmethod
     def tearDownClass(cls):
         UfoApiTest.client.close()
         ResultGenerate.write_to_tempfile(UfoApiTest.run_load_list, UfoApiTest.config['tempfile'])
-
 

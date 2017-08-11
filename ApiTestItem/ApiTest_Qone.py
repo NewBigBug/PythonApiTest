@@ -32,17 +32,9 @@ class QoneApiTest(TestBase):
     run_load_list = {}
     # 存入依赖接口执行状态
     depends_api_status = {}
-    # Session实例
-    client = None
-
-    @classmethod
-    def setUpClass(cls):
-        QoneApiTest.client = requests.Session()
-        # 是否开启verify,fiddler抓包需取消注释
-        # self.api_client.verify = False
 
     def setUp(self):
-        self.client = QoneApiTest.client
+        super(QoneApiTest, self).creat_session()
 
     @ddt.data(*case_lines_list)
     def test_api_rq_qone(self, case_line):
@@ -57,6 +49,7 @@ class QoneApiTest(TestBase):
                                QoneApiTest.usrconfig, QoneApiTest.config, QoneApiTest.depends_api_status)
 
     def tearDown(self):
+        super(QoneApiTest, self).close_session()
         ResultGenerate.result_generate(self.caseindex, self.case_info, self.check_diff, QoneApiTest.run_load_list,
                                        QoneApiTest.depends_api_status)
         #QoneApiTest.run_load_list.update(case_rs)
