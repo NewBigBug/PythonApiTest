@@ -114,7 +114,6 @@ def case_Prepare(api_client, caselines, udatadic, usrconfig, config, depends_api
                 else:
                     LogMsg.logger.error('依赖API接口:' + str(depends) + '执行失败，当前接口未执行：' + str(caselines['Request_Url']))
                     return spilt_case(api_client, caselines, udatadic, usrconfig, config, False)
-                    #assert flag, '依赖API接口' + str(depends) + '执行失败'
         else:
             return spilt_case(api_client, caselines, udatadic, usrconfig, config, True)
     else:
