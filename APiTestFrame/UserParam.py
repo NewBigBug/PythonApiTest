@@ -5,12 +5,15 @@
 # @Software: PyCharm
 
 import hashlib
+import re
+
 import Utils
 import LogMsg
 import copy
 
 
 def param_generate(DL):
+    # 参数化字典内容
     paramdict_str = {
         '$tm$': 'time_generate',
         '$tm1$': 'time_generate1',
@@ -24,8 +27,19 @@ def param_generate(DL):
     }
     paramdict = {}
     for i in range(len(DL)):
-        if DL[i] in paramdict_str:
-            paramdict[DL[i]] = getattr(Utils, paramdict_str[DL[i]])()
+        if '(' in DL[i]:
+            l = ''.join(re.findall(r'(\(.*?\))', DL[i]))
+            D = DL[i].replace(l, '')
+            L = l.replace('(', '').replace(')', '')
+            if D in paramdict_str:
+                paramdict[DL[i]] = getattr(Utils, paramdict_str[D])(L)
+            else:
+                LogMsg.logger.error('未在参数字典中找到对应索引内容    ' + DL[i])
+        else:
+            if DL[i] in paramdict_str:
+                paramdict[DL[i]] = getattr(Utils, paramdict_str[DL[i]])()
+            else:
+                LogMsg.logger.error('未在参数字典中找到对应索引内容    ' + DL[i])
     return paramdict
 
 

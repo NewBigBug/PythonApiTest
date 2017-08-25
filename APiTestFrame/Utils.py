@@ -157,6 +157,8 @@ def chinese_name(num=None):
     # 根据传入参数生成名字
     i = 1
     fn = ''
+
+    num = int(num)
     if not num:
         num = 3
     while i < num:

@@ -1,16 +1,5 @@
-test_api_rq_qone_1001: '/api/CobraUser/Login_1;{''Equal'': {''status_code'': ''200'',
-  ''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'': ''None'', ''NAME'': ''刘云'', ''TELPHONE'':
-  ''13817645775''}, ''In'': [''刘云'', ''登录成功'']};No.1;Login;False;Pass'
-test_api_rq_qone_1002: '/api/CobraUser/Login_2;{''Equal'': {''status_code'': ''201'',
-  ''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'': ''None'', ''NAME'': ''刘云'', ''TELPHONE'':
-  ''13817645775''}, ''In'': [''刘云'', ''登录成功'']};No.2;Login;True;Fail'
-test_api_rq_qone_1003: '/api/PreAppMain/Query_3;{''Equal'': {''status_code'': ''200'',
-  ''ERROR_CODE'': ''None'', ''ERROR_MESSAGE'': ''None''}};No.3;预申请列表;False;Fail'
-test_api_rq_nauth_1001: '/nauth/login_1;{''Equal'': {''status_code'': ''200''}, ''In'':
-  [''登录名'', ''密码'']};No.1;首页;False;Pass'
-test_api_rq_nauth_1002: '/nauth/login_2;{''Equal'': {''status_code'': ''200''}, ''In'':
-  [''您好, 魏双双'', ''一级菜单焦点'']};No.2;系统登录;False;Pass'
-test_api_rq_nauth_1003: '/nauth/login_2;{''Equal'': {''status_code'': ''200''}, ''In'':
-  [''您好, 魏双双'', ''一级菜单焦点'']};No.2;系统登录;True;Pass'
-test_api_rq_nauth_1004: '/nauth/sys/user/info_3;{''Equal'': {''status_code'': ''200''},
-  ''In'': [''台州门店'', ''ShuangshuangWei@quarkfinance.com'']};No.3;个人信息;False;Pass'
+test_api_rq_qone_1001: '/api/CobraUser/Login_2;{''Equal'': {''status_code'': ''200'',
+  ''RESPONSE_STATUS'': ''OK'', ''ERROR_MESSAGE'': ''None'', ''TELPHONE'': ''15502168672''},
+  ''In'': [''登录成功'']};No.2;Login;True;Pass'
+test_api_rq_qone_1002: '/api/preappmain/create_11;{''Equal'': {''status_code'': ''200'',
+  ''ERROR_MESSAGE'': ''None'', ''ERROR_CODE'': ''None'', ''RESULT'': ''True''}};No.11;create;False;Pass'
